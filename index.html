@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>김인경 | 계산화학</title>
-<meta name="description" content="반도체 공정가스와 소재의 반응을 DFT, DFTB-MD로 계산하는 계산화학 연구자 김인경의 웹사이트">
+<meta name="description" content="계산화학 연구자 김인경의 웹사이트. 양자화학 계산과 분자동역학으로 반도체 공정가스와 소재의 반응을 예측합니다. Ingyeong Kim, computational chemist.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
@@ -38,7 +38,7 @@ main{flex:1}
 /* nav */
 .nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-.nav .me{font-weight:800;text-decoration:none;letter-spacing:-.02em;font-size:18px}
+.nav .me{font-weight:800;text-decoration:none;letter-spacing:-.02em;font-size:18px;white-space:nowrap}
 .nav .me span{font-weight:500;color:var(--ink-3);font-size:14px;margin-left:8px;letter-spacing:0}
 .nav ul{display:flex;gap:6px;list-style:none;font-size:15px}
 .nav ul a{text-decoration:none;color:var(--ink-2);padding:6px 12px;border-radius:6px}
@@ -66,8 +66,8 @@ h2{font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.4}
 .hero{padding-top:72px}
 .hero h1{font-size:clamp(44px,7vw,72px);font-weight:800;letter-spacing:-.04em;line-height:1.05}
 .hero .en{display:block;font-size:clamp(17px,2vw,22px);font-weight:500;letter-spacing:0;color:var(--ink-3);margin-top:12px}
-.hero .lead{font-size:clamp(20px,2.4vw,26px);font-weight:600;letter-spacing:-.02em;margin-top:28px;max-width:28em;line-height:1.5}
-.hero .sub{color:var(--ink-2);margin-top:12px;max-width:38em}
+.hero .lead{font-size:clamp(22px,2.8vw,30px);font-weight:700;letter-spacing:-.025em;margin-top:28px;max-width:26em;line-height:1.45}
+.hero .sub{color:var(--ink-2);margin-top:18px;max-width:38em}
 .hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
 .pes{margin-top:48px;width:100%;height:auto;display:block}
 .pes .curve{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round}
@@ -76,31 +76,35 @@ h2{font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.4}
 .pes .pt{fill:var(--bg);stroke:var(--accent);stroke-width:2}
 .pes text{fill:var(--ink-3);font-size:13px;font-family:inherit}
 .pes .lbl{fill:var(--ink);font-weight:600;font-size:14px}
-@media (prefers-reduced-motion:no-preference){
-  .pes .curve{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.2s cubic-bezier(.6,.1,.2,1) .2s forwards}
-  .pes .pt,.pes .lbl,.pes .guide{opacity:0;animation:fade .5s ease forwards}
-  .pes .d1{animation-delay:.5s}.pes .d2{animation-delay:1s}.pes .d3{animation-delay:1.4s}.pes .d4{animation-delay:1.8s}.pes .d5{animation-delay:2.2s}
-}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes fade{to{opacity:1}}
+.pes .trail{fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;opacity:0;pointer-events:none}
+.pes .pt,.pes .lbl,.pes .guide{opacity:0;transition:opacity .45s ease}
+.pes .on{opacity:1}
+.pes .pt{transform-box:fill-box;transform-origin:center;transition:opacity .45s ease,transform .3s ease,fill .3s ease}
+.pes .pt.hit{transform:scale(1.7);fill:var(--accent)}
+.pes .mover{fill:var(--accent);opacity:0}
+.pes .halo{fill:var(--accent);opacity:0}
+.pes.static .pt,.pes.static .lbl,.pes.static .guide{opacity:1}
 .facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:8px}
 .facts a{padding:20px 16px 18px 0;text-decoration:none;display:block}
 .facts a+a{padding-left:20px;border-left:1px solid var(--line)}
 .facts a:hover b{color:var(--accent)}
 .facts b{display:block;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
-.facts span{font-size:14px;color:var(--ink-2)}
+.facts span{font-size:17px;color:var(--ink-2);line-height:1.5;display:block;margin-top:2px}
 
 .home-sec{margin-top:80px}
 .home-sec .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:18px}
 .home-sec .head a{font-size:15px;color:var(--ink-2);text-decoration:none;font-weight:500}
 .home-sec .head a:hover{color:var(--accent)}
-.feature{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px}
+.feature{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .feature a{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;text-decoration:none;transition:border-color .15s}
 .feature a:hover{border-color:var(--accent)}
 .feature a:hover .chev{transform:translateX(3px);color:var(--accent)}
 .feature .k{font-size:13px;color:var(--ink-3)}
 .feature h3{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.4;margin-top:6px}
 .feature p{font-size:15px;color:var(--ink-2);margin-top:8px;flex:1}
+.fmeta{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;margin-top:14px;flex:1;align-content:start}
+.fmeta dt{color:var(--ink-3);white-space:nowrap}
+.fmeta dd{color:var(--ink-2)}
 .feature .big{font-size:34px;font-weight:800;letter-spacing:-.03em;color:var(--accent);margin-top:16px;line-height:1.1}
 .feature .big small{display:block;font-size:13px;font-weight:500;color:var(--ink-3);letter-spacing:0;margin-top:4px}
 .feature .foot{display:flex;justify-content:flex-end;margin-top:14px}
@@ -147,6 +151,7 @@ details.talk .body .lab{color:var(--accent);font-weight:600;margin-right:6px}
 .authors strong{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
 .d-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 .d-grid{display:grid;grid-template-columns:1fr 280px;gap:56px;margin-top:40px}
+.d-grid > *{min-width:0}
 .d-body section+section{margin-top:44px}
 .d-body h2{margin-bottom:12px}
 .d-body p{color:var(--ink-2)}
@@ -237,8 +242,10 @@ footer a{color:var(--ink-2)}
 @media (max-width:600px){
   body{font-size:16px}
   .wrap{padding-left:16px;padding-right:16px}
-  .nav .me span{display:none}
-  .nav ul a{padding:6px 9px}
+  .nav .me span:not(.nm){display:none}
+  .nav ul a{padding:6px 7px}
+  .navr{gap:8px}
+  .nav .me .nm{font-size:16px}
   .page{padding-top:36px}
   .hero{padding-top:44px}
   .row{grid-template-columns:1fr 20px;gap:6px 12px}
@@ -257,17 +264,28 @@ footer a{color:var(--ink-2)}
   .bar{grid-template-columns:70px 1fr 46px}
   .pes text{font-size:16px}.pes .lbl{font-size:17px}
 }
+.nav .me .nm{font-size:18px;font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em}
+.navr{display:flex;align-items:center;gap:14px}
+.lang{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.lang button{font:inherit;font-size:13px;font-weight:600;padding:5px 9px;border:0;background:none;color:var(--ink-3);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.lang button:hover:not([aria-pressed="true"]){color:var(--ink)}
 </style>
 </head>
 <body>
 
-<nav class="nav" aria-label="주요 메뉴">
+<nav class="nav" id="topnav">
   <div class="wrap">
-    <a class="me" href="#/">김인경<span>Computational Chemistry</span></a>
-    <ul>
-      <li><a href="#/research" data-nav="research">연구</a></li>
-      <li><a href="#/about" data-nav="about">소개</a></li>
-    </ul>
+    <a class="me" href="#/"><span class="nm" data-u="name"></span><span data-u="field"></span></a>
+    <div class="navr">
+      <ul>
+        <li><a href="#/research" data-nav="research" data-u="navResearch"></a></li>
+        <li><a href="#/about" data-nav="about" data-u="navAbout"></a></li>
+      </ul>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="ko">KO</button><button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -275,594 +293,631 @@ footer a{color:var(--ink-2)}
 
 <footer>
   <div class="wrap">
-    <span>© 2026 김인경. 2026년 10월 업데이트.</span>
-    <span><!-- TODO: 실제 이메일 주소로 바꾸기 --><a href="mailto:your.email@example.com">메일</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/ingyeong-kim" target="_blank" rel="noopener">GitHub</a></span>
+    <span data-u="footer"></span>
+    <span><!-- TODO: 실제 이메일 주소로 바꾸기 --><a href="mailto:your.email@example.com" data-u="mail"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/ingyeong-kim" target="_blank" rel="noopener">GitHub</a></span>
   </div>
 </footer>
 
 <script>
+/* ===== language ===== */
+let LANG = "ko";
+try { const s = localStorage.getItem("lang"); if (s === "en" || s === "ko") LANG = s; } catch (e) {}
+const t = x => (x && typeof x === "object" && !Array.isArray(x) && "k" in x) ? (LANG === "en" ? x.e : x.k) : x;
+const tl = a => (a || []).map(t);
+
+const U = {
+  name:{k:"김인경",e:"Ingyeong Kim"},
+  field:{k:"Computational Chemistry",e:"Computational Chemistry"},
+  navResearch:{k:"연구",e:"Research"}, navAbout:{k:"소개",e:"About"},
+  footer:{k:"© 2026 김인경. 2026년 10월 업데이트.",e:"© 2026 Ingyeong Kim. Updated October 2026."},
+  mail:{k:"메일",e:"Email"},
+  heroEn:{k:"Ingyeong Kim, M.S. in Physical Chemistry",e:"M.S. in Physical Chemistry, Catholic University of Korea"},
+  heroLead:{k:"양자화학 기반 시뮬레이션과 AI를 활용한 데이터 분석으로 반도체 소재와 공정가스의 물성과 반응을 분자 수준에서 규명하는 계산화학 연구자입니다.",
+            e:"A computational chemist who pins down the properties and reactions of semiconductor materials and process gases at the molecular level, through quantum-chemistry-based simulation and AI-driven data analysis."},
+  heroSub:{k:"실험으로 직접 보기 어려운 반응 경로와 물성을 DFT, CCSD(T), MRCI 등 다양한 양자화학 방법론과 분자동역학 시뮬레이션으로 계산하고, 실험값과 비교해 검증합니다. 반도체 공정가스, 절연막, 온실가스, 배터리, 물반응성 소재를 다룬 국가 R&amp;D 과제 6건에서 반응 메커니즘 규명과 물성 예측을 수행했습니다.",
+           e:"I calculate reaction pathways and properties that are hard to observe experimentally, using quantum chemical methods such as DFT, CCSD(T) and MRCI together with molecular dynamics, and validate the results against experiment. Across six national R&amp;D projects on semiconductor process gases, insulating films, greenhouse gases, batteries and water-reactive materials, I have resolved reaction mechanisms and predicted material properties."},
+  btnResearch:{k:"연구 보기",e:"View research"}, btnAbout:{k:"소개와 이력",e:"About and CV"},
+  pesAria:{k:"반응물에서 전이상태와 중간체를 거쳐 생성물로 가는 반응 에너지 곡선",e:"Reaction energy profile from reactant through transition states and an intermediate to product"},
+  energy:{k:"에너지",e:"Energy"}, coord:{k:"반응 좌표",e:"Reaction coordinate"},
+  reactant:{k:"반응물",e:"Reactant"}, product:{k:"생성물",e:"Product"},
+  f1b:{k:"6건",e:"6"}, f1:{k:"국가 R&amp;D 과제",e:"National R&amp;D projects"},
+  f2b:{k:"5종",e:"5"}, f2:{k:"직접 다루는 측정 장비<br>UV‑Vis, FT‑IR, XRD, SEM, TEM",e:"Instruments I operate<br>UV‑Vis, FT‑IR, XRD, SEM, TEM"},
+  f3b:{k:"6편",e:"6"}, f3:{k:"SCI 논문 (공저자)",e:"SCI papers (co-author)"},
+  f4b:{k:"6건",e:"6"}, f4:{k:"학회 포스터 (단독 1저자 4건)",e:"Conference posters (4 as first author)"},
+  featured:{k:"대표 연구",e:"Featured work"}, allProjects:{k:"국가과제 전체 보기",e:"All projects"},
+  recent:{k:"최근 논문",e:"Recent papers"}, allPapers:{k:"논문 전체 보기",e:"All papers"},
+  fAgency:{k:"지원",e:"Funding"}, fPartners:{k:"참여기관",e:"Institutions"}, fRole:{k:"내 역할",e:"My role"},
+  fEtchBig:{k:"CF<sub>2</sub> 존재 비율 (실험 66.2%)",e:"CF<sub>2</sub> fraction (experiment 66.2%)"},
+  fGwpBig:{k:"GWP 예측 정확도 (목표 0.80)",e:"GWP prediction accuracy (target 0.80)"},
+  fPkgBig:{k:"고분자 구조 연속 계산, 항복전압 순서 실험과 일치",e:"Polymer structures computed; breakdown order matches experiment"},
+  resTitle:{k:"연구",e:"Research"},
+  resSub:{k:"2023년 5월 학부연구생으로 시작해 석사 과정까지, 계산화학연구실에서 수행한 논문, 국가과제, 학회 발표입니다.",
+          e:"Papers, national projects and conference presentations from the Computational Chemistry Lab, from my start as an undergraduate researcher in May 2023 through my master's."},
+  tabPapers:{k:"논문",e:"Papers"}, tabProjects:{k:"국가과제",e:"Projects"}, tabTalks:{k:"학회 발표",e:"Presentations"},
+  tabsAria:{k:"연구 분류",e:"Research sections"},
+  sci:{k:"SCI 논문",e:"Journal articles"}, thesisH:{k:"학위논문",e:"Thesis"},
+  grpSemi:{k:"반도체 공정과 소재",e:"Semiconductor processes and materials"},
+  grpSafe:{k:"화학물질 사고 위험성 예측",e:"Chemical accident hazard prediction"},
+  poster:{k:"포스터",e:"Poster"}, firstAuthor:{k:"단독 1저자",e:"First author"}, coAuthor:{k:"공동저자",e:"Co-author"},
+  myPart:{k:"맡은 부분",e:"My part"}, relProject:{k:"관련 과제",e:"Related project"}, relPaper:{k:"관련 논문",e:"Related paper"},
+  summary:{k:"요약",e:"Summary"}, mine:{k:"내가 맡은 부분",e:"What I did"},
+  info:{k:"정보",e:"Details"}, venue:{k:"게재",e:"Journal"}, year:{k:"연도",e:"Date"},
+  order:{k:"저자 순서",e:"Author position"}, advisor:{k:"지도",e:"Advisor"}, advisorName:{k:"김중한 교수",e:"Prof. Jung-han Kim"},
+  orderFmt:{k:(a,b)=>`${a}번째 / ${b}명`,e:(a,b)=>`${a} of ${b}`},
+  doiBtn:{k:"원문 보기 (DOI)",e:"Read the paper (DOI)"},
+  relProjects:{k:"관련 국가과제",e:"Related projects"}, relTalks:{k:"관련 학회 발표",e:"Related presentations"},
+  fromProject:{k:"이 과제에서 나온 논문",e:"Papers from this project"},
+  paperL:{k:"논문",e:"paper"}, projectL:{k:"과제",e:"project"},
+  prev:{k:"이전",e:"Previous"}, next:{k:"다음",e:"Next"},
+  background:{k:"배경",e:"Background"}, method:{k:"방법",e:"Approach"}, results:{k:"결과",e:"Results"}, limit:{k:"남은 한계",e:"Open limitation"},
+  pInfo:{k:"과제 정보",e:"Project details"}, pName:{k:"과제명",e:"Title"}, pAgency:{k:"지원",e:"Funding"}, pLead:{k:"참여기관",e:"Institutions"},
+  pPeriod:{k:"참여 기간",e:"My period"}, pPI:{k:"책임자",e:"PI"}, piName:{k:"김중한 교수 (가톨릭대)",e:"Prof. Jung-han Kim (CUK)"},
+  reaxNote:{k:"ReaxFF MD 100 ps, 온도별 궤적 5개 평균",e:"ReaxFF MD, 100 ps, averaged over 5 trajectories per temperature"},
+  aboutTitle:{k:"소개",e:"About"},
+  aboutSub:{k:"물리화학을 전공했고, 양자화학 계산과 분자동역학 시뮬레이션으로 반응 메커니즘과 분자 물성을 예측합니다. 반도체 공정가스와 소재 연구를 중심으로, 계산 결과를 실험값과 맞춰 가는 과정을 가장 오래 해 왔습니다.",
+            e:"I trained in physical chemistry and predict reaction mechanisms and molecular properties with quantum chemical calculations and molecular dynamics. Most of my work has been on semiconductor process gases and materials, and on the long process of bringing calculated results in line with experiment."},
+  edu:{k:"학력",e:"Education"}, career:{k:"경력",e:"Experience"}, skills:{k:"기술",e:"Skills"}, awards:{k:"수상과 자격",e:"Awards and certificates"}, contact:{k:"연락",e:"Contact"},
+  contactP:{k:"연구 내용이나 협업 문의는 메일로 부탁드립니다.",e:"For questions about my research or collaboration, please get in touch by email."},
+  mailBtn:{k:"메일 보내기",e:"Send an email"},
+  tHome:{k:"김인경 | 계산화학",e:"Ingyeong Kim | Computational Chemistry"}, tSuffix:{k:" | 김인경",e:" | Ingyeong Kim"}
+};
+
 const ME = "I. Kim";
 const CHEV = '<svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-/* ---------- 논문 ---------- */
+/* ===== papers ===== */
 const PAPERS = [
-  {
-    id:"tx4", date:"2026.06", journal:"J. Chem. Phys.", cite:"164, 214301 (2026)", doi:"10.1063/5.0329963",
+  { id:"tx4", date:"2026.06", journal:"J. Chem. Phys.", cite:"164, 214301 (2026)", doi:"10.1063/5.0329963",
     title:"Spin-orbit effects on molecular properties of Group 14 tetracoordinate compounds TX<sub>4</sub>",
     authors:["J. Kim","Y. Jin","W. Seo","H. Kim","I. Kim","R. K. Yadav","J. S. Lim"],
-    tags:["스핀-궤도 결합","UV-Vis 흡수","2성분 DFT"],
+    tags:[{k:"스핀-궤도 결합",e:"Spin-orbit coupling"},{k:"UV-Vis 흡수",e:"UV-Vis absorption"},{k:"2성분 DFT",e:"Two-component DFT"}],
     summary:[
-      "14족 사배위 화합물 TX<sub>4</sub> 15종(T = Ge, Sn, Pb / X = H, F, Cl, Br, I)에서 스핀-궤도 결합(SOC)이 분자 물성에 주는 영향을 2성분 SO-DFT(PBE0, MN15)로 계산했습니다.",
-      "TDDFT 계산으로 SOC가 단일항과 삼중항 상태를 섞어, 무거운 원자를 포함한 TX<sub>4</sub>의 UV-Vis 흡수 스펙트럼을 바꾼다는 것을 확인했습니다."
-    ],
-    role:["TX<sub>4</sub> 15종의 분자 구조 최적화 전체"],
-    related:{projects:[],talks:[]}
-  },
-  {
-    id:"water-reactive", date:"2026.02", journal:"J. Phys. Chem. A", cite:"130, 1615–1630 (2026)", doi:"",
+      {k:"14족 사배위 화합물 TX<sub>4</sub> 15종(T = Ge, Sn, Pb / X = H, F, Cl, Br, I)에서 스핀-궤도 결합(SOC)이 분자 물성에 주는 영향을 2성분 SO-DFT(PBE0, MN15)로 계산했습니다.",
+       e:"We studied how spin-orbit coupling (SOC) changes the molecular properties of 15 Group 14 tetracoordinate compounds TX<sub>4</sub> (T = Ge, Sn, Pb; X = H, F, Cl, Br, I) using two-component SO-DFT (PBE0, MN15)."},
+      {k:"TDDFT 계산으로 SOC가 단일항과 삼중항 상태를 섞어, 무거운 원자를 포함한 TX<sub>4</sub>의 UV-Vis 흡수 스펙트럼을 바꾼다는 것을 확인했습니다.",
+       e:"TDDFT calculations showed that SOC mixes singlet and triplet states and reshapes the UV-Vis absorption spectra of TX<sub>4</sub> containing heavy atoms."}],
+    role:[{k:"TX<sub>4</sub> 15종의 분자 구조 최적화 전체",e:"All geometry optimizations for the 15 TX<sub>4</sub> molecules"}],
+    related:{projects:[],talks:[]} },
+  { id:"water-reactive", date:"2026.02", journal:"J. Phys. Chem. A", cite:"130, 1615–1630 (2026)", doi:"",
     title:"DFTB-MD Simulations and Quantum Chemical Investigations of Reaction Mechanisms of Water-Reactive Molecules (SiH<sub>2</sub>Cl<sub>2</sub>, PCl<sub>3</sub>, SOCl<sub>2</sub>)",
     authors:["W. Seo","J. Park","I. Kim","Y. Jin","E. Park","J. Kim","J. Kim"],
-    tags:["반응 메커니즘","DFTB-MD","반도체 공정가스"],
+    tags:[{k:"반응 메커니즘",e:"Reaction mechanism"},{k:"분자동역학",e:"Molecular dynamics"},{k:"반도체 공정가스",e:"Semiconductor process gases"}],
     summary:[
-      "반도체 공정에서 쓰이며 물과 격렬히 반응하는 SiH<sub>2</sub>Cl<sub>2</sub>, PCl<sub>3</sub>, SOCl<sub>2</sub>의 가수분해 메커니즘을 다뤘습니다.",
-      "물 분자를 명시적으로 넣은 DFTB-MD로 자주 나타나는 반응 경로를 먼저 찾고, 그 경로의 에너지를 DFT와 DLPNO-CCSD(T)로 정량했습니다. SiH<sub>4</sub>로 방법을 검증했고, 전이상태 이론으로 구한 속도상수를 확산 한계 및 실험값과 비교했습니다."
-    ],
-    role:["SOCl<sub>2</sub>의 DFTB-MD 시뮬레이션","SOCl<sub>2</sub> 가수분해 경로의 DFT 메커니즘 계산"],
-    related:{projects:["water-reactive"],talks:[]}
-  },
-  {
-    id:"vinyl-iodide", date:"2025.07", journal:"J. Chem. Phys.", cite:"163, 044312 (2025)", doi:"10.1063/5.0272176",
+      {k:"반도체 공정에서 쓰이며 물과 격렬히 반응하는 SiH<sub>2</sub>Cl<sub>2</sub>, PCl<sub>3</sub>, SOCl<sub>2</sub>의 가수분해 메커니즘을 다뤘습니다.",
+       e:"We examined the hydrolysis mechanisms of SiH<sub>2</sub>Cl<sub>2</sub>, PCl<sub>3</sub> and SOCl<sub>2</sub>, semiconductor process chemicals that react violently with water."},
+      {k:"물 분자를 명시적으로 넣은 DFTB 기반 분자동역학(DFTB-MD)으로 자주 나타나는 반응 경로를 먼저 찾고, 그 경로의 에너지를 DFT와 DLPNO-CCSD(T)로 정량했습니다. SiH<sub>4</sub>로 방법을 검증했고, 전이상태 이론으로 구한 속도상수를 확산 한계 및 실험값과 비교했습니다.",
+       e:"DFTB-based molecular dynamics with explicit water molecules identified the most frequent reaction pathways, whose energetics were then quantified with DFT and DLPNO-CCSD(T). The approach was validated on SiH<sub>4</sub>, and transition-state-theory rate constants were compared with the diffusion limit and experiment."}],
+    role:[{k:"SOCl<sub>2</sub>의 DFTB-MD 시뮬레이션",e:"DFTB-MD simulations of SOCl<sub>2</sub>"},{k:"SOCl<sub>2</sub> 가수분해 경로의 DFT 메커니즘 계산",e:"DFT mechanism calculations for SOCl<sub>2</sub> hydrolysis"}],
+    related:{projects:["water-reactive"],talks:[]} },
+  { id:"vinyl-iodide", date:"2025.07", journal:"J. Chem. Phys.", cite:"163, 044312 (2025)", doi:"10.1063/5.0272176",
     title:"Spin-orbit ab initio and DFT study of vinyl iodide",
     authors:["J. Kim","J. Park","I. Kim","W. Seo","Y. Jin","J. Lee","T. K. Kim"],
-    tags:["광해리","들뜬 상태","KAIST 공동연구"],
+    tags:[{k:"광해리",e:"Photodissociation"},{k:"들뜬 상태",e:"Excited states"},{k:"KAIST 공동연구",e:"With KAIST"}],
     summary:[
-      "비닐 아이오다이드가 자외선을 흡수해 C–I 결합이 끊어지는 광해리 과정을 다뤘습니다.",
-      "약 250 nm의 넓은 흡수 띠에 삼중항 4A′, 4A″ 상태가 기여한다는 것을 처음으로 배정했습니다. MRCI+Q+SO와 TDDFT+SO로 들뜬 상태와 C–I 해리 퍼텐셜 곡선을 계산해, 실험에서 관측된 파장별 양자수율과 비등방성 인자를 설명했습니다."
-    ],
-    role:["논문에 실린 그림과 표 전체 작성"],
-    related:{projects:["etch"],talks:[]}
-  },
-  {
-    id:"aute", date:"2025.07", journal:"J. Chem. Phys.", cite:"163, 044313 (2025)", doi:"10.1063/5.0258887",
+      {k:"비닐 아이오다이드가 자외선을 흡수해 C–I 결합이 끊어지는 광해리 과정을 다뤘습니다.",e:"This work addresses the UV photodissociation of vinyl iodide, in which the C–I bond breaks."},
+      {k:"약 250 nm의 넓은 흡수 띠에 삼중항 4A′, 4A″ 상태가 기여한다는 것을 처음으로 배정했습니다. MRCI+Q+SO와 TDDFT+SO로 들뜬 상태와 C–I 해리 퍼텐셜 곡선을 계산해, 실험에서 관측된 파장별 양자수율과 비등방성 인자를 설명했습니다.",
+       e:"We assigned, for the first time, contributions from the triplet 4A′ and 4A″ states to the broad absorption band near 250 nm. Excited states and C–I dissociation curves from MRCI+Q+SO and TDDFT+SO explain the measured wavelength-dependent quantum yields and anisotropy parameters."}],
+    role:[{k:"논문에 실린 그림과 표 전체 작성",e:"Prepared all figures and tables in the paper"}],
+    related:{projects:["etch"],talks:[]} },
+  { id:"aute", date:"2025.07", journal:"J. Chem. Phys.", cite:"163, 044313 (2025)", doi:"10.1063/5.0258887",
     title:"MRCI study of potential energy curves of gold monotelluride (AuTe)",
     authors:["J. Park","W. Seo","I. Kim","E. Park","J. Kim","R. K. Yadav","J. Kim"],
-    tags:["퍼텐셜 곡선","분광 상수","MRCI"],
+    tags:[{k:"퍼텐셜 곡선",e:"Potential energy curves"},{k:"분광 상수",e:"Spectroscopic constants"},{k:"MRCI",e:"MRCI"}],
     summary:[
-      "이원자 분자 AuTe의 바닥 상태와 낮은 들뜬 상태의 퍼텐셜 에너지 곡선을 MRCI+Q+SOC로 계산했습니다.",
-      "계산한 분광 상수는 실험값과 잘 맞았고, Te 원자의 <sup>3</sup>P<sub>0</sub>, <sup>3</sup>P<sub>1</sub> 에너지 준위 순서도 재현했습니다."
-    ],
-    role:["결과 해석","결과 그래프와 그림 작성","TOC 그래픽 제작"],
-    related:{projects:["etch"],talks:[]}
-  },
-  {
-    id:"au10", date:"2024.11", journal:"J. Chem. Phys.", cite:"161, 184301 (2024)", doi:"10.1063/5.0234144",
+      {k:"이원자 분자 AuTe의 바닥 상태와 낮은 들뜬 상태의 퍼텐셜 에너지 곡선을 MRCI+Q+SOC로 계산했습니다.",e:"We computed potential energy curves for the ground and low-lying excited states of the diatomic AuTe with MRCI+Q+SOC."},
+      {k:"계산한 분광 상수는 실험값과 잘 맞았고, Te 원자의 <sup>3</sup>P<sub>0</sub>, <sup>3</sup>P<sub>1</sub> 에너지 준위 순서도 재현했습니다.",e:"The spectroscopic constants agree well with experiment, and the ordering of the Te <sup>3</sup>P<sub>0</sub> and <sup>3</sup>P<sub>1</sub> levels is reproduced."}],
+    role:[{k:"결과 해석",e:"Interpretation of results"},{k:"결과 그래프와 그림 작성",e:"Result plots and figures"},{k:"TOC 그래픽 제작",e:"TOC graphic"}],
+    related:{projects:["etch"],talks:[]} },
+  { id:"au10", date:"2024.11", journal:"J. Chem. Phys.", cite:"161, 184301 (2024)", doi:"10.1063/5.0234144",
     title:"Revisiting the global minimum of Au<sub>10</sub> clusters",
     authors:["J. Kim","W. Seo","J. Park","I. Kim","E. Park","J. Kim"],
-    tags:["금속 클러스터","전역 최저점","방법론 비교"],
+    tags:[{k:"금속 클러스터",e:"Metal clusters"},{k:"전역 최저점",e:"Global minimum"},{k:"방법론 비교",e:"Method benchmark"}],
     summary:[
-      "금 원자 10개로 이루어진 Au<sub>10</sub> 클러스터의 여러 이성질체 중 가장 안정한 구조가 무엇인지 다시 검토했습니다.",
-      "DFT 범함수 종류와 PNO-LCCSD(T)-F12 같은 고정밀 방법에 따라 결론이 어떻게 달라지는지 비교했습니다."
-    ],
-    role:["방법론 비교 중 TPSS 계열 범함수 계산 전체","IR 스펙트럼 70개 이상의 피크 처리를 파이썬으로 자동화, 결과 그림 수록"],
-    related:{projects:[],talks:["au-2d3d"]}
-  },
-  {
-    id:"ea", date:"2024.06", journal:"J. Chem. Phys.", cite:"160, 224307 (2024)", doi:"10.1063/5.0207127",
+      {k:"금 원자 10개로 이루어진 Au<sub>10</sub> 클러스터의 여러 이성질체 중 가장 안정한 구조가 무엇인지 다시 검토했습니다.",e:"We revisited which of the many Au<sub>10</sub> isomers is the most stable structure."},
+      {k:"DFT 범함수 종류와 PNO-LCCSD(T)-F12 같은 고정밀 방법에 따라 결론이 어떻게 달라지는지 비교했습니다.",e:"The study compares how the answer depends on the DFT functional and on high-accuracy methods such as PNO-LCCSD(T)-F12."}],
+    role:[{k:"방법론 비교 중 TPSS 계열 범함수 계산 전체",e:"All TPSS-family functional calculations in the benchmark"},{k:"IR 스펙트럼 70개 이상의 피크 처리를 파이썬으로 자동화, 결과 그림 수록",e:"Automated peak processing for 70+ IR spectra in Python; the resulting figure appears in the paper"}],
+    related:{projects:[],talks:["au-2d3d"]} },
+  { id:"ea", date:"2024.06", journal:"J. Chem. Phys.", cite:"160, 224307 (2024)", doi:"10.1063/5.0207127",
     title:"Quantum chemical calculations of electron affinities of alkaline earth metal atoms (Ca, Sr, Ba, Ra)",
     authors:["E. Park","J. Park","I. Kim","J. Kim","W. Seo","R. K. Yadav","J. Kim"],
-    tags:["전자친화도","알칼리 토금속"],
+    tags:[{k:"전자친화도",e:"Electron affinity"},{k:"알칼리 토금속",e:"Alkaline earth metals"}],
     summary:[
-      "알칼리 토금속 원자 Ca, Sr, Ba, Ra의 전자친화도를 양자화학 계산으로 구했습니다.",
-      "계산값을 레이저 광탈착 문턱법으로 측정한 실험값과 비교했고, 실험 측정이 어려워 추정치만 있는 Ra도 다뤘습니다."
-    ],
-    role:["Ca 계산 전체"],
-    related:{projects:[],talks:[]}
-  }
+      {k:"알칼리 토금속 원자 Ca, Sr, Ba, Ra의 전자친화도를 양자화학 계산으로 구했습니다.",e:"We calculated the electron affinities of the alkaline earth atoms Ca, Sr, Ba and Ra."},
+      {k:"계산값을 레이저 광탈착 문턱법으로 측정한 실험값과 비교했고, 실험 측정이 어려워 추정치만 있는 Ra도 다뤘습니다.",e:"Results were compared with laser photodetachment threshold measurements, and Ra, for which only estimates exist, was also covered."}],
+    role:[{k:"Ca 계산 전체",e:"All calculations for Ca"}],
+    related:{projects:[],talks:[]} }
 ];
-const THESIS = {
-  id:"thesis", date:"2026.02", journal:"석사학위논문", cite:"가톨릭대학교 대학원 화학과", doi:"",
-  title:"1,2-옥사제트 형성 반응 메커니즘에 관한 이론적 연구",
-  sub:"Theoretical Investigation of the Reaction Mechanism on Formation of 1,2-Oxazete",
-  authors:["I. Kim"], tags:["석사학위논문","광반응","전이상태"],
+const THESIS = { id:"thesis", date:"2026.02", journal:{k:"석사학위논문",e:"M.S. thesis"}, cite:{k:"가톨릭대학교 대학원 화학과",e:"Department of Chemistry, Catholic University of Korea"}, doi:"",
+  title:{k:"1,2-옥사제트 형성 반응 메커니즘에 관한 이론적 연구",e:"Theoretical Investigation of the Reaction Mechanism on Formation of 1,2-Oxazete"},
+  sub:{k:"Theoretical Investigation of the Reaction Mechanism on Formation of 1,2-Oxazete",e:""},
+  authors:["I. Kim"], tags:[{k:"석사학위논문",e:"Thesis"},{k:"광반응",e:"Photochemistry"},{k:"전이상태",e:"Transition states"}],
   summary:[
-    "실험 논문이 제안한 세드렌과 아질산 무수물의 1,2-옥사제트 생성 경로를 이론으로 검증했습니다. 구조는 DFT(MN15/def2-TZVPP), 흡수 스펙트럼은 TDDFT로 계산하고 MN15/QZ4P 단일점 에너지로 보정했습니다.",
-    "중간체 IM2의 최대 흡수 파장이 428 nm(HOMO−1 → LUMO+1)로 계산되어, 실험에서 쓴 청색광 조건과 맞았습니다. 이 빛으로 N–O 결합이 광해리되어 알콕시 라디칼이 생긴다는 해석을 뒷받침했습니다."
-  ],
-  role:["중간체 7종(IM1~IM7)과 전이상태 5종 전부 직접 탐색, 최적화","전이상태 5개 모두 IRC로 반응 경로 확인"],
-  related:{projects:[],talks:["oxazete"]}
-};
+    {k:"실험 논문이 제안한 세드렌과 아질산 무수물의 1,2-옥사제트 생성 경로를 이론으로 검증했습니다. 구조는 DFT(MN15/def2-TZVPP), 흡수 스펙트럼은 TDDFT로 계산하고 MN15/QZ4P 단일점 에너지로 보정했습니다.",
+     e:"I tested, by theory, the pathway to 1,2-oxazete from cedrene and nitrous anhydride proposed in an experimental study. Structures were optimized with DFT (MN15/def2-TZVPP), absorption spectra computed with TDDFT, and energies refined with MN15/QZ4P single points."},
+    {k:"중간체 IM2의 최대 흡수 파장이 428 nm(HOMO−1 → LUMO+1)로 계산되어, 실험에서 쓴 청색광 조건과 맞았습니다. 이 빛으로 N–O 결합이 광해리되어 알콕시 라디칼이 생긴다는 해석을 뒷받침했습니다.",
+     e:"Intermediate IM2 absorbs most strongly at 428 nm (HOMO−1 → LUMO+1), matching the blue light used in the experiment. This supports the picture that N–O photodissociation generates an alkoxy radical."}],
+  role:[{k:"중간체 7종(IM1~IM7)과 전이상태 5종 전부 직접 탐색, 최적화",e:"Located and optimized all 7 intermediates (IM1–IM7) and 5 transition states"},{k:"전이상태 5개 모두 IRC로 반응 경로 확인",e:"Confirmed all 5 transition states by IRC"}],
+  related:{projects:[],talks:["oxazete"]} };
 
-/* ---------- 학회 발표 ---------- */
+/* ===== presentations ===== */
 const TALKS = [
-  {id:"rusi4", date:"2025.10", venue:"대한화학회 제136회 학술발표회", first:true,
-   title:"RuSi<sub>4</sub><sup>−</sup> 클러스터 전역 최저점 구조 재검증",
-   body:"기존 연구가 B3LYP로 보고한 2A′ 최저점 구조를 PBE0, UCCSD(T), XMS-CASPT2로 다시 계산했습니다. 4A″가 실제 전역 최저점이고 2A′는 허수 진동수를 가진 전이상태임을 밝혔고, 뒤틀린 2A 국소 최저점과 2A″ 상태를 새로 찾았습니다. T1 진단값이 0.08 수준으로 다중참조 특성이 큰 계였습니다.",
+  {id:"rusi4", date:"2025.10", first:true, venue:{k:"대한화학회 제136회 학술발표회",e:"136th KCS General Meeting"},
+   title:{k:"RuSi<sub>4</sub><sup>−</sup> 클러스터 전역 최저점 구조 재검증",e:"Re-examining the global minimum of the RuSi<sub>4</sub><sup>−</sup> cluster"},
+   body:{k:"기존 연구가 B3LYP로 보고한 2A′ 최저점 구조를 PBE0, UCCSD(T), XMS-CASPT2로 다시 계산했습니다. 4A″가 실제 전역 최저점이고 2A′는 허수 진동수를 가진 전이상태임을 밝혔고, 뒤틀린 2A 국소 최저점과 2A″ 상태를 새로 찾았습니다. T1 진단값이 0.08 수준으로 다중참조 특성이 큰 계였습니다.",
+         e:"I recalculated the 2A′ minimum previously reported with B3LYP using PBE0, UCCSD(T) and XMS-CASPT2. The true global minimum is 4A″, while 2A′ is a transition state with an imaginary frequency; a distorted 2A local minimum and a 2A″ state were also found. A T1 diagnostic near 0.08 indicates strong multireference character."},
    project:"etch"},
-  {id:"au-2d3d", date:"2025.04", venue:"대한화학회 제135회 학술발표회", first:true,
-   title:"Au<sub>n</sub> (n=2~14) 클러스터의 2D에서 3D 구조 전이",
-   body:"범함수 4종(revTPSS, TPSS, TPSSh, B1B95)에 분산 보정 D3(BJ) 유무를 조합한 8개 조건으로 비교했습니다. 원자 12개까지는 평면 구조, 13개부터는 입체 구조가 가장 안정하다는 전이 지점을 확인하고 문헌의 CCSD(T) 값과 대조했습니다.",
+  {id:"au-2d3d", date:"2025.04", first:true, venue:{k:"대한화학회 제135회 학술발표회",e:"135th KCS General Meeting"},
+   title:{k:"Au<sub>n</sub> (n=2~14) 클러스터의 2D에서 3D 구조 전이",e:"The 2D-to-3D transition in Au<sub>n</sub> clusters (n = 2–14)"},
+   body:{k:"범함수 4종(revTPSS, TPSS, TPSSh, B1B95)에 분산 보정 D3(BJ) 유무를 조합한 8개 조건으로 비교했습니다. 원자 12개까지는 평면 구조, 13개부터는 입체 구조가 가장 안정하다는 전이 지점을 확인하고 문헌의 CCSD(T) 값과 대조했습니다.",
+         e:"Eight conditions were compared: four functionals (revTPSS, TPSS, TPSSh, B1B95), each with and without D3(BJ) dispersion. Planar structures are most stable up to 12 atoms and 3D structures from 13 atoms on, checked against literature CCSD(T) values."},
    project:"etch"},
-  {id:"sn", date:"2024.10", venue:"대한화학회 제134회 학술발표회", first:true,
-   title:"주석 클러스터의 구조와 전자 특성 DFT 연구",
-   body:"Sn<sub>n</sub>(n=2~12)의 초기 구조 후보를 인공벌군집 알고리즘(ABCluster)으로 만들고 MN15/dhf-TZVPP로 최적화해 단계적으로 걸러냈습니다. Sn<sub>2~4</sub>는 CCSD(T)로 확인했습니다. 2차 에너지 차이로 볼 때 Sn<sub>7</sub>이 가장 안정했고, 실험 이온화 에너지와 비교했습니다.",
+  {id:"sn", date:"2024.10", first:true, venue:{k:"대한화학회 제134회 학술발표회",e:"134th KCS General Meeting"},
+   title:{k:"주석 클러스터의 구조와 전자 특성 DFT 연구",e:"DFT study of the structures and electronic properties of tin clusters"},
+   body:{k:"Sn<sub>n</sub>(n=2~12)의 초기 구조 후보를 인공벌군집 알고리즘(ABCluster)으로 만들고 MN15/dhf-TZVPP로 최적화해 단계적으로 걸러냈습니다. Sn<sub>2~4</sub>는 CCSD(T)로 확인했습니다. 2차 에너지 차이로 볼 때 Sn<sub>7</sub>이 가장 안정했고, 실험 이온화 에너지와 비교했습니다.",
+         e:"Candidate structures for Sn<sub>n</sub> (n = 2–12) were generated with an artificial bee colony algorithm (ABCluster) and screened by MN15/dhf-TZVPP optimization, with CCSD(T) checks for Sn<sub>2–4</sub>. Second energy differences identify Sn<sub>7</sub> as the most stable size; ionization energies were compared with experiment."},
    project:"gwp"},
-  {id:"oxazete", date:"2024.07", venue:"International Workshop on New Advances in Theoretical and Computational Molecular Sciences", first:true,
-   title:"1,2-Oxazete 생성 반응 메커니즘",
-   body:"석사학위논문의 중간 결과입니다. 중간체의 광흡수 파장이 428 nm로 예측되어 실험의 청색광 조사 조건과 일치했습니다.",
+  {id:"oxazete", date:"2024.07", first:true, venue:{k:"International Workshop on New Advances in Theoretical and Computational Molecular Sciences",e:"International Workshop on New Advances in Theoretical and Computational Molecular Sciences"},
+   title:{k:"1,2-Oxazete 생성 반응 메커니즘",e:"Reaction mechanism of 1,2-oxazete formation"},
+   body:{k:"석사학위논문의 중간 결과입니다. 중간체의 광흡수 파장이 428 nm로 예측되어 실험의 청색광 조사 조건과 일치했습니다.",e:"Interim results from my thesis: the predicted 428 nm absorption of an intermediate matches the blue-light irradiation used in experiment."},
    paper:"thesis"},
-  {id:"dielectric", date:"2023.05", venue:"한국공업화학회 춘계 학술대회", first:false,
-   title:"고분자 5종의 유전상수 DFTB-MD 계산",
-   body:"PE, PI, PVDC, Neoprene, PVDF 모델을 298 K에서 최대 2 ns, 독립 궤적 10개로 DFTB-MD 계산하고, PM3 쌍극자 모멘트의 요동으로 유전상수를 구했습니다. 계산값은 실험값보다 약간 컸습니다.",
-   role:"기존 파이썬 스크립트 고도화", project:"packaging"},
-  {id:"indole", date:"2023.05", venue:"한국공업화학회 춘계 학술대회", first:false,
-   title:"Indole의 Dearomative (3+2) 고리화 반응",
-   body:"3-메틸인돌과 2,3-다이메틸인돌의 수율 차이(65%, 85%)를 속도결정단계 활성화에너지(24.7, 22.7 kcal/mol) 차이로 설명했습니다. M06-2X/def2-TZVPP 최적화와 DLPNO-CCSD(T) 단일점 계산을 썼습니다.",
-   role:"반응 경로 탐색과 전이상태 검증 계산 분담"}
+  {id:"dielectric", date:"2023.05", first:false, venue:{k:"한국공업화학회 춘계 학술대회",e:"KSIEC Spring Meeting"},
+   title:{k:"고분자 5종의 유전상수 DFTB-MD 계산",e:"Dielectric constants of five polymers from DFTB-MD"},
+   body:{k:"PE, PI, PVDC, Neoprene, PVDF 모델을 298 K에서 최대 2 ns, 독립 궤적 10개로 DFTB-MD 계산하고, PM3 쌍극자 모멘트의 요동으로 유전상수를 구했습니다. 계산값은 실험값보다 약간 컸습니다.",
+         e:"PE, PI, PVDC, Neoprene and PVDF models were run with DFTB-MD at 298 K for up to 2 ns over 10 independent trajectories, and dielectric constants were obtained from fluctuations of PM3 dipole moments. Calculated values were slightly above experiment."},
+   role:{k:"기존 파이썬 스크립트 고도화",e:"Extended the existing Python scripts"}, project:"packaging"},
+  {id:"indole", date:"2023.05", first:false, venue:{k:"한국공업화학회 춘계 학술대회",e:"KSIEC Spring Meeting"},
+   title:{k:"Indole의 Dearomative (3+2) 고리화 반응",e:"Dearomative (3+2) cycloaddition of indoles"},
+   body:{k:"3-메틸인돌과 2,3-다이메틸인돌의 수율 차이(65%, 85%)를 속도결정단계 활성화에너지(24.7, 22.7 kcal/mol) 차이로 설명했습니다. M06-2X/def2-TZVPP 최적화와 DLPNO-CCSD(T) 단일점 계산을 썼습니다.",
+         e:"The yield difference between 3-methylindole and 2,3-dimethylindole (65% vs 85%) was traced to rate-determining barriers of 24.7 and 22.7 kcal/mol, using M06-2X/def2-TZVPP geometries and DLPNO-CCSD(T) single points."},
+   role:{k:"반응 경로 탐색과 전이상태 검증 계산 분담",e:"Shared pathway search and transition-state verification"}}
 ];
 
-/* ---------- 국가과제 ---------- */
+/* ===== projects ===== */
 const PROJECTS = [
-  {
-    id:"etch", group:"semi", period:"2024.01 ~ 2025.12",
-    title:"C<sub>4</sub>F<sub>8</sub> 식각 플라즈마의 분해 생성물 조성 예측",
-    official:"반도체 식각공정 온실가스의 공정모니터링 및 분석기술 개발",
-    agency:"산업통상자원부, KEIT 탄소중립산업핵심기술개발사업",
-    lead:"한국표준과학연구원 주관, 10개 기관 참여",
-    role:"C<sub>4</sub>F<sub>8</sub> 플라즈마 DFTB-MD 시뮬레이션 담당",
-    tags:["플라즈마 시뮬레이션","DFTB-MD","온실가스"],
-    oneline:"식각 플라즈마 속 C<sub>4</sub>F<sub>8</sub>이 무엇으로 쪼개지는지 계산으로 재현했습니다.",
+  { id:"etch", group:"semi", period:"2024.01 ~ 2025.12",
+    title:{k:"C<sub>4</sub>F<sub>8</sub> 식각 플라즈마의 분해 생성물 조성 예측",e:"Predicting decomposition products in C<sub>4</sub>F<sub>8</sub> etching plasma"},
+    official:{k:"반도체 식각공정 온실가스의 공정모니터링 및 분석기술 개발",e:"Process monitoring and analysis technology for greenhouse gases from semiconductor etching"},
+    agency:{k:"산업통상자원부, KEIT 탄소중립산업핵심기술개발사업",e:"MOTIE / KEIT, Carbon Neutral Industry Core Technology Program"},
+    lead:{k:"한국표준과학연구원(주관), SK하이닉스, 뉴파워프라즈마, 한국반도체연구조합, 안전성평가연구소, 충남대, GIST, 서울과기대, 가톨릭대 등 10개 기관",e:"KRISS (lead), SK hynix, New Power Plasma, COSAR, Korea Institute of Toxicology, Chungnam National Univ., GIST, SeoulTech, CUK and others (10 institutions)"},
+    role:{k:"C<sub>4</sub>F<sub>8</sub> 플라즈마 DFTB-MD 시뮬레이션 담당",e:"Responsible for C<sub>4</sub>F<sub>8</sub> plasma DFTB-MD simulations"},
+    tags:[{k:"플라즈마 시뮬레이션",e:"Plasma simulation"},{k:"분자동역학",e:"Molecular dynamics"},{k:"온실가스",e:"Greenhouse gases"}],
+    oneline:{k:"식각 플라즈마 속 C<sub>4</sub>F<sub>8</sub>이 무엇으로 쪼개지는지 계산으로 재현했습니다.",e:"Reproduced, by simulation, what C<sub>4</sub>F<sub>8</sub> breaks into inside an etching plasma."},
     background:[
-      "반도체 식각 공정에 쓰는 과불화 가스는 지구온난화지수(GWP)가 높지만, 기관마다 보고하는 GWP 값이 다르고(NF<sub>3</sub> 8%, SF<sub>6</sub> 13%, CF<sub>4</sub> 25% 차이) 국제 표준도 없습니다.",
-      "이 과제는 공정에서 나오는 배출가스를 모니터링하고 분석하는 기술을 만드는 장기 과제로, 가톨릭대는 배출가스 DB를 맡았습니다."
-    ],
+      {k:"반도체 식각 공정에 쓰는 과불화 가스는 지구온난화지수(GWP)가 높지만, 기관마다 보고하는 GWP 값이 다르고(NF<sub>3</sub> 8%, SF<sub>6</sub> 13%, CF<sub>4</sub> 25% 차이) 국제 표준도 없습니다.",
+       e:"Perfluorinated etching gases have high global warming potentials (GWP), yet reported values differ between agencies (by 8% for NF<sub>3</sub>, 13% for SF<sub>6</sub>, 25% for CF<sub>4</sub>) and no international standard exists."},
+      {k:"이 과제는 공정에서 나오는 배출가스를 모니터링하고 분석하는 기술을 만드는 장기 과제로, 가톨릭대는 배출가스 DB를 맡았습니다.",
+       e:"This long-term project develops monitoring and analysis technology for process exhaust; our lab was responsible for the exhaust-gas database."}],
     mine:[
-      "C<sub>4</sub>F<sub>8</sub> 플라즈마 DFTB-MD 모델 구축(2차년도)과 조건 최적화(3차년도)",
-      "활성종 조성에 스케일링 팩터를 적용한 IR 흡수 스펙트럼 총합 예측 코드",
-      "PMVE와 OH 라디칼의 대기 반응 메커니즘",
-      "온실가스 5종의 대기수명, 복사효율, GWP 산출과 계산 스크립트 (동료와 공동 수행)"
-    ],
+      {k:"C<sub>4</sub>F<sub>8</sub> 플라즈마 DFTB-MD 모델 구축(2차년도)과 조건 최적화(3차년도)",e:"Built the C<sub>4</sub>F<sub>8</sub> plasma DFTB-MD model (year 2) and optimized its conditions (year 3)"},
+      {k:"활성종 조성에 스케일링 팩터를 적용한 IR 흡수 스펙트럼 총합 예측 코드",e:"Code predicting the total IR absorption spectrum from active-species composition with scaling factors"},
+      {k:"PMVE와 OH 라디칼의 대기 반응 메커니즘",e:"Atmospheric reaction mechanism of PMVE with OH radicals"},
+      {k:"온실가스 5종의 대기수명, 복사효율, GWP 산출과 계산 스크립트 (동료와 공동 수행)",e:"Lifetimes, radiative efficiencies and GWPs of five greenhouse gases, with the calculation scripts (jointly with a colleague)"}],
     method:[
-      ["플라즈마 환경 모사","ICP 저압 플라즈마를 C<sub>4</sub>F<sub>8</sub>:Ar 1:7, 3 Pa로 설정하고 Fermi 온도로 전자를 들뜨게, x, y, z 전기장으로 이온을 가속했습니다."],
-      ["실험과 비교할 척도 찾기","플라즈마 DFTB-MD는 비교할 선행 계산이 없어 논문 21편을 검토했고, electron density를 시뮬레이션과 실험을 잇는 척도로 도입했습니다."],
-      ["조건 격자 탐색","Fermi 온도 9단계(2,000~4,000 K)와 전기장 5단계(3.5~4.5 V/Å), 45개 조건을 동료와 나눠 계산했습니다."],
-      ["생성물 조성 비교","최적 조건에서 생성물 비율을 구해 실험값과 비교했습니다."]
-    ],
+      [{k:"플라즈마 환경 모사",e:"Modeling the plasma"},{k:"ICP 저압 플라즈마를 C<sub>4</sub>F<sub>8</sub>:Ar 1:7, 3 Pa로 설정하고, DFTB 기반 MD에서 Fermi 온도로 전자를 들뜨게 하고 x, y, z 전기장으로 이온을 가속했습니다.",e:"A low-pressure ICP plasma was set at C<sub>4</sub>F<sub>8</sub>:Ar 1:7 and 3 Pa. In DFTB-based MD, a Fermi temperature excites electrons and x, y, z electric fields accelerate ions."}],
+      [{k:"실험과 비교할 척도 찾기",e:"Finding a link to experiment"},{k:"플라즈마 DFTB-MD는 비교할 선행 계산이 없어 논문 21편을 검토했고, electron density를 시뮬레이션과 실험을 잇는 척도로 도입했습니다.",e:"With no prior plasma DFTB-MD to compare against, I reviewed 21 papers and adopted electron density as the quantity linking simulation and experiment."}],
+      [{k:"조건 격자 탐색",e:"Grid search"},{k:"Fermi 온도 9단계(2,000~4,000 K)와 전기장 5단계(3.5~4.5 V/Å), 45개 조건을 동료와 나눠 계산했습니다.",e:"45 conditions, 9 Fermi temperatures (2,000–4,000 K) by 5 field strengths (3.5–4.5 V/Å), were split with a colleague."}],
+      [{k:"생성물 조성 비교",e:"Comparing product composition"},{k:"최적 조건에서 생성물 비율을 구해 실험값과 비교했습니다.",e:"Product fractions at the best conditions were compared with experiment."}]],
     results:{
-      bars:{cap:"CF<sub>2</sub> 존재 비율 (%)",items:[["2차년도",21.1,"dim"],["3차년도",67.2,""],["실험값",66.2,"ref"]]},
-      kpi:[["62.8%","공정가스 조성 DB 정합성 (목표 54%)"],["2,750 K","최적 Fermi 온도"],["4.5 V/Å","최적 전기장 세기"],["300 K","최적 Thermostat"]],
-      text:["2차년도 모델(Thermostat 500 K, Fermi 5,000 K, 2 V/Å)은 C<sub>4</sub>F<sub>8</sub> → 2C<sub>2</sub>F<sub>4</sub> → 2CF<sub>2</sub> 경로는 보였지만 CF<sub>2</sub> 비율이 21.1%에 그쳤습니다. 3차년도에는 Fermi 온도를 낮추고 전기장을 높이는 방향으로 조정해 실험값 66.2%에 근접한 67.2%를 얻었습니다."]
-    },
-    limit:"시뮬레이션 도중 C<sub>4</sub>F<sub>8</sub>이 모두 분해되어 잔류량(실험 1.7%)은 재현하지 못했습니다. 연차보고서에도 추가 고도화가 필요한 한계로 기록했습니다.",
-    papers:["vinyl-iodide","aute"], talks:["rusi4","au-2d3d"]
-  },
-  {
-    id:"gwp", group:"semi", period:"2023.01 ~ 2024.12",
-    title:"온실가스 대기수명과 지구온난화지수 예측",
-    official:"반도체 온실가스 대기수명 예측을 위한 광기반 라디칼 측정기술",
-    agency:"KEIT, 한국반도체연구조합",
-    lead:"한국표준과학연구원 주관, 한국화학융합시험연구원, 가톨릭대",
-    role:"GWP 예측 모델 학습 데이터 구축",
-    tags:["GWP","머신러닝","반응속도"],
-    oneline:"반응속도 데이터 1,247건으로 학습 DB를 만들어 GWP 예측 정확도 R² 0.8523을 얻었습니다.",
+      bars:{cap:{k:"CF<sub>2</sub> 존재 비율 (%)",e:"CF<sub>2</sub> fraction (%)"},items:[[{k:"2차년도",e:"Year 2"},21.1,"dim"],[{k:"3차년도",e:"Year 3"},67.2,""],[{k:"실험값",e:"Experiment"},66.2,"ref"]]},
+      kpi:[["62.8%",{k:"공정가스 조성 DB 정합성 (목표 54%)",e:"Process-gas composition DB agreement (target 54%)"}],["2,750 K",{k:"최적 Fermi 온도",e:"Best Fermi temperature"}],["4.5 V/Å",{k:"최적 전기장 세기",e:"Best field strength"}],["300 K",{k:"최적 Thermostat",e:"Best thermostat"}]],
+      text:[{k:"2차년도 모델(Thermostat 500 K, Fermi 5,000 K, 2 V/Å)은 C<sub>4</sub>F<sub>8</sub> → 2C<sub>2</sub>F<sub>4</sub> → 2CF<sub>2</sub> 경로는 보였지만 CF<sub>2</sub> 비율이 21.1%에 그쳤습니다. 3차년도에는 Fermi 온도를 낮추고 전기장을 높이는 방향으로 조정해 실험값 66.2%에 근접한 67.2%를 얻었습니다.",
+             e:"The year-2 model (thermostat 500 K, Fermi 5,000 K, 2 V/Å) captured the C<sub>4</sub>F<sub>8</sub> → 2C<sub>2</sub>F<sub>4</sub> → 2CF<sub>2</sub> pathway but gave only 21.1% CF<sub>2</sub>. In year 3, lowering the Fermi temperature and raising the field brought it to 67.2%, close to the experimental 66.2%."}]},
+    limit:{k:"시뮬레이션 도중 C<sub>4</sub>F<sub>8</sub>이 모두 분해되어 잔류량(실험 1.7%)은 재현하지 못했습니다. 연차보고서에도 추가 고도화가 필요한 한계로 기록했습니다.",
+           e:"C<sub>4</sub>F<sub>8</sub> decomposes completely during the run, so its residual fraction (1.7% in experiment) is not reproduced. This is recorded in the annual report as a limitation for further work."},
+    papers:["vinyl-iodide","aute"], talks:["rusi4","au-2d3d"] },
+  { id:"gwp", group:"semi", period:"2023.01 ~ 2024.12",
+    title:{k:"온실가스 대기수명과 지구온난화지수 예측",e:"Predicting atmospheric lifetimes and GWPs of greenhouse gases"},
+    official:{k:"반도체 온실가스 대기수명 예측을 위한 광기반 라디칼 측정기술",e:"Light-based radical measurement for predicting atmospheric lifetimes of semiconductor greenhouse gases"},
+    agency:{k:"산업통상자원부, KEIT, 한국반도체연구조합",e:"MOTIE / KEIT, COSAR"},
+    lead:{k:"한국표준과학연구원(주관), 한국화학융합시험연구원, 가톨릭대",e:"KRISS (lead), KTR, CUK"},
+    role:{k:"GWP 예측 모델 학습 데이터 구축",e:"Built training data for the GWP prediction model"},
+    tags:[{k:"GWP",e:"GWP"},{k:"머신러닝",e:"Machine learning"},{k:"반응속도",e:"Kinetics"}],
+    oneline:{k:"반응속도 데이터 1,247건으로 학습 DB를 만들어 GWP 예측 정확도 R² 0.8523을 얻었습니다.",e:"A 1,247-entry kinetics database supported GWP prediction with R² = 0.8523."},
     background:[
-      "온실가스가 대기에 얼마나 오래 남는지는 주로 OH 라디칼과의 반응 속도로 정해지고, 대기수명과 적외선 흡수량이 GWP를 결정합니다.",
-      "표준연은 레이저로 반응 속도를 직접 측정하고, 가톨릭대는 양자화학 계산과 머신러닝으로 이를 예측하는 역할을 맡았습니다."
-    ],
+      {k:"온실가스가 대기에 얼마나 오래 남는지는 주로 OH 라디칼과의 반응 속도로 정해지고, 대기수명과 적외선 흡수량이 GWP를 결정합니다.",e:"How long a greenhouse gas persists is set mainly by its reaction rate with OH radicals, and lifetime together with infrared absorption determines GWP."},
+      {k:"표준연은 레이저로 반응 속도를 직접 측정하고, 가톨릭대는 양자화학 계산과 머신러닝으로 이를 예측하는 역할을 맡았습니다.",e:"KRISS measured rates directly with lasers, while our lab predicted them with quantum chemistry and machine learning."}],
     mine:[
-      "동료와 \"298 K 실험값이 있는 물질\"을 선별 기준으로 정하고, NIST와 JPL에서 OH 반응속도 데이터 1,247건을 모아 학습 DB 구축",
-      "참고문헌 2종과 수기 교차 검증으로 단위 환산 누락, 허수 진동수 인식 오류 수정",
-      "공동연구진이 개발한 GCN 프레임워크로 모델 학습",
-      "CF<sub>4</sub>는 OH와 반응하지 않고 성층권에서 광분해되므로 이 방식의 적용 범위 밖임을 확인"
-    ],
+      {k:"동료와 \"298 K 실험값이 있는 물질\"을 선별 기준으로 정하고, NIST와 JPL에서 OH 반응속도 데이터 1,247건을 모아 학습 DB 구축",e:"With a colleague, set the screening rule \"compounds with a measured value at 298 K\" and compiled 1,247 OH rate constants from NIST and JPL"},
+      {k:"참고문헌 2종과 수기 교차 검증으로 단위 환산 누락, 허수 진동수 인식 오류 수정",e:"Cross-checked entries by hand against two references, fixing missing unit conversions and misread imaginary frequencies"},
+      {k:"공동연구진이 개발한 GCN 프레임워크로 모델 학습",e:"Trained models with the GCN framework developed by our collaborators"},
+      {k:"CF<sub>4</sub>는 OH와 반응하지 않고 성층권에서 광분해되므로 이 방식의 적용 범위 밖임을 확인",e:"Showed that CF<sub>4</sub>, which does not react with OH and is removed by stratospheric photolysis, falls outside this approach"}],
     method:[
-      ["반응 메커니즘","DSDPBEP86으로 구조를 찾고 CCSD(T) 단일점으로 OH 반응의 활성화에너지를 계산했습니다."],
-      ["속도상수와 대기수명","RRKM과 사전평형 근사로 전체 속도상수를 구하고, τ = (k[OH])<sup>−1</sup>로 대기수명을 계산했습니다."],
-      ["복사효율과 GWP","계산한 IR 단면적으로 복사효율을 구하고, 대기수명과 합쳐 GWP<sub>100</sub>을 산출했습니다."],
-      ["머신러닝 예측","SMILES 기반 GCN을 K-fold 교차검증으로 학습해, 계산 없이도 구조만으로 GWP를 예측하도록 했습니다."]
-    ],
+      [{k:"반응 메커니즘",e:"Reaction mechanism"},{k:"DSDPBEP86으로 구조를 찾고 CCSD(T) 단일점으로 OH 반응의 활성화에너지를 계산했습니다.",e:"Structures from DSDPBEP86 with CCSD(T) single points gave OH-reaction barriers."}],
+      [{k:"속도상수와 대기수명",e:"Rate constants and lifetimes"},{k:"RRKM과 사전평형 근사로 전체 속도상수를 구하고, τ = (k[OH])<sup>−1</sup>로 대기수명을 계산했습니다.",e:"RRKM with a pre-equilibrium approximation gave overall rate constants, and lifetimes followed from τ = (k[OH])<sup>−1</sup>."}],
+      [{k:"복사효율과 GWP",e:"Radiative efficiency and GWP"},{k:"계산한 IR 단면적으로 복사효율을 구하고, 대기수명과 합쳐 GWP<sub>100</sub>을 산출했습니다.",e:"Computed IR cross sections gave radiative efficiencies, combined with lifetimes into GWP<sub>100</sub>."}],
+      [{k:"머신러닝 예측",e:"Machine-learning prediction"},{k:"SMILES 기반 GCN을 K-fold 교차검증으로 학습해, 계산 없이도 구조만으로 GWP를 예측하도록 했습니다.",e:"A SMILES-based GCN trained with K-fold cross-validation predicts GWP from structure without new calculations."}]],
     results:{
-      kpi:[["R² 0.8523","GWP 예측 정확도 (목표 0.80)"],["1,247건","반응속도 학습 DB"],["0.330","PMVE 복사효율 (실험 0.328)"]],
-      text:["사업 평가 항목인 머신러닝 예측 정확도는 최종연도 목표 80%에 대해 85%를 달성했습니다."]
-    },
-    papers:[], talks:["sn"]
-  },
-  {
-    id:"packaging", group:"semi", period:"2024.01 ~ 2024.12",
-    title:"패키징 절연막 고분자의 유전상수와 항복전압 계산",
-    official:"반도체 후공정용 Photo definable 절연막 상용화 기술 개발",
-    agency:"KEIT 소재부품기술개발사업",
-    lead:"네패스 주관 총괄과제, 9개 기관 참여",
-    role:"PVDC 계열 고분자 계산, 항복전압 계산, 자동화 스크립트 고도화",
-    tags:["고분자 물성","유전상수","자동화"],
-    oneline:"고분자 절연막의 유전상수와 항복전압을 실험 없이 계산하는 프로토콜에 참여했습니다.",
+      kpi:[["R² 0.8523",{k:"GWP 예측 정확도 (목표 0.80)",e:"GWP prediction accuracy (target 0.80)"}],["1,247",{k:"반응속도 학습 DB (건)",e:"Rate constants in the training DB"}],["0.330",{k:"PMVE 복사효율 (실험 0.328)",e:"PMVE radiative efficiency (exp. 0.328)"}]],
+      text:[{k:"사업 평가 항목인 머신러닝 예측 정확도는 최종연도 목표 80%에 대해 85%를 달성했습니다.",e:"The program's machine-learning accuracy metric reached 85% against a final-year target of 80%."}]},
+    papers:[], talks:["sn"] },
+  { id:"packaging", group:"semi", period:"2024.01 ~ 2024.12",
+    title:{k:"패키징 절연막 고분자의 유전상수와 항복전압 계산",e:"Dielectric constants and breakdown fields of packaging polymers"},
+    official:{k:"반도체 후공정용 Photo definable 절연막 상용화 기술 개발",e:"Commercializing photo-definable insulating films for semiconductor back-end processes"},
+    agency:{k:"KEIT 소재부품기술개발사업",e:"KEIT, Materials and Components Technology Program"},
+    lead:{k:"네패스(주관), 한국화학연구원, 한국전자기술연구원, 인실리코, 가톨릭대 등 9개 기관",e:"NEPES (lead), KRICT, KETI, Insilico, CUK and others (9 institutions)"},
+    role:{k:"PVDC 계열 고분자 계산, 항복전압 계산, 자동화 스크립트 고도화",e:"PVDC-type polymers, breakdown calculations, extended automation scripts"},
+    tags:[{k:"고분자 물성",e:"Polymer properties"},{k:"유전상수",e:"Dielectric constant"},{k:"자동화",e:"Automation"}],
+    oneline:{k:"고분자 절연막의 유전상수와 항복전압을 실험 없이 계산하는 프로토콜에 참여했습니다.",e:"Contributed to a protocol for computing dielectric constants and breakdown fields of insulating polymers without experiment."},
     background:[
-      "반도체 패키지 보호 절연막 소재는 일본산이 시장의 83% 이상을 차지합니다. 이 과제는 국산 절연막 소재를 상용화하는 총괄과제의 일부입니다.",
-      "가톨릭대는 양자 계산으로 고분자의 유전상수와 항복전압을 예측하는 방법을 맡았습니다."
-    ],
+      {k:"반도체 패키지 보호 절연막 소재는 일본산이 시장의 83% 이상을 차지합니다. 이 과제는 국산 절연막 소재를 상용화하는 총괄과제의 일부입니다.",e:"Japanese suppliers hold over 83% of the market for semiconductor package insulating films. This project is part of a national program to commercialize domestic alternatives."},
+      {k:"가톨릭대는 양자 계산으로 고분자의 유전상수와 항복전압을 예측하는 방법을 맡았습니다.",e:"Our lab developed computational methods for predicting polymer dielectric constants and breakdown fields."}],
     mine:[
-      "PVDC 계열 고분자 계산 전담",
-      "전기장 세기를 바꿔 가며 거는 항복전압 계산 구간 담당",
-      "기존 파이썬 코드를 고도화해 MD 궤적 100개 이상을 Gaussian16 입력으로 자동 변환하고, 쌍극자 모멘트에서 유전상수까지 한 번에 계산",
-      "200개 이상의 고분자 구조 연속 계산"
-    ],
+      {k:"PVDC 계열 고분자 계산 전담",e:"All calculations for PVDC-type polymers"},
+      {k:"전기장 세기를 바꿔 가며 거는 항복전압 계산 구간 담당",e:"A range of field strengths in the breakdown calculations"},
+      {k:"기존 파이썬 코드를 고도화해 MD 궤적 100개 이상을 Gaussian16 입력으로 자동 변환하고, 쌍극자 모멘트에서 유전상수까지 한 번에 계산",e:"Extended existing Python code to convert 100+ MD trajectories into Gaussian16 inputs and go from dipole moments to dielectric constants in one pass"},
+      {k:"200개 이상의 고분자 구조 연속 계산",e:"Batch calculations on 200+ polymer structures"}],
     method:[
-      ["부피 수렴","1기압 NPT DFTB-MD로 고분자 모델의 부피를 실제 밀도에 맞췄습니다."],
-      ["궤적 생성","DFTB-MD와 ReaxFF로 298 K 궤적을 만들었습니다. ReaxFF는 같은 계산을 훨씬 짧은 시간에 끝낼 수 있습니다."],
-      ["쌍극자 요동으로 유전상수","프레임마다 PM3로 쌍극자 모멘트 M을 구하고, 그 요동으로 유전상수를 계산했습니다."],
-      ["항복전압","분자 1개에 전기장을 단계적으로 높여 DFTB-MD를 돌리고, 결합이 끊어지기 시작하는 전기장을 분자 길이로 나눴습니다."]
-    ],
+      [{k:"부피 수렴",e:"Volume equilibration"},{k:"1기압 NPT DFTB-MD로 고분자 모델의 부피를 실제 밀도에 맞췄습니다.",e:"NPT DFTB-MD at 1 atm brought each polymer model to a realistic density."}],
+      [{k:"궤적 생성",e:"Trajectories"},{k:"DFTB-MD와 ReaxFF MD로 298 K 궤적을 만들었습니다. ReaxFF MD는 같은 길이의 궤적을 훨씬 짧은 시간에 얻을 수 있습니다.",e:"298 K trajectories were generated with DFTB-MD and ReaxFF MD; ReaxFF MD reaches the same length far faster."}],
+      [{k:"쌍극자 요동으로 유전상수",e:"Dielectric constant from dipole fluctuations"},{k:"프레임마다 PM3로 쌍극자 모멘트 M을 구하고, 그 요동으로 유전상수를 계산했습니다.",e:"PM3 dipole moments M for each frame give the dielectric constant through their fluctuations."}],
+      [{k:"항복전압",e:"Breakdown field"},{k:"분자 1개에 전기장을 단계적으로 높여 DFTB-MD를 돌리고, 결합이 끊어지기 시작하는 전기장을 분자 길이로 나눴습니다.",e:"DFTB-MD on a single chain under stepwise-increasing fields; the field at which bonds begin to break is divided by chain length."}]],
     formula:"ε = 1 + 4π(⟨M²⟩ − ⟨M⟩²) / (3 V k<sub>B</sub>T)",
     results:{
-      kpi:[["5종","PE, PVDC, Neoprene, PVDF, PI"],["200개+","연속 계산한 고분자 구조"],["순서 일치","항복전압 상대 순서 (실험 대비)"]],
-      text:["항복전압은 Neoprene < PE < PVDF < APU 순서로 계산되어 실험의 상대 순서와 일치했습니다. 절댓값이 아니라 소재 간 우열을 가리는 정성 예측입니다."]
-    },
-    papers:[], talks:["dielectric"]
-  },
-  {
-    id:"battery", group:"safety", period:"2025.05 ~ 2025.12",
-    title:"배터리 양극재 LiMn<sub>2</sub>O<sub>4</sub>와 전해질의 계면 반응",
-    official:"배터리 소재 간 반응 위험성 규명을 위한 방법 연구",
-    agency:"화학물질안전원 연구용역",
-    lead:"가톨릭대 수행",
-    role:"LMO 모델 구축부터 메커니즘 규명까지 전담",
-    tags:["배터리","ReaxFF","계면 반응"],
-    oneline:"온도가 오르면 LMO 양극재와 전해질 계면에서 어떤 가스가 얼마나 나오는지 계산했습니다.",
+      kpi:[[{k:"5종",e:"5"},{k:"PE, PVDC, Neoprene, PVDF, PI",e:"Polymers: PE, PVDC, Neoprene, PVDF, PI"}],["200+",{k:"연속 계산한 고분자 구조",e:"Polymer structures in batch runs"}],[{k:"순서 일치",e:"Order matched"},{k:"항복전압 상대 순서 (실험 대비)",e:"Relative breakdown order vs experiment"}]],
+      text:[{k:"항복전압은 Neoprene < PE < PVDF < APU 순서로 계산되어 실험의 상대 순서와 일치했습니다. 절댓값이 아니라 소재 간 우열을 가리는 정성 예측입니다.",e:"Calculated breakdown fields follow Neoprene < PE < PVDF < APU, the same order as experiment. This is a qualitative ranking, not an absolute prediction."}]},
+    papers:[], talks:["dielectric"] },
+  { id:"battery", group:"safety", period:"2025.05 ~ 2025.12",
+    title:{k:"배터리 양극재 LiMn<sub>2</sub>O<sub>4</sub>와 전해질의 계면 반응",e:"Interfacial reactions between LiMn<sub>2</sub>O<sub>4</sub> cathodes and electrolyte"},
+    official:{k:"배터리 소재 간 반응 위험성 규명을 위한 방법 연구",e:"Methods for identifying reaction hazards between battery materials"},
+    agency:{k:"화학물질안전원 연구용역",e:"National Institute of Chemical Safety (NICS)"},
+    lead:{k:"가톨릭대 수행",e:"Carried out by CUK"},
+    role:{k:"LMO 모델 구축부터 메커니즘 규명까지 전담",e:"Sole owner of LMO, from model building to mechanism"},
+    tags:[{k:"배터리",e:"Batteries"},{k:"반응성 역장 MD",e:"Reactive force-field MD"},{k:"계면 반응",e:"Interfacial reactions"}],
+    oneline:{k:"온도가 오르면 LMO 양극재와 전해질 계면에서 어떤 가스가 얼마나 나오는지 계산했습니다.",e:"Calculated which gases form, and how much, at the LMO–electrolyte interface as temperature rises."},
     background:[
-      "전기차 열폭주, 일차전지 공장 화재(2024.06), 항공기 보조배터리 화재(2025.01)처럼 배터리 소재 간 반응이 사고로 이어지는 사례가 늘고 있습니다.",
-      "과제는 양극 3종(LCO, LMO, LFP)과 음극 2종(Graphite, Silicon)이 전해질 EC, EMC와 만나는 계면 반응을 다뤘고, 저는 LMO를 맡았습니다."
-    ],
+      {k:"전기차 열폭주, 일차전지 공장 화재(2024.06), 항공기 보조배터리 화재(2025.01)처럼 배터리 소재 간 반응이 사고로 이어지는 사례가 늘고 있습니다.",e:"EV thermal runaway, a primary-battery plant fire (2024.06) and an in-flight power-bank fire (2025.01) are recent examples of material reactions turning into accidents."},
+      {k:"과제는 양극 3종(LCO, LMO, LFP)과 음극 2종(Graphite, Silicon)이 전해질 EC, EMC와 만나는 계면 반응을 다뤘고, 저는 LMO를 맡았습니다.",e:"The project covered three cathodes (LCO, LMO, LFP) and two anodes (graphite, silicon) in contact with EC/EMC electrolyte; I was responsible for LMO."}],
     mine:[
-      "LMO 문헌 조사부터 모델 구축, 메커니즘 규명까지 전담",
-      "문헌과 계산 규모를 고려해 온도 조건 5구간(500, 700, 1,000, 1,500, 2,000 K) 설정",
-      "ReaxFF로 대량 계산해 경향을 보고, DFTB-MD로 메커니즘 규명"
-    ],
+      {k:"LMO 문헌 조사부터 모델 구축, 메커니즘 규명까지 전담",e:"Everything for LMO, from literature review to model building and mechanism"},
+      {k:"문헌과 계산 규모를 고려해 온도 조건 5구간(500, 700, 1,000, 1,500, 2,000 K) 설정",e:"Chose five temperatures (500, 700, 1,000, 1,500, 2,000 K) based on literature and computational cost"},
+      {k:"ReaxFF MD로 대량 계산해 경향을 보고, DFTB-MD로 메커니즘 규명",e:"Used ReaxFF MD for many runs to capture trends and DFTB-MD to resolve mechanisms"}],
     method:[
-      ["계면 모델","LMO slab 위에 EC 100개, EMC 200개, LiPF<sub>6</sub> 40개를 올린 모델을 만들었습니다."],
-      ["온도별 경향","ReaxFF MD 100 ps를 온도마다 궤적 5개씩 돌려 평균했습니다. 전기장과 과충전(Li 제거) 조건도 비교했습니다."],
-      ["반응 경로","DFTB-MD(GFN1-xTB)에서 자주 나타난 경로를 골라 DFT로 에너지를 계산했습니다."]
-    ],
+      [{k:"계면 모델",e:"Interface model"},{k:"LMO slab 위에 EC 100개, EMC 200개, LiPF<sub>6</sub> 40개를 올린 모델을 만들었습니다.",e:"An LMO slab with 100 EC, 200 EMC and 40 LiPF<sub>6</sub> on top."}],
+      [{k:"온도별 경향",e:"Temperature trends"},{k:"ReaxFF MD 100 ps를 온도마다 궤적 5개씩 돌려 평균했습니다. 전기장과 과충전(Li 제거) 조건도 비교했습니다.",e:"100 ps ReaxFF MD, five trajectories per temperature, averaged; electric-field and overcharge (Li removal) cases were also compared."}],
+      [{k:"반응 경로",e:"Reaction pathways"},{k:"DFTB(GFN1-xTB) 기반 MD에서 자주 나타난 경로를 골라 DFT로 에너지를 계산했습니다.",e:"Frequent pathways from DFTB (GFN1-xTB) MD were recomputed with DFT for energetics."}]],
     results:{
-      table:{head:["가스 (개)","500 K","700 K","1,000 K","1,500 K","2,000 K"],
+      table:{head:[{k:"가스 (개)",e:"Gas (molecules)"},"500 K","700 K","1,000 K","1,500 K","2,000 K"],
         rows:[["CO","10.0","18.2","36.0","131.4","336.0"],["CO<sub>2</sub>","79.8","94.8","138.6","178.8","173.8"],["CH<sub>4</sub>","0.4","1.0","1.8","5.2","9.8"]]},
-      text:["1,500 K부터 LMO 구조가 무너지며 Mn이 용출되고, CO가 급격히 늘었습니다. Li 확산계수는 모든 온도에서 LMO가 LCO보다 컸습니다.",
-            "결론적으로 LMO는 LCO보다 계면이 불안정해 CO가 많이 생기고, 이는 스웰링 위험으로 이어집니다. 저온 구동이 중요하다는 안전 정보로 정리했습니다."]
-    },
-    papers:[], talks:[]
-  },
-  {
-    id:"metal", group:"safety", period:"2024.06 ~ 2024.11",
-    title:"금속 리튬의 산화환원 반응 위험성",
-    official:"비소 등 금속류의 산화상태에 따른 위험성 예측 연구",
-    agency:"화학물질안전원 연구용역",
-    lead:"가톨릭대 수행",
-    role:"리튬 관련 MD, 반응열, 반응속도상수 계산 전담, 사고사례 수집",
-    tags:["리튬","AIMD","사고사례"],
-    oneline:"리튬이 물과 만나 수소를 만드는 과정을 펨토초 단위로 관찰하고 반응열을 계산했습니다.",
+      text:[{k:"1,500 K부터 LMO 구조가 무너지며 Mn이 용출되고, CO가 급격히 늘었습니다. Li 확산계수는 모든 온도에서 LMO가 LCO보다 컸습니다.",e:"From 1,500 K the LMO lattice collapses, Mn dissolves and CO rises sharply. Li diffusion is faster in LMO than in LCO at every temperature."},
+            {k:"결론적으로 LMO는 LCO보다 계면이 불안정해 CO가 많이 생기고, 이는 스웰링 위험으로 이어집니다. 저온 구동이 중요하다는 안전 정보로 정리했습니다.",e:"LMO's interface is less stable than LCO's and produces more CO, a swelling risk; the safety guidance stresses low-temperature operation."}]},
+    papers:[], talks:[] },
+  { id:"metal", group:"safety", period:"2024.06 ~ 2024.11",
+    title:{k:"금속 리튬의 산화환원 반응 위험성",e:"Redox reaction hazards of lithium metal"},
+    official:{k:"비소 등 금속류의 산화상태에 따른 위험성 예측 연구",e:"Hazard prediction by oxidation state for metals including arsenic"},
+    agency:{k:"화학물질안전원 연구용역",e:"National Institute of Chemical Safety (NICS)"},
+    lead:{k:"가톨릭대 수행",e:"Carried out by CUK"},
+    role:{k:"리튬 관련 MD, 반응열, 반응속도상수 계산 전담, 사고사례 수집",e:"All lithium MD, reaction heats and rate constants; accident case collection"},
+    tags:[{k:"리튬",e:"Lithium"},{k:"제일원리 MD",e:"Ab initio MD"},{k:"사고사례",e:"Accident cases"}],
+    oneline:{k:"리튬이 물과 만나 수소를 만드는 과정을 펨토초 단위로 관찰하고 반응열을 계산했습니다.",e:"Followed lithium producing hydrogen from water on a femtosecond scale and computed the reaction heats."},
     background:[
-      "제련소 아르신 누출(2023.12), 과망간산칼륨 누출(2021.08), 리튬 1차전지 화재처럼 금속류의 산화환원 반응이 사고로 이어지는 사례를 계산으로 예측하는 과제였습니다.",
-      "대상은 비소화아연(Zn<sub>3</sub>As<sub>2</sub>), 과망간산칼륨(KMnO<sub>4</sub>), 리튬(Li)이었고, 저는 리튬을 맡았습니다."
-    ],
+      {k:"제련소 아르신 누출(2023.12), 과망간산칼륨 누출(2021.08), 리튬 1차전지 화재처럼 금속류의 산화환원 반응이 사고로 이어지는 사례를 계산으로 예측하는 과제였습니다.",e:"Arsine release at a smelter (2023.12), a potassium permanganate leak (2021.08) and lithium primary-battery fires motivated this project on predicting metal redox hazards by calculation."},
+      {k:"대상은 비소화아연(Zn<sub>3</sub>As<sub>2</sub>), 과망간산칼륨(KMnO<sub>4</sub>), 리튬(Li)이었고, 저는 리튬을 맡았습니다.",e:"Targets were zinc arsenide (Zn<sub>3</sub>As<sub>2</sub>), potassium permanganate (KMnO<sub>4</sub>) and lithium; I was responsible for lithium."}],
     mine:[
-      "리튬과 물, 산, 산소, SOCl<sub>2</sub>의 반응 MD, 반응열, 반응속도상수 계산 전체",
-      "금속류 산화환원 사고사례 114건 수집과 업종별 분류"
-    ],
+      {k:"리튬과 물, 산, 산소, SOCl<sub>2</sub>의 반응 MD, 반응열, 반응속도상수 계산 전체",e:"All MD, reaction heats and rate constants for lithium with water, acid, oxygen and SOCl<sub>2</sub>"},
+      {k:"금속류 산화환원 사고사례 114건 수집과 업종별 분류",e:"Collected and classified 114 metal redox accident cases by industry"}],
     method:[
-      ["표면 반응 관찰","Li(100) 표면에 물 15분자를 둔 슬래브 MD와, 물 6분자 AIMD로 반응 초기 과정을 봤습니다."],
-      ["클러스터 모델","Li<sub>n</sub>(n=2~7) 중 안정한 Li<sub>2</sub>, Li<sub>4</sub>를 골라 물, 염산, 산소와의 반응 경로를 찾았습니다."],
-      ["에너지와 속도","DFT(APFD/def2-TZVPP)와 DLPNO-CCSD(T)로 반응열을 구하고 300~600 K 반응속도상수를 계산했습니다."]
-    ],
-    timeline:{cap:"AIMD에서 본 Li 표면과 물의 반응",items:[["0 fs","물 분자가 Li 원자에 배위"],["20 fs","표면 배위"],["60 fs","H가 Li 표면에 흡착 (Li–H)"],["80 fs","H<sub>2</sub> 생성"]]},
+      [{k:"표면 반응 관찰",e:"Surface reactions"},{k:"Li(100) 표면에 물 15분자를 둔 DFTB 기반 슬래브 MD와, 물 6분자를 둔 DFT 기반 제일원리 MD(AIMD)로 반응 초기 과정을 봤습니다.",e:"DFTB-based slab MD of Li(100) with 15 water molecules and DFT-based ab initio MD (AIMD) with 6 water molecules captured the early steps."}],
+      [{k:"클러스터 모델",e:"Cluster models"},{k:"Li<sub>n</sub>(n=2~7) 중 안정한 Li<sub>2</sub>, Li<sub>4</sub>를 골라 물, 염산, 산소와의 반응 경로를 찾았습니다.",e:"Stable Li<sub>2</sub> and Li<sub>4</sub> from Li<sub>n</sub> (n = 2–7) were used to map pathways with water, HCl and oxygen."}],
+      [{k:"에너지와 속도",e:"Energetics and rates"},{k:"DFT(APFD/def2-TZVPP)와 DLPNO-CCSD(T)로 반응열을 구하고 300~600 K 반응속도상수를 계산했습니다.",e:"Reaction heats from DFT (APFD/def2-TZVPP) and DLPNO-CCSD(T), with rate constants over 300–600 K."}]],
+    timeline:{cap:{k:"AIMD에서 본 Li 표면과 물의 반응",e:"Li surface and water in AIMD"},items:[["0 fs",{k:"물 분자가 Li 원자에 배위",e:"Water coordinates to Li"}],["20 fs",{k:"표면 배위",e:"Surface coordination"}],["60 fs",{k:"H가 Li 표면에 흡착 (Li–H)",e:"H adsorbs on Li (Li–H)"}],["80 fs",{k:"H<sub>2</sub> 생성",e:"H<sub>2</sub> forms"}]]},
     results:{
-      kpi:[["−86.8","물과의 반응열 ΔH (kcal/mol)"],["−26.7","염산과의 반응열 ΔH (kcal/mol)"],["114건","수집, 분류한 사고사례"]],
-      text:["리튬은 물과 쉽게 반응해 수소를 만들고, 산 조건에서는 훨씬 격렬해집니다. SOCl<sub>2</sub>와는 SO<sub>2</sub>를, 산소와는 Li<sub>2</sub>O를 만듭니다. 석유 등에 담가 저습 보관해야 한다는 안전 정보로 정리했습니다."]
-    },
-    papers:[], talks:[]
-  },
-  {
-    id:"water-reactive", group:"safety", period:"2023.05 ~ 2023.11",
-    title:"물반응성 물질 SOCl<sub>2</sub>의 가수분해 메커니즘",
-    official:"물반응성물질 위험성 확인을 위한 방법 연구",
-    agency:"화학물질안전원 연구용역",
-    lead:"가톨릭대 수행",
-    role:"SOCl<sub>2</sub> MD와 DFT 메커니즘, 문헌 조사, 사고사례 수집",
-    tags:["반도체 공정가스","DFTB-MD","사고사례"],
-    oneline:"학부연구생으로 처음 참여한 과제입니다. SOCl<sub>2</sub>가 물과 만나 아황산이 되는 과정을 추적했습니다.",
+      kpi:[["−86.8",{k:"물과의 반응열 ΔH (kcal/mol)",e:"ΔH with water (kcal/mol)"}],["−26.7",{k:"염산과의 반응열 ΔH (kcal/mol)",e:"ΔH with HCl (kcal/mol)"}],["114",{k:"수집, 분류한 사고사례 (건)",e:"Accident cases classified"}]],
+      text:[{k:"리튬은 물과 쉽게 반응해 수소를 만들고, 산 조건에서는 훨씬 격렬해집니다. SOCl<sub>2</sub>와는 SO<sub>2</sub>를, 산소와는 Li<sub>2</sub>O를 만듭니다. 석유 등에 담가 저습 보관해야 한다는 안전 정보로 정리했습니다.",e:"Lithium readily makes hydrogen with water, far more violently under acidic conditions; it gives SO<sub>2</sub> with SOCl<sub>2</sub> and Li<sub>2</sub>O with oxygen. The guidance: store under oil, in low humidity."}]},
+    papers:[], talks:[] },
+  { id:"water-reactive", group:"safety", period:"2023.05 ~ 2023.11",
+    title:{k:"물반응성 물질 SOCl<sub>2</sub>의 가수분해 메커니즘",e:"Hydrolysis mechanism of the water-reactive SOCl<sub>2</sub>"},
+    official:{k:"물반응성물질 위험성 확인을 위한 방법 연구",e:"Methods for identifying hazards of water-reactive substances"},
+    agency:{k:"화학물질안전원 연구용역",e:"National Institute of Chemical Safety (NICS)"},
+    lead:{k:"가톨릭대 수행",e:"Carried out by CUK"},
+    role:{k:"SOCl<sub>2</sub> MD와 DFT 메커니즘, 문헌 조사, 사고사례 수집",e:"SOCl<sub>2</sub> MD and DFT mechanism, literature review, accident cases"},
+    tags:[{k:"반도체 공정가스",e:"Semiconductor process gases"},{k:"분자동역학",e:"Molecular dynamics"},{k:"사고사례",e:"Accident cases"}],
+    oneline:{k:"학부연구생으로 처음 참여한 과제입니다. SOCl<sub>2</sub>가 물과 만나 아황산이 되는 과정을 추적했습니다.",e:"My first project as an undergraduate researcher: tracing SOCl<sub>2</sub> to sulfurous acid in water."},
     background:[
-      "반도체 공장의 디요오드실란 폭발(2021.05), 특수가스 공장의 디보란 폭발(2022.04)처럼 물과 반응하는 공정가스 사고가 이어졌습니다.",
-      "실험하기 위험한 물질 8종(SiH<sub>4</sub>, PCl<sub>3</sub>, SiH<sub>2</sub>Cl<sub>2</sub>, SiH<sub>2</sub>I<sub>2</sub>, B<sub>2</sub>H<sub>6</sub>, SOCl<sub>2</sub>, TiCl<sub>4</sub>, AlP)의 반응 정보를 계산으로 확보하는 과제였고, 저는 SOCl<sub>2</sub>를 맡았습니다."
-    ],
+      {k:"반도체 공장의 디요오드실란 폭발(2021.05), 특수가스 공장의 디보란 폭발(2022.04)처럼 물과 반응하는 공정가스 사고가 이어졌습니다.",e:"A diiodosilane explosion at a semiconductor fab (2021.05) and a diborane explosion at a specialty-gas plant (2022.04) are examples of water-reactive gas accidents."},
+      {k:"실험하기 위험한 물질 8종(SiH<sub>4</sub>, PCl<sub>3</sub>, SiH<sub>2</sub>Cl<sub>2</sub>, SiH<sub>2</sub>I<sub>2</sub>, B<sub>2</sub>H<sub>6</sub>, SOCl<sub>2</sub>, TiCl<sub>4</sub>, AlP)의 반응 정보를 계산으로 확보하는 과제였고, 저는 SOCl<sub>2</sub>를 맡았습니다.",e:"The project obtained reaction data by calculation for eight substances too hazardous to test easily (SiH<sub>4</sub>, PCl<sub>3</sub>, SiH<sub>2</sub>Cl<sub>2</sub>, SiH<sub>2</sub>I<sub>2</sub>, B<sub>2</sub>H<sub>6</sub>, SOCl<sub>2</sub>, TiCl<sub>4</sub>, AlP); I was responsible for SOCl<sub>2</sub>."}],
     mine:[
-      "SOCl<sub>2</sub>와 물의 DFTB-MD, DFT 메커니즘 규명",
-      "물 대신 메탄올, 에탄올, 이소프로필알코올과의 반응성 비교",
-      "물반응성물질 사고 22건, 반도체 등 첨단산업 사고 219건 수집과 유형 분류"
-    ],
+      {k:"SOCl<sub>2</sub>와 물의 DFTB-MD, DFT 메커니즘 규명",e:"DFTB-MD and DFT mechanism of SOCl<sub>2</sub> with water"},
+      {k:"물 대신 메탄올, 에탄올, 이소프로필알코올과의 반응성 비교",e:"Compared reactivity with methanol, ethanol and isopropanol in place of water"},
+      {k:"물반응성물질 사고 22건, 반도체 등 첨단산업 사고 219건 수집과 유형 분류",e:"Collected and classified 22 water-reactive accidents and 219 accidents in semiconductor and other advanced industries"}],
     method:[
-      ["셀 준비","물 50분자로 1기압, 300 K NPT를 돌려 셀 부피를 정했습니다."],
-      ["반응 관찰","NVT DFTB-MD(2,000 K, Fermi 3,000 K, 100 ps)로 반응을 일으켜 생성물을 추적했습니다."],
-      ["에너지 계산","관찰한 경로를 물 28분자 모델에서 B3LYP/def2-TZVPP와 DLPNO-CCSD(T)로 계산했습니다."]
-    ],
-    timeline:{cap:"DFTB-MD에서 본 SOCl<sub>2</sub>의 가수분해",items:[["0 ps","SOCl<sub>2</sub>"],["74.57 ps","SO<sub>2</sub> 생성"],["84.94 ps","HSO<sub>3</sub><sup>−</sup>"],["85.13 ps","H<sub>2</sub>SO<sub>3</sub> (아황산)"]]},
+      [{k:"셀 준비",e:"Cell setup"},{k:"물 50분자로 1기압, 300 K NPT를 돌려 셀 부피를 정했습니다.",e:"NPT with 50 water molecules at 1 atm and 300 K fixed the cell volume."}],
+      [{k:"반응 관찰",e:"Observing reactions"},{k:"DFTB 기반 NVT MD(2,000 K, Fermi 3,000 K, 100 ps)로 반응을 일으켜 생성물을 추적했습니다.",e:"DFTB-based NVT MD (2,000 K, Fermi 3,000 K, 100 ps) drove reactions and tracked products."}],
+      [{k:"에너지 계산",e:"Energetics"},{k:"관찰한 경로를 물 28분자 모델에서 B3LYP/def2-TZVPP와 DLPNO-CCSD(T)로 계산했습니다.",e:"Observed pathways were computed in a 28-water model with B3LYP/def2-TZVPP and DLPNO-CCSD(T)."}]],
+    timeline:{cap:{k:"DFTB-MD에서 본 SOCl<sub>2</sub>의 가수분해",e:"SOCl<sub>2</sub> hydrolysis in DFTB-MD"},items:[["0 ps","SOCl<sub>2</sub>"],["74.57 ps",{k:"SO<sub>2</sub> 생성",e:"SO<sub>2</sub> forms"}],["84.94 ps","HSO<sub>3</sub><sup>−</sup>"],["85.13 ps",{k:"H<sub>2</sub>SO<sub>3</sub> (아황산)",e:"H<sub>2</sub>SO<sub>3</sub> (sulfurous acid)"}]]},
     results:{
-      kpi:[["−40.4","반응열 ΔH (kcal/mol)"],["12.7","활성화에너지 (kcal/mol)"],["241건","수집, 분류한 사고사례"]],
-      text:["메탄올에서는 0.85 ps 만에 HCl이 바로 생성되었습니다. 과제 전체 결론은 Cl을 포함한 화합물은 산을, H를 포함한 화합물은 수소를 만들고, 알코올은 물보다 반응성이 낮아 저온, 저습 취급이 중요하다는 것이었습니다."]
-    },
-    papers:["water-reactive"], talks:[]
-  }
+      kpi:[["−40.4",{k:"반응열 ΔH (kcal/mol)",e:"Reaction ΔH (kcal/mol)"}],["12.7",{k:"활성화에너지 (kcal/mol)",e:"Barrier (kcal/mol)"}],["241",{k:"수집, 분류한 사고사례 (건)",e:"Accident cases classified"}]],
+      text:[{k:"메탄올에서는 0.85 ps 만에 HCl이 바로 생성되었습니다. 과제 전체 결론은 Cl을 포함한 화합물은 산을, H를 포함한 화합물은 수소를 만들고, 알코올은 물보다 반응성이 낮아 저온, 저습 취급이 중요하다는 것이었습니다.",e:"In methanol, HCl formed directly within 0.85 ps. Overall, Cl-containing compounds produce acids, H-containing ones produce hydrogen, and alcohols react more slowly than water; handling should be cold and dry."}]},
+    papers:["water-reactive"], talks:[] }
 ];
 
-/* ---------- helpers ---------- */
+/* ===== helpers ===== */
 const $app = document.getElementById("app");
 const byId = (arr,id) => arr.find(x=>x.id===id);
 const allPapers = () => [...PAPERS, THESIS];
-const plain = s => s.replace(/<[^>]+>/g,"");
+const plain = s => String(s).replace(/<[^>]+>/g,"");
 const authorsHTML = a => a.map(n => n===ME ? `<strong>${n}</strong>` : n).join(", ");
-const tagsHTML = (t,cls="line") => t.map(x=>`<span class="chip ${cls}">${x}</span>`).join("");
-const pos = (a,id) => `${a.indexOf(id)+1}/${a.length}`;
+const tagsHTML = (tg,cls="line") => tl(tg).map(x=>`<span class="chip ${cls}">${x}</span>`).join("");
 
-function researchTabs(cur){
-  const t = [["papers","#/research","논문",PAPERS.length+1],["projects","#/research/projects","국가과제",PROJECTS.length],["talks","#/research/talks","학회 발표",TALKS.length]];
-  return `<nav class="tabs" aria-label="연구 분류">${t.map(([k,h,l,n])=>`<a href="${h}" ${k===cur?'aria-current="page"':''}>${l}<span class="n">${n}</span></a>`).join("")}</nav>`;
-}
 function researchHead(cur){
-  return `<h1 class="page-title" tabindex="-1">연구</h1>
-  <p class="page-sub">2023년 5월 학부연구생으로 시작해 석사 과정까지, 계산화학연구실에서 수행한 논문, 국가과제, 학회 발표입니다.</p>
-  ${researchTabs(cur)}`;
+  const tabs = [["papers","#/research",t(U.tabPapers),PAPERS.length+1],["projects","#/research/projects",t(U.tabProjects),PROJECTS.length],["talks","#/research/talks",t(U.tabTalks),TALKS.length]];
+  return `<h1 class="page-title" tabindex="-1">${t(U.resTitle)}</h1>
+  <p class="page-sub">${t(U.resSub)}</p>
+  <nav class="tabs" aria-label="${t(U.tabsAria)}">${tabs.map(([k,h,l,n])=>`<a href="${h}" ${k===cur?'aria-current="page"':''}>${l}<span class="n">${n}</span></a>`).join("")}</nav>`;
 }
 function paperRow(p){
-  return `<li><a class="row" href="#/paper/${p.id}">
-    <span class="yr">${p.date}</span>
-    <span><span class="r-title" style="display:block">${p.title}</span>
-      <span class="r-meta" style="display:block">${p.journal} ${p.cite}</span>
-      <span class="r-tags">${tagsHTML(p.tags)}</span></span>
-    ${CHEV}</a></li>`;
+  return `<li><a class="row" href="#/paper/${p.id}"><span class="yr">${p.date}</span>
+    <span><span class="r-title" style="display:block">${t(p.title)}</span>
+      <span class="r-meta" style="display:block">${t(p.journal)} ${t(p.cite)}</span>
+      <span class="r-tags">${tagsHTML(p.tags)}</span></span>${CHEV}</a></li>`;
 }
 function projectRow(p){
-  return `<li><a class="row" href="#/project/${p.id}">
-    <span class="yr">${p.period.replace(" ~ ","<br>~ ")}</span>
-    <span><span class="r-title" style="display:block">${p.title}</span>
-      <span class="r-meta" style="display:block">${p.oneline}</span>
-      <span class="r-tags"><span class="chip">${p.role}</span></span></span>
-    ${CHEV}</a></li>`;
+  return `<li><a class="row" href="#/project/${p.id}"><span class="yr">${p.period.replace(" ~ ","<br>~ ")}</span>
+    <span><span class="r-title" style="display:block">${t(p.title)}</span>
+      <span class="r-meta" style="display:block">${t(p.oneline)}</span>
+      <span class="r-tags"><span class="chip">${t(p.role)}</span></span></span>${CHEV}</a></li>`;
 }
-function relatedBox(title, items){
-  if(!items.length) return "";
-  return `<div class="box"><h3>${title}</h3><ul>${items.join("")}</ul></div>`;
-}
-function relPaper(id){ const p=byId(allPapers(),id); return p?`<li><a href="#/paper/${p.id}">${p.title}<small>${p.journal}, ${p.date}</small></a></li>`:""; }
-function relProject(id){ const p=byId(PROJECTS,id); return p?`<li><a href="#/project/${p.id}">${p.title}<small>${p.period}</small></a></li>`:""; }
-function relTalk(id){ const t=byId(TALKS,id); return t?`<li><a href="#/research/talks?open=${t.id}">${t.title}<small>${t.venue}, ${t.date}</small></a></li>`:""; }
+const relatedBox = (title, items) => items.length ? `<div class="box"><h3>${title}</h3><ul>${items.join("")}</ul></div>` : "";
+function relPaper(id){ const p=byId(allPapers(),id); return p?`<li><a href="#/paper/${p.id}">${t(p.title)}<small>${t(p.journal)}, ${p.date}</small></a></li>`:""; }
+function relProject(id){ const p=byId(PROJECTS,id); return p?`<li><a href="#/project/${p.id}">${t(p.title)}<small>${p.period}</small></a></li>`:""; }
+function relTalk(id){ const x=byId(TALKS,id); return x?`<li><a href="#/research/talks?open=${x.id}">${t(x.title)}<small>${t(x.venue)}, ${x.date}</small></a></li>`:""; }
 function pager(list, id, base, label){
-  const i = list.findIndex(x=>x.id===id);
-  const prev = list[i-1], next = list[i+1];
-  return `<nav class="pager" aria-label="${label} 이동">
-    ${prev?`<a href="#/${base}/${prev.id}"><small>이전 ${label}</small><span>${prev.title}</span></a>`:"<span></span>"}
-    ${next?`<a class="next" href="#/${base}/${next.id}"><small>다음 ${label}</small><span>${next.title}</span></a>`:"<span></span>"}
+  const i = list.findIndex(x=>x.id===id), prev = list[i-1], next = list[i+1];
+  const lab = (w) => LANG==="en" ? `${w} ${label}` : `${w} ${label}`;
+  return `<nav class="pager">
+    ${prev?`<a href="#/${base}/${prev.id}"><small>${lab(t(U.prev))}</small><span>${t(prev.title)}</span></a>`:"<span></span>"}
+    ${next?`<a class="next" href="#/${base}/${next.id}"><small>${lab(t(U.next))}</small><span>${t(next.title)}</span></a>`:"<span></span>"}
   </nav>`;
 }
 
-/* ---------- pages ---------- */
+/* ===== pages ===== */
 function Home(){
-  const fe = byId(PROJECTS,"etch"), fg = byId(PROJECTS,"gwp");
-  return `<div class="wrap">
+    return `<div class="wrap">
   <header class="hero">
-    <h1 tabindex="-1">김인경<span class="en">Ingyeong Kim, M.S. in Physical Chemistry</span></h1>
-    <p class="lead">반도체 공정가스와 소재가 어떻게 분해되고 반응하는지, 분자 단위 시뮬레이션으로 계산합니다.</p>
-    <p class="sub">가톨릭대학교 계산화학연구실에서 국가 R&amp;D 과제 6건에 참여하며 DFT, DFTB-MD, ReaxFF로 식각 플라즈마, 온실가스, 절연막, 배터리 소재의 반응을 예측했습니다.</p>
-    <div class="actions"><a class="btn primary" href="#/research">연구 보기</a><a class="btn" href="#/about">소개와 이력</a></div>
-    <svg class="pes" viewBox="0 0 1000 230" role="img" aria-label="반응물에서 전이상태와 중간체를 거쳐 생성물로 가는 반응 에너지 곡선">
+    <h1 tabindex="-1">${t(U.name)}<span class="en">${t(U.heroEn)}</span></h1>
+    <p class="lead">${t(U.heroLead)}</p>
+    <p class="sub">${t(U.heroSub)}</p>
+    <div class="actions"><a class="btn primary" href="#/research">${t(U.btnResearch)}</a><a class="btn" href="#/about">${t(U.btnAbout)}</a></div>
+    <svg class="pes" viewBox="0 0 1000 230" role="img" aria-label="${t(U.pesAria)}">
       <line class="axis" x1="20" y1="210" x2="985" y2="210"/><line class="axis" x1="20" y1="20" x2="20" y2="210"/>
-      <text x="30" y="34">에너지</text><text x="900" y="200">반응 좌표</text>
+      <text x="30" y="34">${t(U.energy)}</text><text x="975" y="200" text-anchor="end">${t(U.coord)}</text>
       <path class="curve" d="M40,150 C120,150 170,42 240,42 C310,42 340,128 420,128 C490,128 520,78 590,78 C670,78 720,186 800,186 C860,186 900,186 970,186"/>
-      <line class="guide d2" x1="40" y1="150" x2="240" y2="150"/><line class="guide d2" x1="240" y1="42" x2="240" y2="150"/>
-      <circle class="pt d1" cx="40" cy="150" r="6"/><circle class="pt d2" cx="240" cy="42" r="6"/><circle class="pt d3" cx="420" cy="128" r="6"/><circle class="pt d4" cx="590" cy="78" r="6"/><circle class="pt d5" cx="800" cy="186" r="6"/>
-      <text class="lbl d1" x="36" y="174">반응물</text><text class="lbl d2" x="226" y="28">TS1</text>
-      <text class="lbl d2" x="252" y="102">E<tspan font-size="10" dy="4">a</tspan></text>
-      <text class="lbl d3" x="406" y="154">IM</text><text class="lbl d4" x="576" y="64">TS2</text><text class="lbl d5" x="780" y="162">생성물</text>
+      <path class="trail" d="M40,150 C120,150 170,42 240,42 C310,42 340,128 420,128 C490,128 520,78 590,78 C670,78 720,186 800,186 C860,186 900,186 970,186"/>
+      <line class="guide" data-i="1" x1="40" y1="150" x2="240" y2="150"/><line class="guide" data-i="1" x1="240" y1="42" x2="240" y2="150"/>
+      <circle class="pt" data-i="0" cx="40" cy="150" r="6"/><circle class="pt" data-i="1" cx="240" cy="42" r="6"/><circle class="pt" data-i="2" cx="420" cy="128" r="6"/><circle class="pt" data-i="3" cx="590" cy="78" r="6"/><circle class="pt" data-i="4" cx="800" cy="186" r="6"/>
+      <text class="lbl" data-i="0" x="36" y="174">${t(U.reactant)}</text><text class="lbl" data-i="1" x="226" y="28">TS1</text>
+      <text class="lbl" data-i="1" x="252" y="102">E<tspan font-size="10" dy="4">a</tspan></text>
+      <text class="lbl" data-i="2" x="406" y="154">IM</text><text class="lbl" data-i="3" x="576" y="64">TS2</text><text class="lbl" data-i="4" x="776" y="162">${t(U.product)}</text>
+      <circle class="halo" cx="40" cy="150" r="15"/><circle class="mover" cx="40" cy="150" r="7"/>
     </svg>
     <div class="facts">
-      <a href="#/research/projects"><b>6건</b><span>국가 R&amp;D 과제</span></a>
-      <a href="#/research/projects"><b>2년 7개월</b><span>과제 수행 (2023.05~2025.12)</span></a>
-      <a href="#/research"><b>6편</b><span>SCI 논문 (공저자)</span></a>
-      <a href="#/research/talks"><b>6건</b><span>학회 포스터 (단독 1저자 4건)</span></a>
+      <a href="#/research/projects"><b>${t(U.f1b)}</b><span>${t(U.f1)}</span></a>
+      <a href="#/about"><b>${t(U.f2b)}</b><span>${t(U.f2)}</span></a>
+      <a href="#/research"><b>${t(U.f3b)}</b><span>${t(U.f3)}</span></a>
+      <a href="#/research/talks"><b>${t(U.f4b)}</b><span>${t(U.f4)}</span></a>
     </div>
   </header>
-
   <section class="home-sec">
-    <div class="head"><h2>대표 연구</h2><a href="#/research/projects">국가과제 전체 보기</a></div>
+    <div class="head"><h2>${t(U.featured)}</h2><a href="#/research/projects">${t(U.allProjects)}</a></div>
     <div class="feature">
-      <a href="#/project/etch"><span class="k">${fe.period}</span><h3>${fe.title}</h3><p>${fe.oneline}</p>
-        <div class="big">21.1% → 67.2%<small>CF<sub>2</sub> 존재 비율 (실험 66.2%)</small></div><div class="foot">${CHEV}</div></a>
-      <a href="#/project/gwp"><span class="k">${fg.period}</span><h3>${fg.title}</h3><p>학습 DB를 구축해 구조만으로 GWP를 예측하는 모델에 활용했습니다.</p>
-        <div class="big">R² 0.8523<small>GWP 예측 (목표 0.80)</small></div><div class="foot">${CHEV}</div></a>
-      <a href="#/paper/thesis"><span class="k">석사학위논문, ${THESIS.date}</span><h3>${THESIS.title}</h3><p>중간체 7종, 전이상태 5종을 직접 찾아 실험이 제안한 광반응 경로를 검증했습니다.</p>
-        <div class="big">428 nm<small>중간체 흡수 파장, 실험 청색광과 일치</small></div><div class="foot">${CHEV}</div></a>
+      ${[["etch","21.1% → 67.2%",U.fEtchBig],["gwp","R² 0.8523",U.fGwpBig],["packaging","200+",U.fPkgBig]].map(([id,big,cap])=>{const p=byId(PROJECTS,id); return `
+      <a href="#/project/${id}"><span class="k">${p.period}</span><h3>${t(p.official)}</h3>
+        <dl class="fmeta"><dt>${t(U.fAgency)}</dt><dd>${t(p.agency)}</dd><dt>${t(U.fPartners)}</dt><dd>${t(p.lead)}</dd><dt>${t(U.fRole)}</dt><dd>${t(p.role)}</dd></dl>
+        <div class="big">${big}<small>${t(cap)}</small></div><div class="foot">${CHEV}</div></a>`;}).join("")}
     </div>
   </section>
-
   <section class="home-sec" style="margin-bottom:96px">
-    <div class="head"><h2>최근 논문</h2><a href="#/research">논문 전체 보기</a></div>
+    <div class="head"><h2>${t(U.recent)}</h2><a href="#/research">${t(U.allPapers)}</a></div>
     <ul class="rows">${PAPERS.slice(0,3).map(paperRow).join("")}</ul>
-  </section>
-  </div>`;
+  </section></div>`;
 }
-
-function Papers(){
-  return `<div class="wrap page">${researchHead("papers")}
-    <h2 class="group-h">SCI 논문</h2>
-    <ul class="rows">${PAPERS.map(paperRow).join("")}</ul>
-    <h2 class="group-h">학위논문</h2>
-    <ul class="rows">${paperRow(THESIS)}</ul>
-  </div>`;
-}
-
-function Projects(){
-  const semi = PROJECTS.filter(p=>p.group==="semi"), safe = PROJECTS.filter(p=>p.group==="safety");
-  return `<div class="wrap page">${researchHead("projects")}
-    <h2 class="group-h">반도체 공정과 소재</h2><ul class="rows">${semi.map(projectRow).join("")}</ul>
-    <h2 class="group-h">화학물질 사고 위험성 예측</h2><ul class="rows">${safe.map(projectRow).join("")}</ul>
-  </div>`;
-}
-
+const Papers = () => `<div class="wrap page">${researchHead("papers")}
+  <h2 class="group-h">${t(U.sci)}</h2><ul class="rows">${PAPERS.map(paperRow).join("")}</ul>
+  <h2 class="group-h">${t(U.thesisH)}</h2><ul class="rows">${paperRow(THESIS)}</ul></div>`;
+const Projects = () => `<div class="wrap page">${researchHead("projects")}
+  <h2 class="group-h">${t(U.grpSemi)}</h2><ul class="rows">${PROJECTS.filter(p=>p.group==="semi").map(projectRow).join("")}</ul>
+  <h2 class="group-h">${t(U.grpSafe)}</h2><ul class="rows">${PROJECTS.filter(p=>p.group==="safety").map(projectRow).join("")}</ul></div>`;
 function Talks(openId){
-  return `<div class="wrap page">${researchHead("talks")}
-    <div style="margin-top:8px">${TALKS.map(t=>`
-      <details class="talk" id="talk-${t.id}" ${t.id===openId?"open":""}>
-        <summary><span class="yr">${t.date}</span>
-          <span><span class="r-title" style="display:block">${t.title}</span><span class="r-meta" style="display:block">${t.venue}, 포스터</span></span>
-          <span class="tagc">${t.first?'<span class="chip">단독 1저자</span>':'<span class="chip line">공동저자</span>'}</span>${CHEV}</summary>
-        <div class="body"><p>${t.body}</p>
-          ${t.role?`<p><span class="lab">맡은 부분</span>${t.role}</p>`:""}
-          ${t.project?`<p><span class="lab">관련 과제</span><a href="#/project/${t.project}">${byId(PROJECTS,t.project).title}</a></p>`:""}
-          ${t.paper?`<p><span class="lab">관련 논문</span><a href="#/paper/${t.paper}">${byId(allPapers(),t.paper).title}</a></p>`:""}
-        </div></details>`).join("")}
-    </div>
-  </div>`;
+  return `<div class="wrap page">${researchHead("talks")}<div style="margin-top:8px">${TALKS.map(x=>`
+    <details class="talk" id="talk-${x.id}" ${x.id===openId?"open":""}>
+      <summary><span class="yr">${x.date}</span>
+        <span><span class="r-title" style="display:block">${t(x.title)}</span><span class="r-meta" style="display:block">${t(x.venue)}, ${t(U.poster)}</span></span>
+        <span class="tagc">${x.first?`<span class="chip">${t(U.firstAuthor)}</span>`:`<span class="chip line">${t(U.coAuthor)}</span>`}</span>${CHEV}</summary>
+      <div class="body"><p>${t(x.body)}</p>
+        ${x.role?`<p><span class="lab">${t(U.myPart)}</span>${t(x.role)}</p>`:""}
+        ${x.project?`<p><span class="lab">${t(U.relProject)}</span><a href="#/project/${x.project}">${t(byId(PROJECTS,x.project).title)}</a></p>`:""}
+        ${x.paper?`<p><span class="lab">${t(U.relPaper)}</span><a href="#/paper/${x.paper}">${t(byId(allPapers(),x.paper).title)}</a></p>`:""}
+      </div></details>`).join("")}</div></div>`;
 }
-
 function Paper(id){
   const p = byId(allPapers(),id); if(!p) return null;
-  const isThesis = p.id==="thesis";
-  return {title:plain(p.title), html:`<div class="wrap page">
-    <div class="crumb"><a href="#/research">연구</a><span class="sep">/</span><a href="#/research">논문</a></div>
+  const isT = p.id==="thesis";
+  return {title:plain(t(p.title)), html:`<div class="wrap page">
+    <div class="crumb"><a href="#/research">${t(U.resTitle)}</a><span class="sep">/</span><a href="#/research">${t(U.tabPapers)}</a></div>
     <header class="d-head">
       <div class="r-tags" style="margin-top:0;margin-bottom:14px">${tagsHTML(p.tags)}</div>
-      <h1 class="d-title" tabindex="-1">${p.title}</h1>
-      ${p.sub?`<p class="d-meta">${p.sub}</p>`:""}
-      <p class="d-meta"><b>${p.journal}</b> ${p.cite}, ${p.date}</p>
-      ${isThesis?"":`<p class="authors">${authorsHTML(p.authors)}</p>`}
-      ${p.doi?`<div class="d-actions"><a class="btn primary" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">원문 보기 (DOI)</a></div>`:""}
+      <h1 class="d-title" tabindex="-1">${t(p.title)}</h1>
+      ${p.sub && t(p.sub)?`<p class="d-meta">${t(p.sub)}</p>`:""}
+      <p class="d-meta"><b>${t(p.journal)}</b> ${t(p.cite)}, ${p.date}</p>
+      ${isT?"":`<p class="authors">${authorsHTML(p.authors)}</p>`}
+      ${p.doi?`<div class="d-actions"><a class="btn primary" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">${t(U.doiBtn)}</a></div>`:""}
     </header>
     <div class="d-grid">
       <div class="d-body">
-        <section><h2>요약</h2>${p.summary.map(s=>`<p>${s}</p>`).join("")}</section>
-        <section class="role-box"><h2>내가 맡은 부분</h2><ul class="dots">${p.role.map(r=>`<li>${r}</li>`).join("")}</ul></section>
+        <section><h2>${t(U.summary)}</h2>${tl(p.summary).map(s=>`<p>${s}</p>`).join("")}</section>
+        <section class="role-box"><h2>${t(U.mine)}</h2><ul class="dots">${tl(p.role).map(r=>`<li>${r}</li>`).join("")}</ul></section>
       </div>
       <aside class="aside">
-        <div class="box"><h3>정보</h3><dl>
-          <dt>게재</dt><dd>${p.journal}</dd><dt>연도</dt><dd>${p.date}</dd>
-          ${isThesis?"<dt>지도</dt><dd>김중한 교수</dd>":`<dt>저자 순서</dt><dd>${p.authors.indexOf(ME)+1}번째 / ${p.authors.length}명</dd>`}
+        <div class="box"><h3>${t(U.info)}</h3><dl>
+          <dt>${t(U.venue)}</dt><dd>${t(p.journal)}</dd><dt>${t(U.year)}</dt><dd>${p.date}</dd>
+          ${isT?`<dt>${t(U.advisor)}</dt><dd>${t(U.advisorName)}</dd>`:`<dt>${t(U.order)}</dt><dd>${t(U.orderFmt)(p.authors.indexOf(ME)+1,p.authors.length)}</dd>`}
           ${p.doi?`<dt>DOI</dt><dd>${p.doi}</dd>`:""}
         </dl></div>
-        ${relatedBox("관련 국가과제", p.related.projects.map(relProject))}
-        ${relatedBox("관련 학회 발표", p.related.talks.map(relTalk))}
+        ${relatedBox(t(U.relProjects), p.related.projects.map(relProject))}
+        ${relatedBox(t(U.relTalks), p.related.talks.map(relTalk))}
       </aside>
     </div>
-    ${isThesis?"":pager(PAPERS,id,"paper","논문")}
-  </div>`};
+    ${isT?"":pager(PAPERS,id,"paper",t(U.paperL))}</div>`};
 }
-
 function Project(id){
   const p = byId(PROJECTS,id); if(!p) return null;
   const r = p.results;
-  const bars = r.bars?`<div class="bars" role="img" aria-label="${plain(r.bars.cap)}: ${r.bars.items.map(i=>i[0]+' '+i[1]).join(', ')}">
-      <div class="cap">${r.bars.cap}</div>
-      ${r.bars.items.map(([l,v,c])=>`<div class="bar ${c}"><span>${l}</span><div class="track"><div class="fill" style="width:${v}%"></div></div><b>${v}</b></div>`).join("")}</div>`:"";
-  const kpi = r.kpi?`<div class="kpi">${r.kpi.map(([b,s])=>`<div><b>${b}</b><span>${s}</span></div>`).join("")}</div>`:"";
-  const table = r.table?`<div class="tblwrap"><table class="data"><thead><tr>${r.table.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
-      <tbody>${r.table.rows.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
-      <p class="note">ReaxFF MD 100 ps, 온도별 궤적 5개 평균</p>`:"";
-  const tl = p.timeline?`<p style="margin-top:20px"><strong>${p.timeline.cap}</strong></p><ul class="tline">${p.timeline.items.map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ul>`:"";
-  return {title:plain(p.title), html:`<div class="wrap page">
-    <div class="crumb"><a href="#/research">연구</a><span class="sep">/</span><a href="#/research/projects">국가과제</a></div>
+  const bars = r.bars?`<div class="bars" role="img" aria-label="${plain(t(r.bars.cap))}: ${r.bars.items.map(i=>plain(t(i[0]))+' '+i[1]).join(', ')}">
+      <div class="cap">${t(r.bars.cap)}</div>
+      ${r.bars.items.map(([l,v,c])=>`<div class="bar ${c}"><span>${t(l)}</span><div class="track"><div class="fill" style="width:${v}%"></div></div><b>${v}</b></div>`).join("")}</div>`:"";
+  const kpi = r.kpi?`<div class="kpi">${r.kpi.map(([b,s])=>`<div><b>${t(b)}</b><span>${t(s)}</span></div>`).join("")}</div>`:"";
+  const table = r.table?`<div class="tblwrap"><table class="data"><thead><tr>${r.table.head.map(h=>`<th>${t(h)}</th>`).join("")}</tr></thead>
+      <tbody>${r.table.rows.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="note">${t(U.reaxNote)}</p>`:"";
+  const tlx = p.timeline?`<p style="margin-top:20px"><strong>${t(p.timeline.cap)}</strong></p><ul class="tline">${p.timeline.items.map(([a,b])=>`<li><b>${a}</b>${t(b)}</li>`).join("")}</ul>`:"";
+  return {title:plain(t(p.title)), html:`<div class="wrap page">
+    <div class="crumb"><a href="#/research">${t(U.resTitle)}</a><span class="sep">/</span><a href="#/research/projects">${t(U.tabProjects)}</a></div>
     <header class="d-head">
       <div class="r-tags" style="margin-top:0;margin-bottom:14px">${tagsHTML(p.tags)}</div>
-      <h1 class="d-title" tabindex="-1">${p.title}</h1>
-      <p class="d-meta">${p.oneline}</p>
+      <h1 class="d-title" tabindex="-1">${t(p.title)}</h1><p class="d-meta">${t(p.oneline)}</p>
     </header>
     <div class="d-grid">
       <div class="d-body">
-        <section><h2>배경</h2>${p.background.map(s=>`<p>${s}</p>`).join("")}</section>
-        <section class="role-box"><h2>내가 맡은 부분</h2><ul class="dots">${p.mine.map(m=>`<li>${m}</li>`).join("")}</ul></section>
-        <section><h2>방법</h2><ol class="steps">${p.method.map(([h,t])=>`<li><b>${h}</b>${t}</li>`).join("")}</ol>
-          ${p.formula?`<div class="formula">${p.formula}</div>`:""}${tl}</section>
-        <section><h2>결과</h2>${bars}${kpi}${table}${r.text.map(s=>`<p style="margin-top:16px">${s}</p>`).join("")}</section>
-        ${p.limit?`<section><h2>남은 한계</h2><p>${p.limit}</p></section>`:""}
+        <section><h2>${t(U.background)}</h2>${tl(p.background).map(s=>`<p>${s}</p>`).join("")}</section>
+        <section class="role-box"><h2>${t(U.mine)}</h2><ul class="dots">${tl(p.mine).map(m=>`<li>${m}</li>`).join("")}</ul></section>
+        <section><h2>${t(U.method)}</h2><ol class="steps">${p.method.map(([h,x])=>`<li><b>${t(h)}</b>${t(x)}</li>`).join("")}</ol>
+          ${p.formula?`<div class="formula">${p.formula}</div>`:""}${tlx}</section>
+        <section><h2>${t(U.results)}</h2>${bars}${kpi}${table}${tl(r.text).map(s=>`<p style="margin-top:16px">${s}</p>`).join("")}</section>
+        ${p.limit?`<section><h2>${t(U.limit)}</h2><p>${t(p.limit)}</p></section>`:""}
       </div>
       <aside class="aside">
-        <div class="box"><h3>과제 정보</h3><dl>
-          <dt>과제명</dt><dd>${p.official}</dd>
-          <dt>지원</dt><dd>${p.agency}</dd>
-          <dt>수행</dt><dd>${p.lead}</dd>
-          <dt>참여 기간</dt><dd>${p.period}</dd>
-          <dt>책임자</dt><dd>김중한 교수 (가톨릭대)</dd>
+        <div class="box"><h3>${t(U.pInfo)}</h3><dl>
+          <dt>${t(U.pName)}</dt><dd>${t(p.official)}</dd><dt>${t(U.pAgency)}</dt><dd>${t(p.agency)}</dd>
+          <dt>${t(U.pLead)}</dt><dd>${t(p.lead)}</dd><dt>${t(U.pPeriod)}</dt><dd>${p.period}</dd><dt>${t(U.pPI)}</dt><dd>${t(U.piName)}</dd>
         </dl></div>
-        ${relatedBox("이 과제에서 나온 논문", p.papers.map(relPaper))}
-        ${relatedBox("관련 학회 발표", p.talks.map(relTalk))}
+        ${relatedBox(t(U.fromProject), p.papers.map(relPaper))}
+        ${relatedBox(t(U.relTalks), p.talks.map(relTalk))}
       </aside>
     </div>
-    ${pager(PROJECTS,id,"project","과제")}
-  </div>`};
+    ${pager(PROJECTS,id,"project",t(U.projectL))}</div>`};
 }
-
 function About(){
+  const A = {
+    edu:[
+      ["2024.03 ~ 2026.02",{k:"가톨릭대학교 대학원 화학과 석사",e:"M.S. in Chemistry, Catholic University of Korea"},{k:"물리화학 전공, 계산화학연구실 (지도교수 김중한). 학점 4.44/4.50",e:"Physical chemistry, Computational Chemistry Lab (advisor Prof. Jung-han Kim). GPA 4.44/4.50"}],
+      ["2020.03 ~ 2024.02",{k:"가톨릭대학교 화학과 학사",e:"B.S. in Chemistry, Catholic University of Korea"},{k:"삼성꿈장학재단 장학생 (재학 전 기간)",e:"Samsung Dream Scholarship Foundation scholar throughout"}]],
+    career:[
+      ["2026.06 ~ 2026.12",{k:"한국마사회 안전관리부 청년인턴",e:"Youth Intern, Safety Management Dept., Korea Racing Authority"},{k:"우수인턴 선발. 전 사업장 작업계획서와 기계장비 현황을 통합 관리 데이터로 정리하고 작업환경측정 결과를 검토했습니다. 88개 부서 안전문화 과제의 심사 자료를 만들었고, 청년인턴 개별과제 평가에서 최고점을 받았습니다.",e:"Selected as an outstanding intern. Consolidated work plans and equipment inventories across all sites into one dataset, reviewed workplace exposure measurements, prepared review materials for safety-culture proposals from 88 departments, and received the top score in the intern project evaluation."}],
+      ["2023.05 ~ 2025.12",{k:"가톨릭대학교 산학협력단 국가과제 참여연구원",e:"Researcher on national R&amp;D projects, CUK Industry-Academic Cooperation Foundation"},{k:"학부연구생으로 시작해 석사 과정까지 국가 R&amp;D 과제 6건 수행. 연구비 집행, 정산, 연차보고서 제출 실무도 맡았습니다.",e:"Six national projects from undergraduate research through the master's, including budget execution, settlement and annual reporting."}],
+      ["2024.03 ~ 2025.12",{k:"화학실험 조교",e:"Teaching assistant, chemistry labs"},{k:"일반화학실험 3학기, 무기화학실험 1학기. 시약과 기구 준비, 기기 측정",e:"General chemistry lab (3 semesters) and inorganic chemistry lab (1 semester): reagent and equipment prep, instrument measurements"}]],
+    skills:[
+      [{k:"전자구조 방법",e:"Electronic structure"},"DFT, TDDFT, CCSD(T), DLPNO-CCSD(T), MRCI, XMS-CASPT2"],
+      [{k:"반경험적 방법, 역장",e:"Semi-empirical, force fields"},"DFTB (GFN1-xTB), PM3, PM7, ReaxFF"],
+      [{k:"분자동역학",e:"Molecular dynamics"},{k:"DFTB-MD, ReaxFF MD, AIMD (DFT 기반 제일원리 MD)",e:"DFTB-MD, ReaxFF MD, AIMD (DFT-based)"}],
+      [{k:"반응 분석",e:"Reaction analysis"},{k:"전이상태 탐색, IRC, 반응열과 활성화에너지, 반응속도상수",e:"Transition-state search, IRC, reaction heats and barriers, rate constants"}],
+      [{k:"프로그램",e:"Software"},"Gaussian, ORCA, Molpro, OpenMolcas, TURBOMOLE, NWChem, AMS, DFTB+, GROMACS, AMBER, NAMD"],
+      [{k:"분석, 시각화",e:"Analysis, visualization"},"GaussView, VMD, Avogadro, Chemissian"],
+      [{k:"자동화",e:"Automation"},{k:"Python으로 계산 입력 생성, 결과 파싱, 물성 산출",e:"Python for input generation, output parsing and property calculation"}],
+      [{k:"실험 장비",e:"Instruments"},{k:"자외선-가시광선 분광광도계(UV-Vis spectrophotometer), 푸리에 변환 적외선 분광기(FT-IR), X선 회절 분석기(XRD), 주사전자현미경(SEM), 투과전자현미경(TEM)",e:"UV-Vis spectrophotometer, Fourier-transform infrared spectrometer (FT-IR), X-ray diffractometer (XRD), scanning electron microscope (SEM), transmission electron microscope (TEM)"}]],
+    awards:[
+      ["2022.11",{k:"2022년 화학과 팀 단기 학술발표회 우수상",e:"Excellence Award, 2022 Chemistry Dept. Team Research Symposium"},{k:"가톨릭대학교 화학과. NiTi-LDH/나노카본 하이브리드 촉매의 연료전지 촉매 성능 연구",e:"Catholic University of Korea. NiTi-LDH/nanocarbon hybrid catalysts for fuel cells"}],
+      ["2026.02",{k:"OPIc 영어 Intermediate High",e:"OPIc English, Intermediate High"},""]]
+  };
+  const tlist = arr => `<ul class="tl">${arr.map(([w,b,d])=>`<li><span class="when">${w}</span><span><b>${t(b)}</b>${t(d)?`<p>${t(d)}</p>`:""}</span></li>`).join("")}</ul>`;
   return `<div class="wrap page">
-    <h1 class="page-title" tabindex="-1">소개</h1>
-    <p class="page-sub">물리화학을 전공했고, 양자화학 계산과 분자동역학으로 반응 메커니즘과 분자 물성을 예측합니다. 반도체 공정가스와 소재 연구를 중심으로, 계산 결과를 실험값과 맞춰 가는 과정을 가장 오래 해 왔습니다.</p>
+    <h1 class="page-title" tabindex="-1">${t(U.aboutTitle)}</h1><p class="page-sub">${t(U.aboutSub)}</p>
     <div class="about-grid">
-      <h2>학력</h2>
-      <div><ul class="tl">
-        <li><span class="when">2024.03 ~ 2026.02</span><span><b>가톨릭대학교 대학원 화학과 석사</b><p>물리화학 전공, 계산화학연구실 (지도교수 김중한). 학점 4.44/4.50</p></span></li>
-        <li><span class="when">2020.03 ~ 2024.02</span><span><b>가톨릭대학교 화학과 학사</b><p>삼성꿈장학재단 장학생 (재학 전 기간)</p></span></li>
-      </ul></div>
-
-      <h2>경력</h2>
-      <div><ul class="tl">
-        <li><span class="when">2026.06 ~ 2026.12</span><span><b>한국마사회 안전관리부 청년인턴</b><p>우수인턴 선발. 전 사업장 작업계획서와 기계장비 현황을 통합 관리 데이터로 정리하고 작업환경측정 결과를 검토했습니다. 88개 부서 안전문화 과제의 심사 자료를 만들었고, 청년인턴 개별과제 평가에서 최고점을 받았습니다.</p></span></li>
-        <li><span class="when">2023.05 ~ 2025.12</span><span><b>가톨릭대학교 산학협력단 국가과제 참여연구원</b><p>학부연구생으로 시작해 석사 과정까지 국가 R&amp;D 과제 6건 수행. 연구비 집행, 정산, 연차보고서 제출 실무도 맡았습니다.</p></span></li>
-        <li><span class="when">2024.03 ~ 2025.12</span><span><b>화학실험 조교</b><p>일반화학실험 3학기, 무기화학실험 1학기. 시약과 기구 준비, 기기 측정</p></span></li>
-      </ul></div>
-
-      <h2>기술</h2>
-      <div><dl class="skillset">
-        <dt>전자구조 계산</dt><dd>Gaussian, ORCA, Molpro, OpenMolcas, TURBOMOLE, NWChem, AMS</dd>
-        <dt>분자동역학</dt><dd>DFTB+, AMS (DFTB, ReaxFF), GROMACS, AMBER, NAMD</dd>
-        <dt>계산 방법</dt><dd>DFT, TDDFT, CCSD(T), DLPNO-CCSD(T), XMS-CASPT2, AIMD, 전이상태 탐색과 IRC</dd>
-        <dt>분석, 시각화</dt><dd>GaussView, VMD, Avogadro, Chemissian</dd>
-        <dt>자동화</dt><dd>Python으로 계산 입력 생성, 결과 파싱, 물성 산출</dd>
-        <dt>실험 장비</dt><dd>XRD, FT-IR, UV/Vis, SEM, TEM, NMR 직접 측정</dd>
-      </dl></div>
-
-      <h2>수상과 자격</h2>
-      <div><ul class="tl">
-        <li><span class="when">2022.11</span><span><b>2022년 화학과 팀 단기 학술발표회 우수상</b><p>가톨릭대학교 화학과. NiTi-LDH/나노카본 하이브리드 촉매의 연료전지 촉매 성능 연구</p></span></li>
-        <li><span class="when">2026.02</span><span><b>OPIc 영어 Intermediate High</b></span></li>
-      </ul></div>
-
-      <h2>연락</h2>
-      <div><p style="color:var(--ink-2)">연구 내용이나 협업 문의는 메일로 부탁드립니다.</p>
-        <div class="d-actions"><!-- TODO: 실제 이메일 주소로 바꾸기 --><a class="btn primary" href="mailto:your.email@example.com">메일 보내기</a><a class="btn" href="https://github.com/ingyeong-kim" target="_blank" rel="noopener">GitHub</a></div></div>
-    </div>
-  </div>`;
+      <h2>${t(U.edu)}</h2><div>${tlist(A.edu)}</div>
+      <h2>${t(U.career)}</h2><div>${tlist(A.career)}</div>
+      <h2>${t(U.skills)}</h2><div><dl class="skillset">${A.skills.map(([a,b])=>`<dt>${t(a)}</dt><dd>${t(b)}</dd>`).join("")}</dl></div>
+      <h2>${t(U.awards)}</h2><div>${tlist(A.awards)}</div>
+      <h2>${t(U.contact)}</h2><div><p style="color:var(--ink-2)">${t(U.contactP)}</p>
+        <div class="d-actions"><!-- TODO: 실제 이메일 주소로 바꾸기 --><a class="btn primary" href="mailto:your.email@example.com">${t(U.mailBtn)}</a><a class="btn" href="https://github.com/ingyeong-kim" target="_blank" rel="noopener">GitHub</a></div></div>
+    </div></div>`;
 }
 
-/* ---------- router ---------- */
-function render(){
+/* ===== energy profile animation ===== */
+let pesRAF = 0;
+function initPES(){
+  cancelAnimationFrame(pesRAF);
+  const svg = $app.querySelector(".pes"); if(!svg) return;
+  const path = svg.querySelector(".curve"), trail = svg.querySelector(".trail");
+  const mover = svg.querySelector(".mover"), halo = svg.querySelector(".halo");
+  const L = path.getTotalLength();
+  const pts = [...svg.querySelectorAll(".pt")];
+  const stopAt = pts.map(c => { const cx = +c.getAttribute("cx"); let best=0, bd=1e9;
+    for(let l=0;l<=L;l+=2){ const q=path.getPointAtLength(l); const d=Math.abs(q.x-cx); if(d<bd){bd=d;best=l;} } return best; });
+  const reveal = i => svg.querySelectorAll(`[data-i="${i}"]`).forEach(el=>el.classList.add("on"));
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches){ svg.classList.add("static"); return; }
+  path.style.strokeDasharray = L; path.style.strokeDashoffset = L;
+  const SEG = 90; trail.style.strokeDasharray = `${SEG} ${L+SEG}`;
+  const DRAW = 3200, TRAVEL = 4200, PAUSE = 1600;
+  const ease = x => x<.5 ? 2*x*x : 1-Math.pow(-2*x+2,2)/2;
+  const place = (l, a) => { const q = path.getPointAtLength(Math.max(0,Math.min(L,l)));
+    mover.setAttribute("cx",q.x); mover.setAttribute("cy",q.y); halo.setAttribute("cx",q.x); halo.setAttribute("cy",q.y);
+    mover.style.opacity = a; halo.style.opacity = a*.18; };
+  const t0 = performance.now() + 300;
+  function frame(now){
+    const e = now - t0;
+    if (e < 0){ pesRAF = requestAnimationFrame(frame); return; }
+    let l, a = 1;
+    if (e < DRAW){
+      l = ease(e/DRAW) * L;
+      path.style.strokeDashoffset = L - l;
+      trail.style.opacity = 0;
+    } else {
+      path.style.strokeDashoffset = 0;
+      const c = (e - DRAW) % (TRAVEL + PAUSE);
+      if (c > TRAVEL){ place(L, 0); trail.style.opacity = 0; pts.forEach(p=>p.classList.remove("hit")); pesRAF = requestAnimationFrame(frame); return; }
+      l = ease(c/TRAVEL) * L;
+      a = Math.min(1, c/300, (TRAVEL-c)/300);
+      trail.style.opacity = .22*a;
+      trail.style.strokeDashoffset = -(l - SEG);
+    }
+    place(l, a);
+    stopAt.forEach((s,i) => { if (l >= s - 1) reveal(i); pts[i].classList.toggle("hit", Math.abs(l - s) < 14); });
+    pesRAF = requestAnimationFrame(frame);
+  }
+  pesRAF = requestAnimationFrame(frame);
+}
+
+/* ===== router ===== */
+function applyChrome(){
+  document.documentElement.lang = LANG;
+  document.querySelectorAll("[data-u]").forEach(el => { el.innerHTML = t(U[el.dataset.u]); });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===LANG ? "true" : "false"));
+  document.getElementById("topnav").setAttribute("aria-label", LANG==="en" ? "Main menu" : "주요 메뉴");
+}
+function render(keepScroll){
   const raw = location.hash.replace(/^#/,"") || "/";
   const [path, qs] = raw.split("?");
   const parts = path.split("/").filter(Boolean);
   const q = new URLSearchParams(qs||"");
-  let html, title = "김인경 | 계산화학", nav = "";
+  let html, title = t(U.tHome), nav = "";
+  const sfx = t(U.tSuffix);
   if(!parts.length){ html = Home(); }
   else if(parts[0]==="research"){
     nav = "research";
-    if(parts[1]==="projects"){ html = Projects(); title = "국가과제 | 김인경"; }
-    else if(parts[1]==="talks"){ html = Talks(q.get("open")); title = "학회 발표 | 김인경"; }
-    else { html = Papers(); title = "논문 | 김인경"; }
+    if(parts[1]==="projects"){ html = Projects(); title = plain(t(U.tabProjects))+sfx; }
+    else if(parts[1]==="talks"){ html = Talks(q.get("open")); title = plain(t(U.tabTalks))+sfx; }
+    else { html = Papers(); title = plain(t(U.tabPapers))+sfx; }
   }
-  else if(parts[0]==="paper"){ const r = Paper(parts[1]); nav="research"; if(r){html=r.html; title=r.title+" | 김인경";} }
-  else if(parts[0]==="project"){ const r = Project(parts[1]); nav="research"; if(r){html=r.html; title=r.title+" | 김인경";} }
-  else if(parts[0]==="about"){ html = About(); nav="about"; title="소개 | 김인경"; }
+  else if(parts[0]==="paper"){ const r = Paper(parts[1]); nav="research"; if(r){html=r.html; title=r.title+sfx;} }
+  else if(parts[0]==="project"){ const r = Project(parts[1]); nav="research"; if(r){html=r.html; title=r.title+sfx;} }
+  else if(parts[0]==="about"){ html = About(); nav="about"; title=plain(t(U.aboutTitle))+sfx; }
   if(!html){ html = Home(); nav=""; }
+  applyChrome();
   $app.innerHTML = html;
+  initPES();
   document.title = title;
   document.querySelectorAll("[data-nav]").forEach(a=>{ a.dataset.nav===nav ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"); });
+  if(keepScroll) return;
   const openId = q.get("open");
   if(openId){ const el = document.getElementById("talk-"+openId); if(el){ el.scrollIntoView({block:"center"}); return; } }
   window.scrollTo(0,0);
   const h = $app.querySelector("h1"); if(h) h.focus({preventScroll:true});
 }
-window.addEventListener("hashchange", render);
-render();
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
+  if (LANG === b.dataset.lang) return;
+  LANG = b.dataset.lang;
+  try { localStorage.setItem("lang", LANG); } catch (e) {}
+  render(true);
+}));
+window.addEventListener("hashchange", () => render(false));
+render(false);
 </script>
 </body>
 </html>
