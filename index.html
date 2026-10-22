@@ -242,6 +242,7 @@ table.data tr:last-child td{border-bottom:none}
 .tl .when{font-size:14px;color:var(--ink-3);padding-top:2px}
 .tl b{font-weight:700}
 .tl p{font-size:15px;color:var(--ink-2);margin-top:2px}
+.etype{display:block;font-size:14px;color:var(--accent);font-weight:600;margin-top:2px}
 ul.dots.small{list-style:none;font-size:15px;color:var(--ink-2);margin-top:4px}
 ul.dots.small li{position:relative;padding-left:14px;margin-top:4px}
 ul.dots.small li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
@@ -383,7 +384,7 @@ const U = {
   aboutTitle:{k:"소개",e:"About"},
   aboutSub:{k:"물리화학을 전공했고, 양자화학 계산과 분자동역학 시뮬레이션으로 반응 메커니즘과 분자 물성을 예측합니다. 반도체 공정가스와 소재 연구를 중심으로, 계산 결과를 실험값과 맞춰 검증하는 과정을 가장 오래 해 왔습니다.",
             e:"Trained in physical chemistry, I predict reaction mechanisms and molecular properties using quantum chemical calculations and molecular dynamics simulations. My work has centered on semiconductor process gases and materials, with a consistent focus on validating calculated results against experimental data."},
-  edu:{k:"학력",e:"Education"}, resCareer:{k:"연구 경력",e:"Research experience"}, career:{k:"경력",e:"Professional experience"}, skills:{k:"기술",e:"Technical skills"}, awards:{k:"수상과 장학",e:"Awards and scholarships"}, certs:{k:"자격과 어학",e:"Certifications"}, parttime:{k:"아르바이트",e:"Part-time work"}, activities:{k:"대외활동",e:"Activities"}, contact:{k:"연락",e:"Contact"},
+  edu:{k:"학력",e:"Education"}, resCareer:{k:"연구 경력",e:"Research experience"}, career:{k:"경력",e:"Professional experience"}, skills:{k:"기술",e:"Technical skills"}, awards:{k:"수상",e:"Awards"}, certs:{k:"어학",e:"Languages"}, parttime:{k:"아르바이트",e:"Part-time work"}, activities:{k:"대외활동",e:"Activities"}, contact:{k:"연락",e:"Contact"},
   contactP:{k:"연구 내용이나 협업 문의는 메일로 부탁드립니다.",e:"For questions about my research or collaboration, please get in touch by email."},
   mailBtn:{k:"메일 보내기",e:"Send an email"},
   tHome:{k:"김인경 | 계산화학",e:"Ingyeong Kim | Computational Chemistry"}, tSuffix:{k:" | 김인경",e:" | Ingyeong Kim"}
@@ -936,7 +937,7 @@ function About(){
   const A = {
     edu:[
       ["2024.03 ~ 2026.02",{k:"가톨릭대학교 대학원 화학과 석사",e:"M.S. in Chemistry, The Catholic University of Korea"},{k:"물리화학 전공, 계산화학연구실 (지도교수 김중한). 학점 4.44/4.50. 학위논문: 1,2-옥사제트 형성 반응 메커니즘에 관한 이론적 연구",e:"Physical Chemistry, Theoretical &amp; Computational Chemistry Lab (advisor: Prof. Joonghan Kim). GPA 4.44/4.50. Thesis: Theoretical Investigation of the Reaction Mechanism on Formation of 1,2-Oxazete"}],
-      ["2020.03 ~ 2024.02",{k:"가톨릭대학교 화학과 학사",e:"B.S. in Chemistry, The Catholic University of Korea"},{k:"2023년 5월부터 학부연구생으로 계산화학연구실 국가과제 참여. 삼성꿈장학재단 장학생 (재학 전 기간)",e:"Undergraduate researcher in the Computational Chemistry Lab from May 2023. Samsung Dream Scholarship Foundation scholar throughout undergraduate study"}],
+      ["2020.03 ~ 2024.02",{k:"가톨릭대학교 화학과 학사",e:"B.S. in Chemistry, The Catholic University of Korea"},{k:"2023년 5월부터 학부연구생으로 계산화학연구실 국가과제 참여",e:"Undergraduate researcher in the Computational Chemistry Lab from May 2023"}],
       ["2017.03 ~ 2020.02",{k:"인천산곡고등학교 졸업",e:"Sangok High School, Incheon"},""]],
     research:[
       ["2023.05 ~ 2025.12",{k:"국가 R&amp;D 과제 참여연구원, 가톨릭대학교 산학협력단",e:"Researcher, National R&amp;D Projects, Industry-Academic Cooperation Foundation, The Catholic University of Korea"},
@@ -947,28 +948,23 @@ function About(){
         [{k:"일반화학실험 3학기, 무기화학실험 1학기",e:"General Chemistry Laboratory (3 semesters) and Inorganic Chemistry Laboratory (1 semester)"},
          {k:"시약과 기구 준비, XRD, FT-IR, UV-Vis 등 기기 측정을 직접 수행해 실험 데이터 제공",e:"Prepared reagents and equipment; performed XRD, FT-IR and UV-Vis measurements to provide data for students"}]]],
     career:[
-      ["2026.06 ~ 2026.12",{k:"한국마사회 안전관리부 청년인턴 (우수인턴 선발)",e:"Youth Intern, Safety Management Department, Korea Racing Authority (selected as Outstanding Intern)"},
+      ["2026.06 ~ 2026.12",{k:"한국마사회 안전관리부",e:"Safety Management Department, Korea Racing Authority"},{k:"인턴 (청년인턴, 우수인턴 선발)",e:"Intern (Youth Intern; selected as Outstanding Intern)"},
         [{k:"중대재해 예방 작업계획서 현행화: 전 사업장 작업계획서와 기계장비 현황을 항목 단위로 표준화해 통합 관리 데이터를 구축하고, 실제 현황과 대조해 누락과 불일치 확인",e:"Updated serious-accident prevention work plans by standardizing work plans and equipment inventories from all sites into a single dataset and cross-checking them against actual site conditions"},
          {k:"협력사 포함 전 사업장 상반기 작업환경측정 결과를 소음, 분진, 화학물질 등 측정 항목 단위로 재구성해 반복 초과 지점과 후속 조치 구간 구분",e:"Reorganized first-half workplace exposure measurements for all sites, including contractors, by hazard type (noise, dust, chemicals) to identify recurring exceedances and follow-up areas"},
          {k:"88개 부서 안전문화 확산 과제의 심사 자료를 정량 지표 중심으로 정리, 전사 안전 워크숍 운영과 현장 체크리스트 점검",e:"Prepared quantitative review materials for safety-culture proposals from 88 departments; supported a company-wide safety workshop and on-site checklist inspections"},
          {k:"청년인턴 개별과제 「미리말(馬)해」로 평가 최고점",e:"Received the highest score in the youth intern project evaluation"}]],
-      ["2022.07 ~ 2023.02",{k:"넥스트챕터, Channel Ops Manager (프리랜서)",e:"Channel Operations Manager (freelance), Next Chapter"},
+      ["2022.07 ~ 2023.02",{k:"넥스트챕터",e:"Next Chapter"},{k:"아르바이트 (Channel Ops Manager)",e:"Part-time (Channel Operations Manager)"},
         [{k:"이커머스 채널마다 포맷이 다른 고객 구매이력과 상품 데이터를 클렌징하고 전처리",e:"Cleaned and preprocessed customer purchase and product data arriving in different formats from multiple e-commerce channels"},
-         {k:"비정형 텍스트를 소비재 카테고리와 표준 상품코드에 매핑해 브랜드 인수, 마케팅 전략용 데이터로 정리",e:"Mapped unstructured product text to consumer-goods categories and standard product codes for brand acquisition and marketing analysis"}]]],
-    parttime:[
-      ["2022.04 ~ 2023.06",{k:"웅진씽크빅 키즈빌리지 플레이도시점",e:"Woongjin Thinkbig Kids Village (part-time)"},
+         {k:"비정형 텍스트를 소비재 카테고리와 표준 상품코드에 매핑해 브랜드 인수, 마케팅 전략용 데이터로 정리",e:"Mapped unstructured product text to consumer-goods categories and standard product codes for brand acquisition and marketing analysis"}]],
+      ["2022.04 ~ 2023.06",{k:"웅진씽크빅 키즈빌리지 플레이도시점",e:"Woongjin Thinkbig Kids Village"},{k:"아르바이트",e:"Part-time"},
         [{k:"반복되는 고객 불편사항을 직접 기록해 엑셀로 유형별 분류 후 매니저에게 전달",e:"Logged recurring customer complaints, categorized them in Excel and reported them to the manager"},
          {k:"시설 안전 점검과 이용 수칙 안내, 이용 수칙 안내용 노래 제작. 고객 설문 점수 21% 상승, 컴플레인 감소",e:"Ran safety checks and rule guidance, including a song written to explain the rules; customer survey scores rose 21% and complaints decreased"}]],
-      ["2020.02 ~ 2020.08",{k:"JKD영어전문학원 고등부",e:"JKD English Academy, high school division (part-time)"},
-        [{k:"중고등학생 영어 1:1 지도와 교재 제작, 영단어 시험 채점 후 학생별 오답 패턴 분석",e:"One-on-one English tutoring, teaching materials, and analysis of each student's error patterns"}]],
-      [{k:"학부 재학 중",e:"Undergraduate"},{k:"교내 근로장학생 (도서관)",e:"Work-study student, university library"},
-        [{k:"학부 3학년 때 근로장학, 재택 데이터 업무, 주말 아르바이트를 동시에 병행하며 대학원 학비를 직접 마련",e:"In third year, held work-study, remote data work and a weekend job at once, and later funded graduate tuition myself"}]]],
+      ["2020.02 ~ 2020.08",{k:"JKD영어전문학원",e:"JKD English Academy"},{k:"아르바이트 (고등부)",e:"Part-time (High School Division)"},
+        [{k:"중고등학생 영어 1:1 지도와 교재 제작, 영단어 시험 채점 후 학생별 오답 패턴 분석",e:"One-on-one English tutoring, teaching materials, and analysis of each student's error patterns"}]]],
     activities:[
       ["2022.10 ~ 2026.04",{k:"부천시내독서모임 모임장",e:"Organizer, Bucheon book club"},
         [{k:"지인 4명으로 시작해 최대 8명까지 운영, 3년 반 동안 72권 함께 읽음",e:"Grew the club from 4 to as many as 8 members and read 72 books over three and a half years"},
-         {k:"취향 분류와 투표 기준으로 도서를 선정하고, 참석 확정과 불참 시 비용 분담 규칙을 만들어 운영",e:"Introduced category-based voting for book selection and attendance rules to keep meetings running"}]],
-      ["2014 ~ 2015",{k:"삼성드림클래스 2년 수료",e:"Samsung Dream Class (2 years)"},""],
-      [{k:"학부 재학 중",e:"Undergraduate"},{k:"몽골 해외봉사",e:"Volunteer work in Mongolia"},{k:"게르 장판 교체 봉사",e:"Replaced floor coverings in ger dwellings"}]],
+         {k:"취향 분류와 투표 기준으로 도서를 선정하고, 참석 확정과 불참 시 비용 분담 규칙을 만들어 운영",e:"Introduced category-based voting for book selection and attendance rules to keep meetings running"}]]],
     skills:[
       [{k:"전자구조 방법",e:"Electronic structure"},"DFT, TDDFT, CCSD(T), DLPNO-CCSD(T), MRCI, XMS-CASPT2"],
       [{k:"반경험적 방법, 역장",e:"Semi-empirical, force fields"},"DFTB (GFN1-xTB), PM3, PM7, ReaxFF"],
@@ -979,15 +975,12 @@ function About(){
       [{k:"자동화, 데이터",e:"Automation and data"},{k:"Python으로 계산 입력 생성, 결과 파싱, 물성 산출. AI 코딩 도구 활용",e:"Python for input generation, output parsing and property calculation, using AI coding tools"}],
       [{k:"실험 장비",e:"Instrumentation"},{k:"자외선-가시광선 분광광도계(UV-Vis), 푸리에 변환 적외선 분광기(FT-IR), X선 회절 분석기(XRD), 주사전자현미경(SEM), 투과전자현미경(TEM)",e:"UV-Vis spectrophotometry, Fourier-transform infrared spectroscopy (FT-IR), X-ray diffraction (XRD), scanning electron microscopy (SEM), transmission electron microscopy (TEM)"}]],
     awards:[
-      ["2022.11",{k:"2022년 화학과 팀 단기 학술발표회 우수상",e:"Excellence Award, 2022 Department of Chemistry Team Research Symposium"},{k:"가톨릭대학교 화학과. NiTi-LDH/나노카본 하이브리드 촉매의 연료전지 촉매 성능 연구 (SEM, TEM, XRD 직접 측정)",e:"The Catholic University of Korea. NiTi-LDH/nanocarbon hybrid catalysts for fuel cells (SEM, TEM and XRD measured in person)"}],
-      ["2020 ~ 2024",{k:"삼성꿈장학재단 장학생",e:"Samsung Dream Scholarship Foundation Scholar"},""]],
+      ["2022.11",{k:"2022년 화학과 팀 단기 학술발표회 우수상",e:"Excellence Award, 2022 Department of Chemistry Team Research Symposium"},{k:"가톨릭대학교 화학과. NiTi-LDH/나노카본 하이브리드 촉매의 연료전지 촉매 성능 연구 (SEM, TEM, XRD 직접 측정)",e:"The Catholic University of Korea. NiTi-LDH/nanocarbon hybrid catalysts for fuel cells (SEM, TEM and XRD measured in person)"}]],
     certs:[
-      ["2026.02",{k:"OPIc 영어 Intermediate High",e:"OPIc English, Intermediate High"},""],
-      ["2024.01",{k:"자동차운전면허 1종 보통",e:"Class 1 Ordinary Driver's License"},""],
-      ["",{k:"태권도 3단",e:"Taekwondo, 3rd Dan"},""]]
+      ["2026.02",{k:"OPIc 영어 Intermediate High",e:"OPIc English, Intermediate High"},""]]
   };
   const desc = d => Array.isArray(d) ? `<ul class="dots small">${d.map(x=>`<li>${t(x)}</li>`).join("")}</ul>` : (t(d)?`<p>${t(d)}</p>`:"");
-  const tlist = arr => `<ul class="tl">${arr.map(([w,b,d])=>`<li><span class="when">${t(w)}</span><span><b>${t(b)}</b>${desc(d)}</span></li>`).join("")}</ul>`;
+  const tlist = arr => `<ul class="tl">${arr.map(r=>{const [w,b,x,y]=r; const typ = r.length===4 ? x : null; const d = r.length===4 ? y : x; return `<li><span class="when">${t(w)}</span><span><b>${t(b)}</b>${typ?`<span class="etype">${t(typ)}</span>`:""}${desc(d)}</span></li>`;}).join("")}</ul>`;
   return `<div class="wrap page">
     <h1 class="page-title" tabindex="-1">${t(U.aboutTitle)}</h1><p class="page-sub">${t(U.aboutSub)}</p>
     <div class="about-grid">
@@ -997,7 +990,6 @@ function About(){
       <h2>${t(U.skills)}</h2><div><dl class="skillset">${A.skills.map(([a,b])=>`<dt>${t(a)}</dt><dd>${t(b)}</dd>`).join("")}</dl></div>
       <h2>${t(U.awards)}</h2><div>${tlist(A.awards)}</div>
       <h2>${t(U.certs)}</h2><div>${tlist(A.certs)}</div>
-      <h2>${t(U.parttime)}</h2><div>${tlist(A.parttime)}</div>
       <h2>${t(U.activities)}</h2><div>${tlist(A.activities)}</div>
       <h2>${t(U.contact)}</h2><div><p style="color:var(--ink-2)">${t(U.contactP)}</p>
         <div class="d-actions"><!-- TODO: 실제 이메일 주소로 바꾸기 --><a class="btn primary" href="mailto:your.email@example.com">${t(U.mailBtn)}</a><a class="btn" href="https://github.com/ingyeong-kim" target="_blank" rel="noopener">GitHub</a></div></div>
