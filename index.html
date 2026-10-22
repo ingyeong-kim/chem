@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김인경 | 계산화학</title>
+<meta name="description" content="반도체 공정가스와 소재의 반응을 DFT, DFTB-MD로 계산하는 계산화학 연구자 김인경의 웹사이트">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#F3F5F9;--surface:#FFFFFF;--ink:#16202E;--ink-2:#4A5568;--ink-3:#7A8699;
+  --line:#D5DBE5;--accent:#5338D6;--accent-soft:#E7E2FB;--ref:#9AA5B6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10151F;--surface:#171E2B;--ink:#E8ECF3;--ink-2:#AEB7C6;--ink-3:#7D889B;
+    --line:#2A3445;--accent:#9C8CFF;--accent-soft:#2A2550;--ref:#5D6879;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10151F;--surface:#171E2B;--ink:#E8ECF3;--ink-2:#AEB7C6;--ink-3:#7D889B;
+  --line:#2A3445;--accent:#9C8CFF;--accent-soft:#2A2550;--ref:#5D6879;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:17px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+a{color:inherit}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1:focus{outline:none}
+.wrap{max-width:1040px;margin:0 auto;padding-left:24px;padding-right:24px;width:100%}
+sub,sup{font-size:.72em;line-height:0}
+main{flex:1}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav .me{font-weight:800;text-decoration:none;letter-spacing:-.02em;font-size:18px}
+.nav .me span{font-weight:500;color:var(--ink-3);font-size:14px;margin-left:8px;letter-spacing:0}
+.nav ul{display:flex;gap:6px;list-style:none;font-size:15px}
+.nav ul a{text-decoration:none;color:var(--ink-2);padding:6px 12px;border-radius:6px}
+.nav ul a:hover{color:var(--ink);background:var(--surface)}
+.nav ul a[aria-current="page"]{color:var(--accent);font-weight:600;background:var(--accent-soft)}
+
+/* common */
+.page{padding-top:56px;padding-bottom:96px}
+.page-title{font-size:clamp(32px,5vw,44px);font-weight:800;letter-spacing:-.035em;line-height:1.2}
+.page-sub{color:var(--ink-2);margin-top:10px;max-width:40em}
+h2{font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.4}
+.crumb{font-size:14px;color:var(--ink-3);margin-bottom:18px}
+.crumb a{text-decoration:none;color:var(--ink-2)}
+.crumb a:hover{color:var(--accent);text-decoration:underline}
+.crumb .sep{margin:0 8px;color:var(--line)}
+.chip{display:inline-block;font-size:13px;padding:3px 10px;border-radius:20px;background:var(--accent-soft);color:var(--accent);font-weight:600;white-space:nowrap}
+.chip.line{background:none;border:1px solid var(--line);color:var(--ink-2);font-weight:500}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;border:1.5px solid var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary:hover{background:var(--accent);color:#fff}
+.chev{flex:none;width:20px;height:20px;color:var(--ink-3);transition:transform .15s}
+
+/* home hero */
+.hero{padding-top:72px}
+.hero h1{font-size:clamp(44px,7vw,72px);font-weight:800;letter-spacing:-.04em;line-height:1.05}
+.hero .en{display:block;font-size:clamp(17px,2vw,22px);font-weight:500;letter-spacing:0;color:var(--ink-3);margin-top:12px}
+.hero .lead{font-size:clamp(20px,2.4vw,26px);font-weight:600;letter-spacing:-.02em;margin-top:28px;max-width:28em;line-height:1.5}
+.hero .sub{color:var(--ink-2);margin-top:12px;max-width:38em}
+.hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.pes{margin-top:48px;width:100%;height:auto;display:block}
+.pes .curve{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round}
+.pes .axis{stroke:var(--line);stroke-width:1.5}
+.pes .guide{stroke:var(--ref);stroke-width:1;stroke-dasharray:4 5}
+.pes .pt{fill:var(--bg);stroke:var(--accent);stroke-width:2}
+.pes text{fill:var(--ink-3);font-size:13px;font-family:inherit}
+.pes .lbl{fill:var(--ink);font-weight:600;font-size:14px}
+@media (prefers-reduced-motion:no-preference){
+  .pes .curve{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.2s cubic-bezier(.6,.1,.2,1) .2s forwards}
+  .pes .pt,.pes .lbl,.pes .guide{opacity:0;animation:fade .5s ease forwards}
+  .pes .d1{animation-delay:.5s}.pes .d2{animation-delay:1s}.pes .d3{animation-delay:1.4s}.pes .d4{animation-delay:1.8s}.pes .d5{animation-delay:2.2s}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:8px}
+.facts a{padding:20px 16px 18px 0;text-decoration:none;display:block}
+.facts a+a{padding-left:20px;border-left:1px solid var(--line)}
+.facts a:hover b{color:var(--accent)}
+.facts b{display:block;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.facts span{font-size:14px;color:var(--ink-2)}
+
+.home-sec{margin-top:80px}
+.home-sec .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:18px}
+.home-sec .head a{font-size:15px;color:var(--ink-2);text-decoration:none;font-weight:500}
+.home-sec .head a:hover{color:var(--accent)}
+.feature{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px}
+.feature a{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;text-decoration:none;transition:border-color .15s}
+.feature a:hover{border-color:var(--accent)}
+.feature a:hover .chev{transform:translateX(3px);color:var(--accent)}
+.feature .k{font-size:13px;color:var(--ink-3)}
+.feature h3{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.4;margin-top:6px}
+.feature p{font-size:15px;color:var(--ink-2);margin-top:8px;flex:1}
+.feature .big{font-size:34px;font-weight:800;letter-spacing:-.03em;color:var(--accent);margin-top:16px;line-height:1.1}
+.feature .big small{display:block;font-size:13px;font-weight:500;color:var(--ink-3);letter-spacing:0;margin-top:4px}
+.feature .foot{display:flex;justify-content:flex-end;margin-top:14px}
+
+/* tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-top:36px;overflow-x:auto}
+.tabs a{padding:12px 16px;text-decoration:none;color:var(--ink-2);font-weight:600;border-bottom:2.5px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs a:hover{color:var(--ink)}
+.tabs a[aria-current="page"]{color:var(--accent);border-color:var(--accent)}
+.tabs .n{font-weight:500;color:var(--ink-3);margin-left:4px;font-size:14px}
+
+/* list rows */
+.rows{list-style:none;margin-top:8px}
+.rows > li{border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:96px 1fr 24px;gap:20px;align-items:start;padding:22px 8px 22px 0;text-decoration:none}
+.row:hover .r-title{color:var(--accent)}
+.row:hover .chev{transform:translateX(3px);color:var(--accent)}
+.row .yr{font-size:14px;color:var(--ink-3);padding-top:3px}
+.r-title{font-weight:600;font-size:18px;line-height:1.5;letter-spacing:-.01em}
+.r-meta{font-size:14px;color:var(--ink-2);margin-top:4px}
+.r-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;min-width:0}
+.r-tags .chip{white-space:normal}
+.row > span{min-width:0}
+.row .chev{margin-top:4px}
+.group-h{font-size:15px;font-weight:700;color:var(--ink-3);margin-top:44px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+
+/* talks (expandable) */
+details.talk{border-bottom:1px solid var(--line)}
+details.talk summary{list-style:none;display:grid;grid-template-columns:96px 1fr auto 24px;gap:20px;align-items:start;padding:20px 8px 20px 0;cursor:pointer}
+details.talk summary::-webkit-details-marker{display:none}
+details.talk summary:hover .r-title{color:var(--accent)}
+details.talk .chev{transform:rotate(90deg);margin-top:4px}
+details.talk[open] .chev{transform:rotate(-90deg)}
+details.talk .body{padding:0 32px 24px 116px;color:var(--ink-2);font-size:16px}
+details.talk .body p+p{margin-top:8px}
+details.talk .body .lab{color:var(--accent);font-weight:600;margin-right:6px}
+
+/* detail pages */
+.d-head{padding-bottom:28px;border-bottom:1px solid var(--line)}
+.d-title{font-size:clamp(26px,3.6vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.3;max-width:28em}
+.d-meta{margin-top:14px;color:var(--ink-2);font-size:15px}
+.d-meta b{color:var(--ink);font-weight:600}
+.authors{margin-top:10px;font-size:15px;color:var(--ink-2)}
+.authors strong{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
+.d-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.d-grid{display:grid;grid-template-columns:1fr 280px;gap:56px;margin-top:40px}
+.d-body section+section{margin-top:44px}
+.d-body h2{margin-bottom:12px}
+.d-body p{color:var(--ink-2)}
+.d-body p+p{margin-top:10px}
+.d-body ul.dots{list-style:none;color:var(--ink-2)}
+.d-body ul.dots li{position:relative;padding-left:16px;margin-top:8px}
+.d-body ul.dots li::before{content:"";position:absolute;left:0;top:.75em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.d-body strong{color:var(--ink);font-weight:600}
+.role-box{background:var(--accent-soft);border-radius:10px;padding:20px 22px}
+.role-box h2{font-size:18px;color:var(--accent);margin-bottom:8px}
+.role-box ul.dots{color:var(--ink)}
+.steps{list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 44px;color:var(--ink-2)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.steps li::after{content:"";position:absolute;left:14px;top:32px;bottom:4px;width:1.5px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps li b{color:var(--ink);display:block;font-weight:600}
+.formula{margin-top:14px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:8px;font-size:17px;text-align:center;color:var(--ink);font-style:italic}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:12px}
+.kpi div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.kpi b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.kpi span{font-size:13px;color:var(--ink-2)}
+.bars{margin-top:16px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.bars .cap{font-size:14px;color:var(--ink-2);margin-bottom:10px}
+.bar{display:grid;grid-template-columns:84px 1fr 56px;align-items:center;gap:12px;font-size:14px;margin-top:8px;color:var(--ink-2)}
+.bar .track{height:12px;background:var(--bg);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:6px}
+.bar.ref .fill{background:var(--ref)}
+.bar.dim .fill{background:color-mix(in srgb,var(--accent) 40%,var(--bg))}
+.bar b{font-weight:700;text-align:right;color:var(--ink)}
+.tline{list-style:none;margin-top:8px;border-left:2px solid var(--line);padding-left:18px}
+.tline li{position:relative;padding:6px 0;color:var(--ink-2);font-size:15px}
+.tline li::before{content:"";position:absolute;left:-24px;top:15px;width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tline b{color:var(--ink);display:inline-block;min-width:84px;font-weight:600}
+table.data{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+table.data th,table.data td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line)}
+table.data th:first-child,table.data td:first-child{text-align:left}
+table.data thead th{color:var(--ink-3);font-weight:600;background:var(--bg)}
+table.data tr:last-child td{border-bottom:none}
+.tblwrap{overflow-x:auto}
+.note{font-size:14px;color:var(--ink-3);margin-top:10px}
+.aside{font-size:14px}
+.aside .box{border-top:2px solid var(--ink);padding-top:14px}
+.aside .box+.box{margin-top:28px}
+.aside h3{font-size:14px;color:var(--ink-3);font-weight:600;margin-bottom:8px}
+.aside dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;color:var(--ink-2)}
+.aside dt{color:var(--ink-3)}
+.aside dd{color:var(--ink)}
+.aside ul{list-style:none}
+.aside li+li{margin-top:10px}
+.aside li a{color:var(--ink);text-decoration:none;font-weight:500;line-height:1.5;display:block}
+.aside li a:hover{color:var(--accent);text-decoration:underline}
+.aside li small{display:block;color:var(--ink-3)}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:64px;border-top:1px solid var(--line);padding-top:24px}
+.pager a{text-decoration:none;display:block;padding:4px 0}
+.pager a small{display:block;color:var(--ink-3);font-size:13px}
+.pager a span{font-weight:600;line-height:1.5}
+.pager a:hover span{color:var(--accent)}
+.pager .next{text-align:right}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:200px 1fr;gap:12px 40px;margin-top:48px}
+.about-grid > h2{font-size:18px;padding-top:18px;border-top:2px solid var(--ink)}
+.about-grid > div{border-top:1px solid var(--line);padding-top:18px;margin-bottom:28px}
+.tl{list-style:none}
+.tl li{display:grid;grid-template-columns:150px 1fr;gap:16px}
+.tl li+li{margin-top:16px}
+.tl .when{font-size:14px;color:var(--ink-3);padding-top:2px}
+.tl b{font-weight:700}
+.tl p{font-size:15px;color:var(--ink-2);margin-top:2px}
+.skillset{display:grid;grid-template-columns:150px 1fr;gap:10px 16px;font-size:16px}
+.skillset dt{font-size:14px;color:var(--ink-3);padding-top:2px}
+
+footer{border-top:1px solid var(--line);padding:32px 0 40px;font-size:14px;color:var(--ink-3)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:var(--ink-2)}
+
+@media (max-width:880px){
+  .feature{grid-template-columns:1fr}
+  .d-grid{grid-template-columns:1fr;gap:40px}
+  .facts{grid-template-columns:repeat(2,1fr)}
+  .facts a:nth-child(3){padding-left:0;border-left:none}
+  .facts a:nth-child(n+3){border-top:1px solid var(--line)}
+  .about-grid{grid-template-columns:1fr;gap:0}
+  .about-grid > h2{border-top:none;padding-top:0}
+  .about-grid > div{border-top:none;padding-top:10px;margin-bottom:36px}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding-left:16px;padding-right:16px}
+  .nav .me span{display:none}
+  .nav ul a{padding:6px 9px}
+  .page{padding-top:36px}
+  .hero{padding-top:44px}
+  .row{grid-template-columns:1fr 20px;gap:6px 12px}
+  .row .yr{grid-column:1/-1;padding-top:0}
+  .row .yr br{display:none}
+  .row .chev{grid-column:2;grid-row:2}
+  details.talk summary{grid-template-columns:1fr 20px;gap:6px 12px}
+  details.talk summary .yr{grid-column:1/-1}
+  details.talk summary .tagc{grid-column:1;grid-row:3}
+  details.talk summary .chev{grid-column:2;grid-row:2}
+  details.talk .body{padding:0 0 20px 0}
+  .tl li,.skillset{grid-template-columns:1fr;gap:2px}
+  .skillset dd{margin-bottom:10px}
+  .pager{grid-template-columns:1fr}
+  .pager .next{text-align:left}
+  .bar{grid-template-columns:70px 1fr 46px}
+  .pes text{font-size:16px}.pes .lbl{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="주요 메뉴">
+  <div class="wrap">
+    <a class="me" href="#/">김인경<span>Computational Chemistry</span></a>
+    <ul>
+      <li><a href="#/research" data-nav="research">연구</a></li>
+      <li><a href="#/about" data-nav="about">소개</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 김인경. 2026년 10월 업데이트.</span>
+    <span><!-- TODO: 실제 이메일 주소로 바꾸기 --><a href="mailto:your.email@example.com">메일</a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/ingyeong-kim" target="_blank" rel="noopener">GitHub</a></span>
+  </div>
+</footer>
+
+<script>
+const ME = "I. Kim";
+const CHEV = '<svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/* ---------- 논문 ---------- */
+const PAPERS = [
+  {
+    id:"tx4", date:"2026.06", journal:"J. Chem. Phys.", cite:"164, 214301 (2026)", doi:"10.1063/5.0329963",
+    title:"Spin-orbit effects on molecular properties of Group 14 tetracoordinate compounds TX<sub>4</sub>",
+    authors:["J. Kim","Y. Jin","W. Seo","H. Kim","I. Kim","R. K. Yadav","J. S. Lim"],
+    tags:["스핀-궤도 결합","UV-Vis 흡수","2성분 DFT"],
+    summary:[
+      "14족 사배위 화합물 TX<sub>4</sub> 15종(T = Ge, Sn, Pb / X = H, F, Cl, Br, I)에서 스핀-궤도 결합(SOC)이 분자 물성에 주는 영향을 2성분 SO-DFT(PBE0, MN15)로 계산했습니다.",
+      "TDDFT 계산으로 SOC가 단일항과 삼중항 상태를 섞어, 무거운 원자를 포함한 TX<sub>4</sub>의 UV-Vis 흡수 스펙트럼을 바꾼다는 것을 확인했습니다."
+    ],
+    role:["TX<sub>4</sub> 15종의 분자 구조 최적화 전체"],
+    related:{projects:[],talks:[]}
+  },
+  {
+    id:"water-reactive", date:"2026.02", journal:"J. Phys. Chem. A", cite:"130, 1615–1630 (2026)", doi:"",
+    title:"DFTB-MD Simulations and Quantum Chemical Investigations of Reaction Mechanisms of Water-Reactive Molecules (SiH<sub>2</sub>Cl<sub>2</sub>, PCl<sub>3</sub>, SOCl<sub>2</sub>)",
+    authors:["W. Seo","J. Park","I. Kim","Y. Jin","E. Park","J. Kim","J. Kim"],
+    tags:["반응 메커니즘","DFTB-MD","반도체 공정가스"],
+    summary:[
+      "반도체 공정에서 쓰이며 물과 격렬히 반응하는 SiH<sub>2</sub>Cl<sub>2</sub>, PCl<sub>3</sub>, SOCl<sub>2</sub>의 가수분해 메커니즘을 다뤘습니다.",
+      "물 분자를 명시적으로 넣은 DFTB-MD로 자주 나타나는 반응 경로를 먼저 찾고, 그 경로의 에너지를 DFT와 DLPNO-CCSD(T)로 정량했습니다. SiH<sub>4</sub>로 방법을 검증했고, 전이상태 이론으로 구한 속도상수를 확산 한계 및 실험값과 비교했습니다."
+    ],
+    role:["SOCl<sub>2</sub>의 DFTB-MD 시뮬레이션","SOCl<sub>2</sub> 가수분해 경로의 DFT 메커니즘 계산"],
+    related:{projects:["water-reactive"],talks:[]}
+  },
+  {
+    id:"vinyl-iodide", date:"2025.07", journal:"J. Chem. Phys.", cite:"163, 044312 (2025)", doi:"10.1063/5.0272176",
+    title:"Spin-orbit ab initio and DFT study of vinyl iodide",
+    authors:["J. Kim","J. Park","I. Kim","W. Seo","Y. Jin","J. Lee","T. K. Kim"],
+    tags:["광해리","들뜬 상태","KAIST 공동연구"],
+    summary:[
+      "비닐 아이오다이드가 자외선을 흡수해 C–I 결합이 끊어지는 광해리 과정을 다뤘습니다.",
+      "약 250 nm의 넓은 흡수 띠에 삼중항 4A′, 4A″ 상태가 기여한다는 것을 처음으로 배정했습니다. MRCI+Q+SO와 TDDFT+SO로 들뜬 상태와 C–I 해리 퍼텐셜 곡선을 계산해, 실험에서 관측된 파장별 양자수율과 비등방성 인자를 설명했습니다."
+    ],
+    role:["논문에 실린 그림과 표 전체 작성"],
+    related:{projects:["etch"],talks:[]}
+  },
+  {
+    id:"aute", date:"2025.07", journal:"J. Chem. Phys.", cite:"163, 044313 (2025)", doi:"10.1063/5.0258887",
+    title:"MRCI study of potential energy curves of gold monotelluride (AuTe)",
+    authors:["J. Park","W. Seo","I. Kim","E. Park","J. Kim","R. K. Yadav","J. Kim"],
+    tags:["퍼텐셜 곡선","분광 상수","MRCI"],
+    summary:[
+      "이원자 분자 AuTe의 바닥 상태와 낮은 들뜬 상태의 퍼텐셜 에너지 곡선을 MRCI+Q+SOC로 계산했습니다.",
+      "계산한 분광 상수는 실험값과 잘 맞았고, Te 원자의 <sup>3</sup>P<sub>0</sub>, <sup>3</sup>P<sub>1</sub> 에너지 준위 순서도 재현했습니다."
+    ],
+    role:["결과 해석","결과 그래프와 그림 작성","TOC 그래픽 제작"],
+    related:{projects:["etch"],talks:[]}
+  },
+  {
+    id:"au10", date:"2024.11", journal:"J. Chem. Phys.", cite:"161, 184301 (2024)", doi:"10.1063/5.0234144",
+    title:"Revisiting the global minimum of Au<sub>10</sub> clusters",
+    authors:["J. Kim","W. Seo","J. Park","I. Kim","E. Park","J. Kim"],
+    tags:["금속 클러스터","전역 최저점","방법론 비교"],
+    summary:[
+      "금 원자 10개로 이루어진 Au<sub>10</sub> 클러스터의 여러 이성질체 중 가장 안정한 구조가 무엇인지 다시 검토했습니다.",
+      "DFT 범함수 종류와 PNO-LCCSD(T)-F12 같은 고정밀 방법에 따라 결론이 어떻게 달라지는지 비교했습니다."
+    ],
+    role:["방법론 비교 중 TPSS 계열 범함수 계산 전체","IR 스펙트럼 70개 이상의 피크 처리를 파이썬으로 자동화, 결과 그림 수록"],
+    related:{projects:[],talks:["au-2d3d"]}
+  },
+  {
+    id:"ea", date:"2024.06", journal:"J. Chem. Phys.", cite:"160, 224307 (2024)", doi:"10.1063/5.0207127",
+    title:"Quantum chemical calculations of electron affinities of alkaline earth metal atoms (Ca, Sr, Ba, Ra)",
+    authors:["E. Park","J. Park","I. Kim","J. Kim","W. Seo","R. K. Yadav","J. Kim"],
+    tags:["전자친화도","알칼리 토금속"],
+    summary:[
+      "알칼리 토금속 원자 Ca, Sr, Ba, Ra의 전자친화도를 양자화학 계산으로 구했습니다.",
+      "계산값을 레이저 광탈착 문턱법으로 측정한 실험값과 비교했고, 실험 측정이 어려워 추정치만 있는 Ra도 다뤘습니다."
+    ],
+    role:["Ca 계산 전체"],
+    related:{projects:[],talks:[]}
+  }
+];
+const THESIS = {
+  id:"thesis", date:"2026.02", journal:"석사학위논문", cite:"가톨릭대학교 대학원 화학과", doi:"",
+  title:"1,2-옥사제트 형성 반응 메커니즘에 관한 이론적 연구",
+  sub:"Theoretical Investigation of the Reaction Mechanism on Formation of 1,2-Oxazete",
+  authors:["I. Kim"], tags:["석사학위논문","광반응","전이상태"],
+  summary:[
+    "실험 논문이 제안한 세드렌과 아질산 무수물의 1,2-옥사제트 생성 경로를 이론으로 검증했습니다. 구조는 DFT(MN15/def2-TZVPP), 흡수 스펙트럼은 TDDFT로 계산하고 MN15/QZ4P 단일점 에너지로 보정했습니다.",
+    "중간체 IM2의 최대 흡수 파장이 428 nm(HOMO−1 → LUMO+1)로 계산되어, 실험에서 쓴 청색광 조건과 맞았습니다. 이 빛으로 N–O 결합이 광해리되어 알콕시 라디칼이 생긴다는 해석을 뒷받침했습니다."
+  ],
+  role:["중간체 7종(IM1~IM7)과 전이상태 5종 전부 직접 탐색, 최적화","전이상태 5개 모두 IRC로 반응 경로 확인"],
+  related:{projects:[],talks:["oxazete"]}
+};
+
+/* ---------- 학회 발표 ---------- */
+const TALKS = [
+  {id:"rusi4", date:"2025.10", venue:"대한화학회 제136회 학술발표회", first:true,
+   title:"RuSi<sub>4</sub><sup>−</sup> 클러스터 전역 최저점 구조 재검증",
+   body:"기존 연구가 B3LYP로 보고한 2A′ 최저점 구조를 PBE0, UCCSD(T), XMS-CASPT2로 다시 계산했습니다. 4A″가 실제 전역 최저점이고 2A′는 허수 진동수를 가진 전이상태임을 밝혔고, 뒤틀린 2A 국소 최저점과 2A″ 상태를 새로 찾았습니다. T1 진단값이 0.08 수준으로 다중참조 특성이 큰 계였습니다.",
+   project:"etch"},
+  {id:"au-2d3d", date:"2025.04", venue:"대한화학회 제135회 학술발표회", first:true,
+   title:"Au<sub>n</sub> (n=2~14) 클러스터의 2D에서 3D 구조 전이",
+   body:"범함수 4종(revTPSS, TPSS, TPSSh, B1B95)에 분산 보정 D3(BJ) 유무를 조합한 8개 조건으로 비교했습니다. 원자 12개까지는 평면 구조, 13개부터는 입체 구조가 가장 안정하다는 전이 지점을 확인하고 문헌의 CCSD(T) 값과 대조했습니다.",
+   project:"etch"},
+  {id:"sn", date:"2024.10", venue:"대한화학회 제134회 학술발표회", first:true,
+   title:"주석 클러스터의 구조와 전자 특성 DFT 연구",
+   body:"Sn<sub>n</sub>(n=2~12)의 초기 구조 후보를 인공벌군집 알고리즘(ABCluster)으로 만들고 MN15/dhf-TZVPP로 최적화해 단계적으로 걸러냈습니다. Sn<sub>2~4</sub>는 CCSD(T)로 확인했습니다. 2차 에너지 차이로 볼 때 Sn<sub>7</sub>이 가장 안정했고, 실험 이온화 에너지와 비교했습니다.",
+   project:"gwp"},
+  {id:"oxazete", date:"2024.07", venue:"International Workshop on New Advances in Theoretical and Computational Molecular Sciences", first:true,
+   title:"1,2-Oxazete 생성 반응 메커니즘",
+   body:"석사학위논문의 중간 결과입니다. 중간체의 광흡수 파장이 428 nm로 예측되어 실험의 청색광 조사 조건과 일치했습니다.",
+   paper:"thesis"},
+  {id:"dielectric", date:"2023.05", venue:"한국공업화학회 춘계 학술대회", first:false,
+   title:"고분자 5종의 유전상수 DFTB-MD 계산",
+   body:"PE, PI, PVDC, Neoprene, PVDF 모델을 298 K에서 최대 2 ns, 독립 궤적 10개로 DFTB-MD 계산하고, PM3 쌍극자 모멘트의 요동으로 유전상수를 구했습니다. 계산값은 실험값보다 약간 컸습니다.",
+   role:"기존 파이썬 스크립트 고도화", project:"packaging"},
+  {id:"indole", date:"2023.05", venue:"한국공업화학회 춘계 학술대회", first:false,
+   title:"Indole의 Dearomative (3+2) 고리화 반응",
+   body:"3-메틸인돌과 2,3-다이메틸인돌의 수율 차이(65%, 85%)를 속도결정단계 활성화에너지(24.7, 22.7 kcal/mol) 차이로 설명했습니다. M06-2X/def2-TZVPP 최적화와 DLPNO-CCSD(T) 단일점 계산을 썼습니다.",
+   role:"반응 경로 탐색과 전이상태 검증 계산 분담"}
+];
+
+/* ---------- 국가과제 ---------- */
+const PROJECTS = [
+  {
+    id:"etch", group:"semi", period:"2024.01 ~ 2025.12",
+    title:"C<sub>4</sub>F<sub>8</sub> 식각 플라즈마의 분해 생성물 조성 예측",
+    official:"반도체 식각공정 온실가스의 공정모니터링 및 분석기술 개발",
+    agency:"산업통상자원부, KEIT 탄소중립산업핵심기술개발사업",
+    lead:"한국표준과학연구원 주관, 10개 기관 참여",
+    role:"C<sub>4</sub>F<sub>8</sub> 플라즈마 DFTB-MD 시뮬레이션 담당",
+    tags:["플라즈마 시뮬레이션","DFTB-MD","온실가스"],
+    oneline:"식각 플라즈마 속 C<sub>4</sub>F<sub>8</sub>이 무엇으로 쪼개지는지 계산으로 재현했습니다.",
+    background:[
+      "반도체 식각 공정에 쓰는 과불화 가스는 지구온난화지수(GWP)가 높지만, 기관마다 보고하는 GWP 값이 다르고(NF<sub>3</sub> 8%, SF<sub>6</sub> 13%, CF<sub>4</sub> 25% 차이) 국제 표준도 없습니다.",
+      "이 과제는 공정에서 나오는 배출가스를 모니터링하고 분석하는 기술을 만드는 장기 과제로, 가톨릭대는 배출가스 DB를 맡았습니다."
+    ],
+    mine:[
+      "C<sub>4</sub>F<sub>8</sub> 플라즈마 DFTB-MD 모델 구축(2차년도)과 조건 최적화(3차년도)",
+      "활성종 조성에 스케일링 팩터를 적용한 IR 흡수 스펙트럼 총합 예측 코드",
+      "PMVE와 OH 라디칼의 대기 반응 메커니즘",
+      "온실가스 5종의 대기수명, 복사효율, GWP 산출과 계산 스크립트 (동료와 공동 수행)"
+    ],
+    method:[
+      ["플라즈마 환경 모사","ICP 저압 플라즈마를 C<sub>4</sub>F<sub>8</sub>:Ar 1:7, 3 Pa로 설정하고 Fermi 온도로 전자를 들뜨게, x, y, z 전기장으로 이온을 가속했습니다."],
+      ["실험과 비교할 척도 찾기","플라즈마 DFTB-MD는 비교할 선행 계산이 없어 논문 21편을 검토했고, electron density를 시뮬레이션과 실험을 잇는 척도로 도입했습니다."],
+      ["조건 격자 탐색","Fermi 온도 9단계(2,000~4,000 K)와 전기장 5단계(3.5~4.5 V/Å), 45개 조건을 동료와 나눠 계산했습니다."],
+      ["생성물 조성 비교","최적 조건에서 생성물 비율을 구해 실험값과 비교했습니다."]
+    ],
+    results:{
+      bars:{cap:"CF<sub>2</sub> 존재 비율 (%)",items:[["2차년도",21.1,"dim"],["3차년도",67.2,""],["실험값",66.2,"ref"]]},
+      kpi:[["62.8%","공정가스 조성 DB 정합성 (목표 54%)"],["2,750 K","최적 Fermi 온도"],["4.5 V/Å","최적 전기장 세기"],["300 K","최적 Thermostat"]],
+      text:["2차년도 모델(Thermostat 500 K, Fermi 5,000 K, 2 V/Å)은 C<sub>4</sub>F<sub>8</sub> → 2C<sub>2</sub>F<sub>4</sub> → 2CF<sub>2</sub> 경로는 보였지만 CF<sub>2</sub> 비율이 21.1%에 그쳤습니다. 3차년도에는 Fermi 온도를 낮추고 전기장을 높이는 방향으로 조정해 실험값 66.2%에 근접한 67.2%를 얻었습니다."]
+    },
+    limit:"시뮬레이션 도중 C<sub>4</sub>F<sub>8</sub>이 모두 분해되어 잔류량(실험 1.7%)은 재현하지 못했습니다. 연차보고서에도 추가 고도화가 필요한 한계로 기록했습니다.",
+    papers:["vinyl-iodide","aute"], talks:["rusi4","au-2d3d"]
+  },
+  {
+    id:"gwp", group:"semi", period:"2023.01 ~ 2024.12",
+    title:"온실가스 대기수명과 지구온난화지수 예측",
+    official:"반도체 온실가스 대기수명 예측을 위한 광기반 라디칼 측정기술",
+    agency:"KEIT, 한국반도체연구조합",
+    lead:"한국표준과학연구원 주관, 한국화학융합시험연구원, 가톨릭대",
+    role:"GWP 예측 모델 학습 데이터 구축",
+    tags:["GWP","머신러닝","반응속도"],
+    oneline:"반응속도 데이터 1,247건으로 학습 DB를 만들어 GWP 예측 정확도 R² 0.8523을 얻었습니다.",
+    background:[
+      "온실가스가 대기에 얼마나 오래 남는지는 주로 OH 라디칼과의 반응 속도로 정해지고, 대기수명과 적외선 흡수량이 GWP를 결정합니다.",
+      "표준연은 레이저로 반응 속도를 직접 측정하고, 가톨릭대는 양자화학 계산과 머신러닝으로 이를 예측하는 역할을 맡았습니다."
+    ],
+    mine:[
+      "동료와 \"298 K 실험값이 있는 물질\"을 선별 기준으로 정하고, NIST와 JPL에서 OH 반응속도 데이터 1,247건을 모아 학습 DB 구축",
+      "참고문헌 2종과 수기 교차 검증으로 단위 환산 누락, 허수 진동수 인식 오류 수정",
+      "공동연구진이 개발한 GCN 프레임워크로 모델 학습",
+      "CF<sub>4</sub>는 OH와 반응하지 않고 성층권에서 광분해되므로 이 방식의 적용 범위 밖임을 확인"
+    ],
+    method:[
+      ["반응 메커니즘","DSDPBEP86으로 구조를 찾고 CCSD(T) 단일점으로 OH 반응의 활성화에너지를 계산했습니다."],
+      ["속도상수와 대기수명","RRKM과 사전평형 근사로 전체 속도상수를 구하고, τ = (k[OH])<sup>−1</sup>로 대기수명을 계산했습니다."],
+      ["복사효율과 GWP","계산한 IR 단면적으로 복사효율을 구하고, 대기수명과 합쳐 GWP<sub>100</sub>을 산출했습니다."],
+      ["머신러닝 예측","SMILES 기반 GCN을 K-fold 교차검증으로 학습해, 계산 없이도 구조만으로 GWP를 예측하도록 했습니다."]
+    ],
+    results:{
+      kpi:[["R² 0.8523","GWP 예측 정확도 (목표 0.80)"],["1,247건","반응속도 학습 DB"],["0.330","PMVE 복사효율 (실험 0.328)"]],
+      text:["사업 평가 항목인 머신러닝 예측 정확도는 최종연도 목표 80%에 대해 85%를 달성했습니다."]
+    },
+    papers:[], talks:["sn"]
+  },
+  {
+    id:"packaging", group:"semi", period:"2024.01 ~ 2024.12",
+    title:"패키징 절연막 고분자의 유전상수와 항복전압 계산",
+    official:"반도체 후공정용 Photo definable 절연막 상용화 기술 개발",
+    agency:"KEIT 소재부품기술개발사업",
+    lead:"네패스 주관 총괄과제, 9개 기관 참여",
+    role:"PVDC 계열 고분자 계산, 항복전압 계산, 자동화 스크립트 고도화",
+    tags:["고분자 물성","유전상수","자동화"],
+    oneline:"고분자 절연막의 유전상수와 항복전압을 실험 없이 계산하는 프로토콜에 참여했습니다.",
+    background:[
+      "반도체 패키지 보호 절연막 소재는 일본산이 시장의 83% 이상을 차지합니다. 이 과제는 국산 절연막 소재를 상용화하는 총괄과제의 일부입니다.",
+      "가톨릭대는 양자 계산으로 고분자의 유전상수와 항복전압을 예측하는 방법을 맡았습니다."
+    ],
+    mine:[
+      "PVDC 계열 고분자 계산 전담",
+      "전기장 세기를 바꿔 가며 거는 항복전압 계산 구간 담당",
+      "기존 파이썬 코드를 고도화해 MD 궤적 100개 이상을 Gaussian16 입력으로 자동 변환하고, 쌍극자 모멘트에서 유전상수까지 한 번에 계산",
+      "200개 이상의 고분자 구조 연속 계산"
+    ],
+    method:[
+      ["부피 수렴","1기압 NPT DFTB-MD로 고분자 모델의 부피를 실제 밀도에 맞췄습니다."],
+      ["궤적 생성","DFTB-MD와 ReaxFF로 298 K 궤적을 만들었습니다. ReaxFF는 같은 계산을 훨씬 짧은 시간에 끝낼 수 있습니다."],
+      ["쌍극자 요동으로 유전상수","프레임마다 PM3로 쌍극자 모멘트 M을 구하고, 그 요동으로 유전상수를 계산했습니다."],
+      ["항복전압","분자 1개에 전기장을 단계적으로 높여 DFTB-MD를 돌리고, 결합이 끊어지기 시작하는 전기장을 분자 길이로 나눴습니다."]
+    ],
+    formula:"ε = 1 + 4π(⟨M²⟩ − ⟨M⟩²) / (3 V k<sub>B</sub>T)",
+    results:{
+      kpi:[["5종","PE, PVDC, Neoprene, PVDF, PI"],["200개+","연속 계산한 고분자 구조"],["순서 일치","항복전압 상대 순서 (실험 대비)"]],
+      text:["항복전압은 Neoprene < PE < PVDF < APU 순서로 계산되어 실험의 상대 순서와 일치했습니다. 절댓값이 아니라 소재 간 우열을 가리는 정성 예측입니다."]
+    },
+    papers:[], talks:["dielectric"]
+  },
+  {
+    id:"battery", group:"safety", period:"2025.05 ~ 2025.12",
+    title:"배터리 양극재 LiMn<sub>2</sub>O<sub>4</sub>와 전해질의 계면 반응",
+    official:"배터리 소재 간 반응 위험성 규명을 위한 방법 연구",
+    agency:"화학물질안전원 연구용역",
+    lead:"가톨릭대 수행",
+    role:"LMO 모델 구축부터 메커니즘 규명까지 전담",
+    tags:["배터리","ReaxFF","계면 반응"],
+    oneline:"온도가 오르면 LMO 양극재와 전해질 계면에서 어떤 가스가 얼마나 나오는지 계산했습니다.",
+    background:[
+      "전기차 열폭주, 일차전지 공장 화재(2024.06), 항공기 보조배터리 화재(2025.01)처럼 배터리 소재 간 반응이 사고로 이어지는 사례가 늘고 있습니다.",
+      "과제는 양극 3종(LCO, LMO, LFP)과 음극 2종(Graphite, Silicon)이 전해질 EC, EMC와 만나는 계면 반응을 다뤘고, 저는 LMO를 맡았습니다."
+    ],
+    mine:[
+      "LMO 문헌 조사부터 모델 구축, 메커니즘 규명까지 전담",
+      "문헌과 계산 규모를 고려해 온도 조건 5구간(500, 700, 1,000, 1,500, 2,000 K) 설정",
+      "ReaxFF로 대량 계산해 경향을 보고, DFTB-MD로 메커니즘 규명"
+    ],
+    method:[
+      ["계면 모델","LMO slab 위에 EC 100개, EMC 200개, LiPF<sub>6</sub> 40개를 올린 모델을 만들었습니다."],
+      ["온도별 경향","ReaxFF MD 100 ps를 온도마다 궤적 5개씩 돌려 평균했습니다. 전기장과 과충전(Li 제거) 조건도 비교했습니다."],
+      ["반응 경로","DFTB-MD(GFN1-xTB)에서 자주 나타난 경로를 골라 DFT로 에너지를 계산했습니다."]
+    ],
+    results:{
+      table:{head:["가스 (개)","500 K","700 K","1,000 K","1,500 K","2,000 K"],
+        rows:[["CO","10.0","18.2","36.0","131.4","336.0"],["CO<sub>2</sub>","79.8","94.8","138.6","178.8","173.8"],["CH<sub>4</sub>","0.4","1.0","1.8","5.2","9.8"]]},
+      text:["1,500 K부터 LMO 구조가 무너지며 Mn이 용출되고, CO가 급격히 늘었습니다. Li 확산계수는 모든 온도에서 LMO가 LCO보다 컸습니다.",
+            "결론적으로 LMO는 LCO보다 계면이 불안정해 CO가 많이 생기고, 이는 스웰링 위험으로 이어집니다. 저온 구동이 중요하다는 안전 정보로 정리했습니다."]
+    },
+    papers:[], talks:[]
+  },
+  {
+    id:"metal", group:"safety", period:"2024.06 ~ 2024.11",
+    title:"금속 리튬의 산화환원 반응 위험성",
+    official:"비소 등 금속류의 산화상태에 따른 위험성 예측 연구",
+    agency:"화학물질안전원 연구용역",
+    lead:"가톨릭대 수행",
+    role:"리튬 관련 MD, 반응열, 반응속도상수 계산 전담, 사고사례 수집",
+    tags:["리튬","AIMD","사고사례"],
+    oneline:"리튬이 물과 만나 수소를 만드는 과정을 펨토초 단위로 관찰하고 반응열을 계산했습니다.",
+    background:[
+      "제련소 아르신 누출(2023.12), 과망간산칼륨 누출(2021.08), 리튬 1차전지 화재처럼 금속류의 산화환원 반응이 사고로 이어지는 사례를 계산으로 예측하는 과제였습니다.",
+      "대상은 비소화아연(Zn<sub>3</sub>As<sub>2</sub>), 과망간산칼륨(KMnO<sub>4</sub>), 리튬(Li)이었고, 저는 리튬을 맡았습니다."
+    ],
+    mine:[
+      "리튬과 물, 산, 산소, SOCl<sub>2</sub>의 반응 MD, 반응열, 반응속도상수 계산 전체",
+      "금속류 산화환원 사고사례 114건 수집과 업종별 분류"
+    ],
+    method:[
+      ["표면 반응 관찰","Li(100) 표면에 물 15분자를 둔 슬래브 MD와, 물 6분자 AIMD로 반응 초기 과정을 봤습니다."],
+      ["클러스터 모델","Li<sub>n</sub>(n=2~7) 중 안정한 Li<sub>2</sub>, Li<sub>4</sub>를 골라 물, 염산, 산소와의 반응 경로를 찾았습니다."],
+      ["에너지와 속도","DFT(APFD/def2-TZVPP)와 DLPNO-CCSD(T)로 반응열을 구하고 300~600 K 반응속도상수를 계산했습니다."]
+    ],
+    timeline:{cap:"AIMD에서 본 Li 표면과 물의 반응",items:[["0 fs","물 분자가 Li 원자에 배위"],["20 fs","표면 배위"],["60 fs","H가 Li 표면에 흡착 (Li–H)"],["80 fs","H<sub>2</sub> 생성"]]},
+    results:{
+      kpi:[["−86.8","물과의 반응열 ΔH (kcal/mol)"],["−26.7","염산과의 반응열 ΔH (kcal/mol)"],["114건","수집, 분류한 사고사례"]],
+      text:["리튬은 물과 쉽게 반응해 수소를 만들고, 산 조건에서는 훨씬 격렬해집니다. SOCl<sub>2</sub>와는 SO<sub>2</sub>를, 산소와는 Li<sub>2</sub>O를 만듭니다. 석유 등에 담가 저습 보관해야 한다는 안전 정보로 정리했습니다."]
+    },
+    papers:[], talks:[]
+  },
+  {
+    id:"water-reactive", group:"safety", period:"2023.05 ~ 2023.11",
+    title:"물반응성 물질 SOCl<sub>2</sub>의 가수분해 메커니즘",
+    official:"물반응성물질 위험성 확인을 위한 방법 연구",
+    agency:"화학물질안전원 연구용역",
+    lead:"가톨릭대 수행",
+    role:"SOCl<sub>2</sub> MD와 DFT 메커니즘, 문헌 조사, 사고사례 수집",
+    tags:["반도체 공정가스","DFTB-MD","사고사례"],
+    oneline:"학부연구생으로 처음 참여한 과제입니다. SOCl<sub>2</sub>가 물과 만나 아황산이 되는 과정을 추적했습니다.",
+    background:[
+      "반도체 공장의 디요오드실란 폭발(2021.05), 특수가스 공장의 디보란 폭발(2022.04)처럼 물과 반응하는 공정가스 사고가 이어졌습니다.",
+      "실험하기 위험한 물질 8종(SiH<sub>4</sub>, PCl<sub>3</sub>, SiH<sub>2</sub>Cl<sub>2</sub>, SiH<sub>2</sub>I<sub>2</sub>, B<sub>2</sub>H<sub>6</sub>, SOCl<sub>2</sub>, TiCl<sub>4</sub>, AlP)의 반응 정보를 계산으로 확보하는 과제였고, 저는 SOCl<sub>2</sub>를 맡았습니다."
+    ],
+    mine:[
+      "SOCl<sub>2</sub>와 물의 DFTB-MD, DFT 메커니즘 규명",
+      "물 대신 메탄올, 에탄올, 이소프로필알코올과의 반응성 비교",
+      "물반응성물질 사고 22건, 반도체 등 첨단산업 사고 219건 수집과 유형 분류"
+    ],
+    method:[
+      ["셀 준비","물 50분자로 1기압, 300 K NPT를 돌려 셀 부피를 정했습니다."],
+      ["반응 관찰","NVT DFTB-MD(2,000 K, Fermi 3,000 K, 100 ps)로 반응을 일으켜 생성물을 추적했습니다."],
+      ["에너지 계산","관찰한 경로를 물 28분자 모델에서 B3LYP/def2-TZVPP와 DLPNO-CCSD(T)로 계산했습니다."]
+    ],
+    timeline:{cap:"DFTB-MD에서 본 SOCl<sub>2</sub>의 가수분해",items:[["0 ps","SOCl<sub>2</sub>"],["74.57 ps","SO<sub>2</sub> 생성"],["84.94 ps","HSO<sub>3</sub><sup>−</sup>"],["85.13 ps","H<sub>2</sub>SO<sub>3</sub> (아황산)"]]},
+    results:{
+      kpi:[["−40.4","반응열 ΔH (kcal/mol)"],["12.7","활성화에너지 (kcal/mol)"],["241건","수집, 분류한 사고사례"]],
+      text:["메탄올에서는 0.85 ps 만에 HCl이 바로 생성되었습니다. 과제 전체 결론은 Cl을 포함한 화합물은 산을, H를 포함한 화합물은 수소를 만들고, 알코올은 물보다 반응성이 낮아 저온, 저습 취급이 중요하다는 것이었습니다."]
+    },
+    papers:["water-reactive"], talks:[]
+  }
+];
+
+/* ---------- helpers ---------- */
+const $app = document.getElementById("app");
+const byId = (arr,id) => arr.find(x=>x.id===id);
+const allPapers = () => [...PAPERS, THESIS];
+const plain = s => s.replace(/<[^>]+>/g,"");
+const authorsHTML = a => a.map(n => n===ME ? `<strong>${n}</strong>` : n).join(", ");
+const tagsHTML = (t,cls="line") => t.map(x=>`<span class="chip ${cls}">${x}</span>`).join("");
+const pos = (a,id) => `${a.indexOf(id)+1}/${a.length}`;
+
+function researchTabs(cur){
+  const t = [["papers","#/research","논문",PAPERS.length+1],["projects","#/research/projects","국가과제",PROJECTS.length],["talks","#/research/talks","학회 발표",TALKS.length]];
+  return `<nav class="tabs" aria-label="연구 분류">${t.map(([k,h,l,n])=>`<a href="${h}" ${k===cur?'aria-current="page"':''}>${l}<span class="n">${n}</span></a>`).join("")}</nav>`;
+}
+function researchHead(cur){
+  return `<h1 class="page-title" tabindex="-1">연구</h1>
+  <p class="page-sub">2023년 5월 학부연구생으로 시작해 석사 과정까지, 계산화학연구실에서 수행한 논문, 국가과제, 학회 발표입니다.</p>
+  ${researchTabs(cur)}`;
+}
+function paperRow(p){
+  return `<li><a class="row" href="#/paper/${p.id}">
+    <span class="yr">${p.date}</span>
+    <span><span class="r-title" style="display:block">${p.title}</span>
+      <span class="r-meta" style="display:block">${p.journal} ${p.cite}</span>
+      <span class="r-tags">${tagsHTML(p.tags)}</span></span>
+    ${CHEV}</a></li>`;
+}
+function projectRow(p){
+  return `<li><a class="row" href="#/project/${p.id}">
+    <span class="yr">${p.period.replace(" ~ ","<br>~ ")}</span>
+    <span><span class="r-title" style="display:block">${p.title}</span>
+      <span class="r-meta" style="display:block">${p.oneline}</span>
+      <span class="r-tags"><span class="chip">${p.role}</span></span></span>
+    ${CHEV}</a></li>`;
+}
+function relatedBox(title, items){
+  if(!items.length) return "";
+  return `<div class="box"><h3>${title}</h3><ul>${items.join("")}</ul></div>`;
+}
+function relPaper(id){ const p=byId(allPapers(),id); return p?`<li><a href="#/paper/${p.id}">${p.title}<small>${p.journal}, ${p.date}</small></a></li>`:""; }
+function relProject(id){ const p=byId(PROJECTS,id); return p?`<li><a href="#/project/${p.id}">${p.title}<small>${p.period}</small></a></li>`:""; }
+function relTalk(id){ const t=byId(TALKS,id); return t?`<li><a href="#/research/talks?open=${t.id}">${t.title}<small>${t.venue}, ${t.date}</small></a></li>`:""; }
+function pager(list, id, base, label){
+  const i = list.findIndex(x=>x.id===id);
+  const prev = list[i-1], next = list[i+1];
+  return `<nav class="pager" aria-label="${label} 이동">
+    ${prev?`<a href="#/${base}/${prev.id}"><small>이전 ${label}</small><span>${prev.title}</span></a>`:"<span></span>"}
+    ${next?`<a class="next" href="#/${base}/${next.id}"><small>다음 ${label}</small><span>${next.title}</span></a>`:"<span></span>"}
+  </nav>`;
+}
+
+/* ---------- pages ---------- */
+function Home(){
+  const fe = byId(PROJECTS,"etch"), fg = byId(PROJECTS,"gwp");
+  return `<div class="wrap">
+  <header class="hero">
+    <h1 tabindex="-1">김인경<span class="en">Ingyeong Kim, M.S. in Physical Chemistry</span></h1>
+    <p class="lead">반도체 공정가스와 소재가 어떻게 분해되고 반응하는지, 분자 단위 시뮬레이션으로 계산합니다.</p>
+    <p class="sub">가톨릭대학교 계산화학연구실에서 국가 R&amp;D 과제 6건에 참여하며 DFT, DFTB-MD, ReaxFF로 식각 플라즈마, 온실가스, 절연막, 배터리 소재의 반응을 예측했습니다.</p>
+    <div class="actions"><a class="btn primary" href="#/research">연구 보기</a><a class="btn" href="#/about">소개와 이력</a></div>
+    <svg class="pes" viewBox="0 0 1000 230" role="img" aria-label="반응물에서 전이상태와 중간체를 거쳐 생성물로 가는 반응 에너지 곡선">
+      <line class="axis" x1="20" y1="210" x2="985" y2="210"/><line class="axis" x1="20" y1="20" x2="20" y2="210"/>
+      <text x="30" y="34">에너지</text><text x="900" y="200">반응 좌표</text>
+      <path class="curve" d="M40,150 C120,150 170,42 240,42 C310,42 340,128 420,128 C490,128 520,78 590,78 C670,78 720,186 800,186 C860,186 900,186 970,186"/>
+      <line class="guide d2" x1="40" y1="150" x2="240" y2="150"/><line class="guide d2" x1="240" y1="42" x2="240" y2="150"/>
+      <circle class="pt d1" cx="40" cy="150" r="6"/><circle class="pt d2" cx="240" cy="42" r="6"/><circle class="pt d3" cx="420" cy="128" r="6"/><circle class="pt d4" cx="590" cy="78" r="6"/><circle class="pt d5" cx="800" cy="186" r="6"/>
+      <text class="lbl d1" x="36" y="174">반응물</text><text class="lbl d2" x="226" y="28">TS1</text>
+      <text class="lbl d2" x="252" y="102">E<tspan font-size="10" dy="4">a</tspan></text>
+      <text class="lbl d3" x="406" y="154">IM</text><text class="lbl d4" x="576" y="64">TS2</text><text class="lbl d5" x="780" y="162">생성물</text>
+    </svg>
+    <div class="facts">
+      <a href="#/research/projects"><b>6건</b><span>국가 R&amp;D 과제</span></a>
+      <a href="#/research/projects"><b>2년 7개월</b><span>과제 수행 (2023.05~2025.12)</span></a>
+      <a href="#/research"><b>6편</b><span>SCI 논문 (공저자)</span></a>
+      <a href="#/research/talks"><b>6건</b><span>학회 포스터 (단독 1저자 4건)</span></a>
+    </div>
+  </header>
+
+  <section class="home-sec">
+    <div class="head"><h2>대표 연구</h2><a href="#/research/projects">국가과제 전체 보기</a></div>
+    <div class="feature">
+      <a href="#/project/etch"><span class="k">${fe.period}</span><h3>${fe.title}</h3><p>${fe.oneline}</p>
+        <div class="big">21.1% → 67.2%<small>CF<sub>2</sub> 존재 비율 (실험 66.2%)</small></div><div class="foot">${CHEV}</div></a>
+      <a href="#/project/gwp"><span class="k">${fg.period}</span><h3>${fg.title}</h3><p>학습 DB를 구축해 구조만으로 GWP를 예측하는 모델에 활용했습니다.</p>
+        <div class="big">R² 0.8523<small>GWP 예측 (목표 0.80)</small></div><div class="foot">${CHEV}</div></a>
+      <a href="#/paper/thesis"><span class="k">석사학위논문, ${THESIS.date}</span><h3>${THESIS.title}</h3><p>중간체 7종, 전이상태 5종을 직접 찾아 실험이 제안한 광반응 경로를 검증했습니다.</p>
+        <div class="big">428 nm<small>중간체 흡수 파장, 실험 청색광과 일치</small></div><div class="foot">${CHEV}</div></a>
+    </div>
+  </section>
+
+  <section class="home-sec" style="margin-bottom:96px">
+    <div class="head"><h2>최근 논문</h2><a href="#/research">논문 전체 보기</a></div>
+    <ul class="rows">${PAPERS.slice(0,3).map(paperRow).join("")}</ul>
+  </section>
+  </div>`;
+}
+
+function Papers(){
+  return `<div class="wrap page">${researchHead("papers")}
+    <h2 class="group-h">SCI 논문</h2>
+    <ul class="rows">${PAPERS.map(paperRow).join("")}</ul>
+    <h2 class="group-h">학위논문</h2>
+    <ul class="rows">${paperRow(THESIS)}</ul>
+  </div>`;
+}
+
+function Projects(){
+  const semi = PROJECTS.filter(p=>p.group==="semi"), safe = PROJECTS.filter(p=>p.group==="safety");
+  return `<div class="wrap page">${researchHead("projects")}
+    <h2 class="group-h">반도체 공정과 소재</h2><ul class="rows">${semi.map(projectRow).join("")}</ul>
+    <h2 class="group-h">화학물질 사고 위험성 예측</h2><ul class="rows">${safe.map(projectRow).join("")}</ul>
+  </div>`;
+}
+
+function Talks(openId){
+  return `<div class="wrap page">${researchHead("talks")}
+    <div style="margin-top:8px">${TALKS.map(t=>`
+      <details class="talk" id="talk-${t.id}" ${t.id===openId?"open":""}>
+        <summary><span class="yr">${t.date}</span>
+          <span><span class="r-title" style="display:block">${t.title}</span><span class="r-meta" style="display:block">${t.venue}, 포스터</span></span>
+          <span class="tagc">${t.first?'<span class="chip">단독 1저자</span>':'<span class="chip line">공동저자</span>'}</span>${CHEV}</summary>
+        <div class="body"><p>${t.body}</p>
+          ${t.role?`<p><span class="lab">맡은 부분</span>${t.role}</p>`:""}
+          ${t.project?`<p><span class="lab">관련 과제</span><a href="#/project/${t.project}">${byId(PROJECTS,t.project).title}</a></p>`:""}
+          ${t.paper?`<p><span class="lab">관련 논문</span><a href="#/paper/${t.paper}">${byId(allPapers(),t.paper).title}</a></p>`:""}
+        </div></details>`).join("")}
+    </div>
+  </div>`;
+}
+
+function Paper(id){
+  const p = byId(allPapers(),id); if(!p) return null;
+  const isThesis = p.id==="thesis";
+  return {title:plain(p.title), html:`<div class="wrap page">
+    <div class="crumb"><a href="#/research">연구</a><span class="sep">/</span><a href="#/research">논문</a></div>
+    <header class="d-head">
+      <div class="r-tags" style="margin-top:0;margin-bottom:14px">${tagsHTML(p.tags)}</div>
+      <h1 class="d-title" tabindex="-1">${p.title}</h1>
+      ${p.sub?`<p class="d-meta">${p.sub}</p>`:""}
+      <p class="d-meta"><b>${p.journal}</b> ${p.cite}, ${p.date}</p>
+      ${isThesis?"":`<p class="authors">${authorsHTML(p.authors)}</p>`}
+      ${p.doi?`<div class="d-actions"><a class="btn primary" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">원문 보기 (DOI)</a></div>`:""}
+    </header>
+    <div class="d-grid">
+      <div class="d-body">
+        <section><h2>요약</h2>${p.summary.map(s=>`<p>${s}</p>`).join("")}</section>
+        <section class="role-box"><h2>내가 맡은 부분</h2><ul class="dots">${p.role.map(r=>`<li>${r}</li>`).join("")}</ul></section>
+      </div>
+      <aside class="aside">
+        <div class="box"><h3>정보</h3><dl>
+          <dt>게재</dt><dd>${p.journal}</dd><dt>연도</dt><dd>${p.date}</dd>
+          ${isThesis?"<dt>지도</dt><dd>김중한 교수</dd>":`<dt>저자 순서</dt><dd>${p.authors.indexOf(ME)+1}번째 / ${p.authors.length}명</dd>`}
+          ${p.doi?`<dt>DOI</dt><dd>${p.doi}</dd>`:""}
+        </dl></div>
+        ${relatedBox("관련 국가과제", p.related.projects.map(relProject))}
+        ${relatedBox("관련 학회 발표", p.related.talks.map(relTalk))}
+      </aside>
+    </div>
+    ${isThesis?"":pager(PAPERS,id,"paper","논문")}
+  </div>`};
+}
+
+function Project(id){
+  const p = byId(PROJECTS,id); if(!p) return null;
+  const r = p.results;
+  const bars = r.bars?`<div class="bars" role="img" aria-label="${plain(r.bars.cap)}: ${r.bars.items.map(i=>i[0]+' '+i[1]).join(', ')}">
+      <div class="cap">${r.bars.cap}</div>
+      ${r.bars.items.map(([l,v,c])=>`<div class="bar ${c}"><span>${l}</span><div class="track"><div class="fill" style="width:${v}%"></div></div><b>${v}</b></div>`).join("")}</div>`:"";
+  const kpi = r.kpi?`<div class="kpi">${r.kpi.map(([b,s])=>`<div><b>${b}</b><span>${s}</span></div>`).join("")}</div>`:"";
+  const table = r.table?`<div class="tblwrap"><table class="data"><thead><tr>${r.table.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
+      <tbody>${r.table.rows.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+      <p class="note">ReaxFF MD 100 ps, 온도별 궤적 5개 평균</p>`:"";
+  const tl = p.timeline?`<p style="margin-top:20px"><strong>${p.timeline.cap}</strong></p><ul class="tline">${p.timeline.items.map(([a,b])=>`<li><b>${a}</b>${b}</li>`).join("")}</ul>`:"";
+  return {title:plain(p.title), html:`<div class="wrap page">
+    <div class="crumb"><a href="#/research">연구</a><span class="sep">/</span><a href="#/research/projects">국가과제</a></div>
+    <header class="d-head">
+      <div class="r-tags" style="margin-top:0;margin-bottom:14px">${tagsHTML(p.tags)}</div>
+      <h1 class="d-title" tabindex="-1">${p.title}</h1>
+      <p class="d-meta">${p.oneline}</p>
+    </header>
+    <div class="d-grid">
+      <div class="d-body">
+        <section><h2>배경</h2>${p.background.map(s=>`<p>${s}</p>`).join("")}</section>
+        <section class="role-box"><h2>내가 맡은 부분</h2><ul class="dots">${p.mine.map(m=>`<li>${m}</li>`).join("")}</ul></section>
+        <section><h2>방법</h2><ol class="steps">${p.method.map(([h,t])=>`<li><b>${h}</b>${t}</li>`).join("")}</ol>
+          ${p.formula?`<div class="formula">${p.formula}</div>`:""}${tl}</section>
+        <section><h2>결과</h2>${bars}${kpi}${table}${r.text.map(s=>`<p style="margin-top:16px">${s}</p>`).join("")}</section>
+        ${p.limit?`<section><h2>남은 한계</h2><p>${p.limit}</p></section>`:""}
+      </div>
+      <aside class="aside">
+        <div class="box"><h3>과제 정보</h3><dl>
+          <dt>과제명</dt><dd>${p.official}</dd>
+          <dt>지원</dt><dd>${p.agency}</dd>
+          <dt>수행</dt><dd>${p.lead}</dd>
+          <dt>참여 기간</dt><dd>${p.period}</dd>
+          <dt>책임자</dt><dd>김중한 교수 (가톨릭대)</dd>
+        </dl></div>
+        ${relatedBox("이 과제에서 나온 논문", p.papers.map(relPaper))}
+        ${relatedBox("관련 학회 발표", p.talks.map(relTalk))}
+      </aside>
+    </div>
+    ${pager(PROJECTS,id,"project","과제")}
+  </div>`};
+}
+
+function About(){
+  return `<div class="wrap page">
+    <h1 class="page-title" tabindex="-1">소개</h1>
+    <p class="page-sub">물리화학을 전공했고, 양자화학 계산과 분자동역학으로 반응 메커니즘과 분자 물성을 예측합니다. 반도체 공정가스와 소재 연구를 중심으로, 계산 결과를 실험값과 맞춰 가는 과정을 가장 오래 해 왔습니다.</p>
+    <div class="about-grid">
+      <h2>학력</h2>
+      <div><ul class="tl">
+        <li><span class="when">2024.03 ~ 2026.02</span><span><b>가톨릭대학교 대학원 화학과 석사</b><p>물리화학 전공, 계산화학연구실 (지도교수 김중한). 학점 4.44/4.50</p></span></li>
+        <li><span class="when">2020.03 ~ 2024.02</span><span><b>가톨릭대학교 화학과 학사</b><p>삼성꿈장학재단 장학생 (재학 전 기간)</p></span></li>
+      </ul></div>
+
+      <h2>경력</h2>
+      <div><ul class="tl">
+        <li><span class="when">2026.06 ~ 2026.12</span><span><b>한국마사회 안전관리부 청년인턴</b><p>우수인턴 선발. 전 사업장 작업계획서와 기계장비 현황을 통합 관리 데이터로 정리하고 작업환경측정 결과를 검토했습니다. 88개 부서 안전문화 과제의 심사 자료를 만들었고, 청년인턴 개별과제 평가에서 최고점을 받았습니다.</p></span></li>
+        <li><span class="when">2023.05 ~ 2025.12</span><span><b>가톨릭대학교 산학협력단 국가과제 참여연구원</b><p>학부연구생으로 시작해 석사 과정까지 국가 R&amp;D 과제 6건 수행. 연구비 집행, 정산, 연차보고서 제출 실무도 맡았습니다.</p></span></li>
+        <li><span class="when">2024.03 ~ 2025.12</span><span><b>화학실험 조교</b><p>일반화학실험 3학기, 무기화학실험 1학기. 시약과 기구 준비, 기기 측정</p></span></li>
+      </ul></div>
+
+      <h2>기술</h2>
+      <div><dl class="skillset">
+        <dt>전자구조 계산</dt><dd>Gaussian, ORCA, Molpro, OpenMolcas, TURBOMOLE, NWChem, AMS</dd>
+        <dt>분자동역학</dt><dd>DFTB+, AMS (DFTB, ReaxFF), GROMACS, AMBER, NAMD</dd>
+        <dt>계산 방법</dt><dd>DFT, TDDFT, CCSD(T), DLPNO-CCSD(T), XMS-CASPT2, AIMD, 전이상태 탐색과 IRC</dd>
+        <dt>분석, 시각화</dt><dd>GaussView, VMD, Avogadro, Chemissian</dd>
+        <dt>자동화</dt><dd>Python으로 계산 입력 생성, 결과 파싱, 물성 산출</dd>
+        <dt>실험 장비</dt><dd>XRD, FT-IR, UV/Vis, SEM, TEM, NMR 직접 측정</dd>
+      </dl></div>
+
+      <h2>수상과 자격</h2>
+      <div><ul class="tl">
+        <li><span class="when">2022.11</span><span><b>2022년 화학과 팀 단기 학술발표회 우수상</b><p>가톨릭대학교 화학과. NiTi-LDH/나노카본 하이브리드 촉매의 연료전지 촉매 성능 연구</p></span></li>
+        <li><span class="when">2026.02</span><span><b>OPIc 영어 Intermediate High</b></span></li>
+      </ul></div>
+
+      <h2>연락</h2>
+      <div><p style="color:var(--ink-2)">연구 내용이나 협업 문의는 메일로 부탁드립니다.</p>
+        <div class="d-actions"><!-- TODO: 실제 이메일 주소로 바꾸기 --><a class="btn primary" href="mailto:your.email@example.com">메일 보내기</a><a class="btn" href="https://github.com/ingyeong-kim" target="_blank" rel="noopener">GitHub</a></div></div>
+    </div>
+  </div>`;
+}
+
+/* ---------- router ---------- */
+function render(){
+  const raw = location.hash.replace(/^#/,"") || "/";
+  const [path, qs] = raw.split("?");
+  const parts = path.split("/").filter(Boolean);
+  const q = new URLSearchParams(qs||"");
+  let html, title = "김인경 | 계산화학", nav = "";
+  if(!parts.length){ html = Home(); }
+  else if(parts[0]==="research"){
+    nav = "research";
+    if(parts[1]==="projects"){ html = Projects(); title = "국가과제 | 김인경"; }
+    else if(parts[1]==="talks"){ html = Talks(q.get("open")); title = "학회 발표 | 김인경"; }
+    else { html = Papers(); title = "논문 | 김인경"; }
+  }
+  else if(parts[0]==="paper"){ const r = Paper(parts[1]); nav="research"; if(r){html=r.html; title=r.title+" | 김인경";} }
+  else if(parts[0]==="project"){ const r = Project(parts[1]); nav="research"; if(r){html=r.html; title=r.title+" | 김인경";} }
+  else if(parts[0]==="about"){ html = About(); nav="about"; title="소개 | 김인경"; }
+  if(!html){ html = Home(); nav=""; }
+  $app.innerHTML = html;
+  document.title = title;
+  document.querySelectorAll("[data-nav]").forEach(a=>{ a.dataset.nav===nav ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"); });
+  const openId = q.get("open");
+  if(openId){ const el = document.getElementById("talk-"+openId); if(el){ el.scrollIntoView({block:"center"}); return; } }
+  window.scrollTo(0,0);
+  const h = $app.querySelector("h1"); if(h) h.focus({preventScroll:true});
+}
+window.addEventListener("hashchange", render);
+render();
+</script>
+</body>
+</html>
